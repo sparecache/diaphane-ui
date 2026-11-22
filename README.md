@@ -5,6 +5,11 @@
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-lightgrey">
   <img alt="React 19" src="https://img.shields.io/badge/React-19-lightgrey">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-lightgrey">
+  <img alt="48 components" src="https://img.shields.io/badge/components-48-lightgrey">
+  <img alt="Gzipped size: 39 KB JS, 25 KB CSS" src="https://img.shields.io/badge/gzipped-39_KB_JS%2C_25_KB_CSS-lightgrey">
+  <img alt="High contrast mode: WCAG AA" src="https://img.shields.io/badge/high_contrast-WCAG_AA-lightgrey">
+  <img alt="Last commit" src="https://img.shields.io/github/last-commit/sparecache/diaphane-ui?color=lightgrey&label=last%20commit">
+  <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-lightgrey">
 </p>
 
 <p align="center">
