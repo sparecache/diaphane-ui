@@ -1,6 +1,13 @@
 <h1 align="center">Diaphane UI: Inspired by iOS 27</h1>
 
 <p align="center">
+  <a href="https://github.com/sparecache/diaphane-ui/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/sparecache/diaphane-ui/actions/workflows/ci.yml/badge.svg"></a>
+  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-lightgrey">
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-lightgrey">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-lightgrey">
+</p>
+
+<p align="center">
   <img src="docs/assets/banner.png" alt="Diaphane UI: translucent, spring-smooth mobile UI for React. Inspired by iOS 27. Independent project, not affiliated with Apple Inc." width="100%">
 </p>
 
@@ -14,13 +21,6 @@
 
 <p align="center">
   <img src="docs/assets/bento.png" alt="Eight screens built with Diaphane UI: activity, a product page, a wallet, messages, trips, onboarding, a dashboard and settings, some shown half in light and half in dark mode" width="880">
-</p>
-
-<p align="center">
-  <a href="https://github.com/sparecache/diaphane-ui/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/sparecache/diaphane-ui/actions/workflows/ci.yml/badge.svg"></a>
-  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-lightgrey">
-  <img alt="React 19" src="https://img.shields.io/badge/React-19-lightgrey">
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-lightgrey">
 </p>
 
 A React library for **mobile-style interfaces on the web**: translucent glass, springy controls, draggable sheets and
