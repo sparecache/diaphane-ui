@@ -1,0 +1,32 @@
+/* ── Toolbar (48pt glass items, 28pt from the screen sides and bottom;
+ * status text (.caption, 12pt) in a 48pt glass capsule with 5pt side padding, centred between the groups. ── */
+[data-ds="diaphane"] .dph-toolbar {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, auto) 1fr;
+  align-items: center;
+  column-gap: var(--dph-space-2);
+  height: 48px;
+  padding-inline: 28px;
+  /* Screen's bottomBar slot pads by the home-indicator inset (34pt); the bar sits 28pt above the screen edge. */
+  margin-block-end: calc(28px - var(--dph-safe-bottom));
+}
+[data-ds="diaphane"] .dph-toolbar__leading { grid-column: 1; justify-self: start; display: flex; min-width: 0; }
+[data-ds="diaphane"] .dph-toolbar__status { grid-column: 2; display: flex; justify-content: center; min-width: 0; }
+[data-ds="diaphane"] .dph-toolbar__trailing { grid-column: 3; justify-self: end; display: flex; min-width: 0; }
+
+[data-ds="diaphane"] .dph-toolbar__status-text {
+  display: block;
+  max-width: 100%;
+  height: 48px;
+  min-width: 48px;
+  padding-inline: 5px;
+  overflow: hidden;
+  border-radius: var(--dph-radius-full);
+  color: var(--dph-label);
+  font: var(--dph-font-caption1);
+  line-height: 48px;
+  letter-spacing: var(--dph-text-caption1-tracking);
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,144 @@
+/* ── Sheet (874pt screen) ──
+ * large : card from the safe-area top to the bottom edge, 38pt top corners, grouped background; the presenting
+ *         screen stays in place and dims (20% black light / 48% dark); it is not scaled back.
+ * medium: floating glass sheet, 469.67pt tall (50% + 32.67pt) laid out at full width, then scaled 0.96 about its
+ *         bottom edge so it floats 8pt from the screen edges; 31pt top / 56pt bottom corners (concentric with the display).
+ * Header: 16pt top inset, 54pt bar, 44pt circular buttons at 16pt from the edges, inline headline title. */
+[data-ds="diaphane"] .dph-overlay[data-kind="sheet"] { display: block; padding: 0; }
+
+[data-ds="diaphane"] .dph-sheet {
+  --_surface: var(--dph-system-grouped-background);
+  position: absolute;
+  inset-inline: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--_surface);
+  color: var(--dph-label);
+  outline: none;
+  /* Drag offset rides on `translate`, so it composes with the medium sheet's scale. */
+  translate: 0 var(--_dy, 0px);
+  animation: dph-sheet-rise var(--dph-motion-sheet-in) backwards;
+  transition: translate var(--dph-motion-sheet-in), top var(--dph-motion-sheet-in), bottom var(--dph-motion-sheet-in),
+    border-radius var(--dph-motion-sheet-in), transform var(--dph-motion-sheet-in), background-color var(--dph-motion-sheet-in);
+  touch-action: pan-x;
+}
+[data-ds="diaphane"] .dph-sheet[data-dragging] { transition: none; }
+@keyframes dph-sheet-rise { from { translate: 0 calc(100% + 16px); } }
+/* Dismiss: slides off from wherever the drag left it, on the dismiss curve. */
+[data-ds="diaphane"] .dph-overlay[data-closing] .dph-sheet { translate: 0 calc(100% + 16px); transition: translate var(--dph-motion-sheet-out); }
+[data-ds="diaphane"] .dph-overlay[data-kind="sheet"] .dph-overlay__scrim { animation-timing-function: linear; animation-duration: 460ms; }
+[data-ds="diaphane"] .dph-overlay[data-closing] .dph-overlay__scrim { opacity: 0; transition: opacity var(--dph-motion-sheet-out); }
+[data-ds="diaphane"] .dph-sheet__drag { flex: none; touch-action: none; }
+[data-ds="diaphane"] .dph-sheet[data-detent="large"] {
+  top: var(--dph-safe-top);
+  bottom: 0;
+  border-start-start-radius: 38px;
+  border-start-end-radius: 38px;
+}
+[data-ds="diaphane"] .dph-sheet[data-detent="medium"] {
+  --_surface: color-mix(in srgb, var(--dph-system-grouped-background) 93%, var(--dph-label));
+  top: calc(50% - 40.667px); /* 469.67pt tall (50% + 32.67) above the 8pt bottom inset */
+  bottom: 8px;
+  border-radius: 31.25px 31.25px 56px 56px;
+  transform: scale(0.9602);
+  transform-origin: 50% 100%;
+  box-shadow: 0 0 0 0.333px rgb(0 0 0 / 0.12), 0 6px 32px rgb(0 0 0 / 0.1);
+  -webkit-backdrop-filter: blur(var(--dph-glass-blur)) saturate(var(--dph-glass-saturate));
+  backdrop-filter: blur(var(--dph-glass-blur)) saturate(var(--dph-glass-saturate));
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-sheet[data-detent="medium"],
+[data-ds="diaphane"] [data-theme="dark"] .dph-sheet[data-detent="medium"] {
+  --_surface: color-mix(in srgb, var(--dph-system-grouped-background) 96%, var(--dph-label));
+  box-shadow: inset 0 0.667px 0.667px rgb(255 255 255 / 0.12);
+}
+/* Content on the glass sheet: grouped surfaces become translucent fills. */
+[data-ds="diaphane"] .dph-sheet[data-detent="medium"] .dph-sheet__content {
+  --dph-system-grouped-background: transparent;
+  --dph-secondary-system-grouped-background: color-mix(in srgb, var(--dph-label) 6%, transparent);
+}
+
+[data-ds="diaphane"] .dph-sheet__grabber {
+  position: absolute;
+  top: 6px;
+  inset-inline-start: calc(50% - 30px);
+  width: 60px;
+  height: 4px;
+  border-radius: var(--dph-radius-full);
+  background: var(--dph-tertiary-label);
+  z-index: 1;
+}
+
+[data-ds="diaphane"] .dph-sheet__header {
+  flex: none;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  column-gap: 8px;
+  height: 70px;
+  padding: 16px 16px 10px;
+}
+[data-ds="diaphane"] .dph-sheet__slot { display: flex; width: 44px; height: 44px; }
+[data-ds="diaphane"] .dph-sheet__slot:last-child { grid-column: 3; }
+[data-ds="diaphane"] .dph-sheet__title {
+  grid-column: 2;
+  margin: 0;
+  font: var(--dph-font-headline);
+  letter-spacing: var(--dph-text-headline-tracking);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Glass circle buttons (44pt), 17pt regular glyphs at the large image scale. */
+[data-ds="diaphane"] .dph-sheet__button {
+  --_fill: var(--dph-glass-fill);
+  --_fg: var(--dph-label);
+  --_shadow: var(--dph-glass-rim), var(--dph-glass-shadow);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--_fill);
+  box-shadow: var(--_shadow);
+  color: var(--_fg);
+  font-size: var(--dph-text-body-size);
+  line-height: 1;
+  cursor: pointer;
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  transition: transform var(--dph-duration-fast) var(--dph-ease-standard);
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-sheet__button,
+[data-ds="diaphane"] [data-theme="dark"] .dph-sheet__button {
+  --_fill: color-mix(in srgb, var(--dph-label) 13.5%, var(--dph-system-background));
+}
+[data-ds="diaphane"] .dph-sheet__button[data-prominent] {
+  --_fill: var(--dph-accent);
+  --_fg: var(--dph-on-accent);
+  --_shadow: var(--dph-glass-prominent-rim), var(--dph-glass-shadow);
+}
+[data-ds="diaphane"] .dph-sheet__button:disabled { --_fg: var(--dph-tertiary-label); cursor: default; }
+[data-ds="diaphane"] .dph-sheet__button[data-prominent]:disabled { --_fill: var(--dph-disabled-fill); --_fg: var(--dph-disabled-label); }
+[data-ds="diaphane"] .dph-sheet__button:not(:disabled):active { transform: scale(1.06); }
+[data-ds="diaphane"] .dph-sheet__button:focus-visible { outline: none; box-shadow: var(--_shadow), var(--dph-focus-ring); }
+
+[data-ds="diaphane"] .dph-sheet__content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: var(--dph-safe-bottom);
+}
+
+/* A NavigationStack inside a sheet (pickers pushed within the sheet: one path, no modal over modal):
+   the stack fills the sheet and its NavigationBar replaces the sheet header (11pt + 54pt bar = the sheet header height). */
+[data-ds="diaphane"] .dph-sheet__content:has(> .dph-nav) { position: relative; overflow: hidden; padding-bottom: 0; }
+[data-ds="diaphane"] .dph-sheet__content > .dph-nav { position: absolute; inset: 0; --dph-safe-top: 11px; }
+[data-ds="diaphane"] .dph-sheet__content > .dph-nav .dph-nav__page { background: var(--_surface, var(--dph-system-grouped-background)); }
+[data-ds="diaphane"] .dph-sheet[data-detent="medium"] .dph-sheet__content > .dph-nav { --dph-safe-bottom: 8px; }

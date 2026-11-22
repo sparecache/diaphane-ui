@@ -1,0 +1,77 @@
+/* ── StatCard (summary card): grouped card 26pt corners, 17pt padding;
+ *   header 17pt semibold in the category tint + trailing 14pt secondary caption and chevron;
+ *   30pt semibold value + 16pt semibold secondary unit; mini chart 7 bars × 8pt, 50pt tall, bottom-aligned with the value. ── */
+[data-ds="diaphane"] .dph-stat {
+  --_tint: var(--dph-accent);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: 132px;
+  margin: 0;
+  padding: 16px 17px 17px;
+  border: 0;
+  border-radius: var(--dph-radius-lg);
+  background: var(--dph-secondary-system-grouped-background);
+  color: var(--dph-label);
+  font: inherit;
+  text-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-ds="diaphane"] button.dph-stat { cursor: pointer; transition: transform var(--dph-duration-fast) var(--dph-ease-standard), background-color var(--dph-duration-fast) linear; -webkit-user-select: none; user-select: none; }
+[data-ds="diaphane"] button.dph-stat:active { transform: scale(0.98); }
+[data-ds="diaphane"] button.dph-stat:focus-visible { outline: none; box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-stat[data-size="compact"] { min-height: 112px; padding: 14px 15px 15px; }
+
+[data-ds="diaphane"] .dph-stat__header { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; min-height: 22px; }
+[data-ds="diaphane"] .dph-stat__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--_tint);
+  font: 600 17px/22px var(--dph-font-family);
+  letter-spacing: -0.43px;
+}
+[data-ds="diaphane"] .dph-stat__title .dph-icon { flex: none; vertical-align: top; }
+[data-ds="diaphane"] .dph-stat__title > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+[data-ds="diaphane"] .dph-stat__caption {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dph-secondary-label);
+  font: 400 14px/18px var(--dph-font-family);
+  font-variant-numeric: tabular-nums;
+}
+[data-ds="diaphane"] .dph-stat__caption .dph-icon { color: var(--dph-tertiary-label); }
+[data-ds="diaphane"] .dph-stat__body { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+[data-ds="diaphane"] .dph-stat__figure { display: flex; flex-direction: column; min-width: 0; }
+[data-ds="diaphane"] .dph-stat__label { color: var(--dph-secondary-label); font: 600 15px/20px var(--dph-font-family); }
+[data-ds="diaphane"] .dph-stat__value {
+  color: var(--dph-label);
+  font: 600 30px/34px var(--dph-font-family);
+  letter-spacing: 0.2px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-stat[data-size="compact"] .dph-stat__value { font-size: 26px; line-height: 30px; }
+[data-ds="diaphane"] .dph-stat__unit { color: var(--dph-secondary-label); font: 600 16px/1 var(--dph-font-family); letter-spacing: 0; }
+[data-ds="diaphane"] .dph-stat__trend { display: inline-flex; align-items: center; gap: 3px; margin-top: 2px; font: 600 13px/16px var(--dph-font-family); color: var(--dph-secondary-label); }
+[data-ds="diaphane"] .dph-stat__trend[data-trend="up"] { color: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-stat__trend[data-trend="down"] { color: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-stat__chart { flex: none; width: 77px; margin-bottom: 1px; }
+
+[data-ds="diaphane"] .dph-stat[data-tint="blue"] { --_tint: var(--dph-system-blue); }
+[data-ds="diaphane"] .dph-stat[data-tint="green"] { --_tint: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-stat[data-tint="indigo"] { --_tint: var(--dph-system-indigo); }
+[data-ds="diaphane"] .dph-stat[data-tint="orange"] { --_tint: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-stat[data-tint="pink"] { --_tint: var(--dph-system-pink); }
+[data-ds="diaphane"] .dph-stat[data-tint="purple"] { --_tint: var(--dph-system-purple); }
+[data-ds="diaphane"] .dph-stat[data-tint="red"] { --_tint: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-stat[data-tint="teal"] { --_tint: var(--dph-system-cyan); }
+[data-ds="diaphane"] .dph-stat[data-tint="yellow"] { --_tint: var(--dph-system-yellow); }
+[data-ds="diaphane"] .dph-stat[data-tint="gray"] { --_tint: var(--dph-system-gray); }

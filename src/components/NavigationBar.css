@@ -1,0 +1,136 @@
+/* ── NavigationBar (design values): 54pt bar under the status bar (44pt glass items + 10),
+ * 16pt side margins, large title block 52pt (34pt bold, label at +3.67). No background, no hairline. ── */
+[data-ds="diaphane"] .dph-navbar { display: block; min-width: 0; }
+
+/* The bar has no background: Screen's header slot supplies the safe area, stickiness and scroll-edge effect. */
+[data-ds="diaphane"] .dph-navbar__bar {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, auto) 1fr;
+  align-items: start;
+  column-gap: var(--dph-space-2);
+  height: 54px;
+  padding-block-end: 10px;
+  padding-inline: var(--dph-margin);
+}
+
+[data-ds="diaphane"] .dph-navbar__leading,
+[data-ds="diaphane"] .dph-navbar__trailing { display: flex; align-items: center; gap: var(--dph-space-3); min-width: 0; height: 44px; }
+[data-ds="diaphane"] .dph-navbar__leading { grid-column: 1; justify-self: start; }
+[data-ds="diaphane"] .dph-navbar__trailing { grid-column: 3; justify-self: end; }
+
+/* Back: 44pt glass circle, chevron.backward in the label color. */
+[data-ds="diaphane"] .dph-navbar__back {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--dph-label);
+  font: var(--dph-font-body);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-spring);
+}
+[data-ds="diaphane"] .dph-navbar__back:focus-visible { outline: none; box-shadow: var(--dph-glass-rim), var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-navbar__back:active { transform: scale(1.04); }
+
+/* Inline title: 17pt semibold; with a subtitle 15pt semibold over 12pt secondary (18.33 + 14.67). */
+[data-ds="diaphane"] .dph-navbar__principal {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 44px;
+  text-align: center;
+}
+[data-ds="diaphane"] .dph-navbar__title {
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  font: var(--dph-font-headline);
+  letter-spacing: var(--dph-text-headline-tracking);
+  color: var(--dph-label);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+[data-ds="diaphane"] .dph-navbar__title[data-has-subtitle] {
+  font: var(--dph-font-subheadline);
+  font-weight: var(--dph-weight-semibold);
+  line-height: 18.333px;
+  letter-spacing: var(--dph-text-subheadline-tracking);
+}
+[data-ds="diaphane"] .dph-navbar__subtitle {
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  font: var(--dph-font-caption1);
+  line-height: 14.667px;
+  letter-spacing: var(--dph-text-caption1-tracking);
+  color: var(--dph-secondary-label);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Large title: scrolls with the content, under the floating bar. */
+[data-ds="diaphane"] .dph-navbar__large { overflow: clip; padding-block: 3.667px 7.667px; padding-inline: var(--dph-margin); }
+[data-ds="diaphane"] .dph-navbar__large-title {
+  margin: 0;
+  overflow: hidden;
+  font: var(--dph-font-large-title);
+  font-weight: var(--dph-weight-bold);
+  letter-spacing: var(--dph-text-large-title-tracking);
+  color: var(--dph-label);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+[data-ds="diaphane"] .dph-navbar__large-subtitle {
+  margin: 0;
+  font: var(--dph-font-subheadline);
+  letter-spacing: var(--dph-text-subheadline-tracking);
+  color: var(--dph-secondary-label);
+}
+
+/* Large → inline on scroll (scroll-driven, where supported): the large title slides up under the bar and the
+ * inline title fades in, like a collapsing navigation bar. Without support the large title simply stays. */
+[data-ds="diaphane"] .dph-navbar[data-display="large"] .dph-navbar__principal { opacity: 0; }
+@supports (animation-timeline: scroll()) {
+  [data-ds="diaphane"] .dph-navbar[data-display="large"] .dph-navbar__large > * {
+    animation: diaphane-navbar-large-out linear both;
+    animation-timeline: scroll(nearest block);
+    animation-range: 0 52px;
+  }
+  [data-ds="diaphane"] .dph-navbar[data-display="large"] .dph-navbar__principal {
+    animation: diaphane-navbar-inline-in linear both;
+    animation-timeline: scroll(nearest block);
+    animation-range: 36px 56px;
+  }
+}
+@keyframes diaphane-navbar-large-out { to { transform: translateY(-52px); opacity: 0; } }
+@keyframes diaphane-navbar-inline-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Account: 44pt glass circle around a 36pt avatar (4pt inset). */
+[data-ds="diaphane"] .dph-navbar__account {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-spring);
+}
+[data-ds="diaphane"] .dph-navbar__account .dph-avatar { --_size: 36px; }
+[data-ds="diaphane"] .dph-navbar__account:focus-visible { outline: none; box-shadow: var(--dph-glass-rim), var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-navbar__account:active { transform: scale(1.04); }

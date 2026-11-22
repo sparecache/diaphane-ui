@@ -1,0 +1,58 @@
+/* ── Glass surface. Levels:
+ *   regular      backdrop luminance → 0.78–0.98 (light) / 0.12–0.57 (dark), colour kept (chroma ×0.65 / ×1)
+ *   clear        12.5% white over the sharp backdrop, same in both appearances
+ *   regular.tint tint × (0.9 + 0.05·L): practically opaque
+ *   clear.tint   tint × (0.65 + 0.35·L): the backdrop's light and dark show through the colour
+ * Edge refraction comes from glassRefraction.ts (Chromium); the rim light from --dph-glass-rim. ── */
+[data-ds="diaphane"] .dph-glass {
+  --_radius: var(--dph-radius-full);
+  --_tint: transparent;
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border-radius: var(--_radius);
+  background: var(--dph-glass-fill);
+  box-shadow: var(--dph-glass-rim), var(--dph-glass-shadow);
+  color: var(--dph-label);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+}
+[data-ds="diaphane"] .dph-glass[data-shape="circle"] { --_radius: 50%; aspect-ratio: 1; }
+[data-ds="diaphane"] .dph-glass[data-variant="clear"] {
+  background: var(--dph-glass-clear-fill);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-clear-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-clear-backdrop);
+}
+
+/* Tint: a tint fill over a darkened grey backdrop, so the backdrop's light and dark still shade the colour. */
+[data-ds="diaphane"] .dph-glass[data-tint] {
+  background: color-mix(in srgb, var(--_tint) 95%, transparent);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) blur(0.5px) grayscale(1) brightness(0.5);
+  backdrop-filter: var(--dph-glass-refraction,) blur(0.5px) grayscale(1) brightness(0.5);
+}
+[data-ds="diaphane"] .dph-glass[data-tint][data-variant="clear"] { background: color-mix(in srgb, var(--_tint) 78%, transparent); }
+[data-ds="diaphane"] .dph-glass[data-tint="accent"] { --_tint: var(--dph-accent); }
+[data-ds="diaphane"] .dph-glass[data-tint="blue"] { --_tint: var(--dph-system-blue); }
+[data-ds="diaphane"] .dph-glass[data-tint="green"] { --_tint: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-glass[data-tint="indigo"] { --_tint: var(--dph-system-indigo); }
+[data-ds="diaphane"] .dph-glass[data-tint="orange"] { --_tint: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-glass[data-tint="pink"] { --_tint: var(--dph-system-pink); }
+[data-ds="diaphane"] .dph-glass[data-tint="purple"] { --_tint: var(--dph-system-purple); }
+[data-ds="diaphane"] .dph-glass[data-tint="red"] { --_tint: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-glass[data-tint="teal"] { --_tint: var(--dph-system-teal); }
+[data-ds="diaphane"] .dph-glass[data-tint="yellow"] { --_tint: var(--dph-system-yellow); }
+
+/* .interactive(): same press as glass buttons (×1.2133 spring, white glow). */
+[data-ds="diaphane"] .dph-glass[data-interactive] {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  transition: transform var(--dph-duration-standard) var(--dph-ease-spring), background var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-glass[data-interactive]:active { transform: scale(1.2133); }
+[data-ds="diaphane"] .dph-glass[data-interactive]:not([data-tint]):active {
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.6), rgb(255 255 255 / 0.25) 70%, transparent), var(--dph-glass-fill);
+}

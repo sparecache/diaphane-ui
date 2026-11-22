@@ -1,0 +1,79 @@
+/* Glass close-ups (README images). Published images use the bundled open font, never a platform font. */
+[data-ds="diaphane"].cu-page {
+  --dph-font-family: "Inter Variable", Inter, sans-serif;
+  --dph-font-family-rounded: "Inter Variable", Inter, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  font: var(--dph-font-body);
+  color: var(--dph-label);
+}
+[data-ds="diaphane"].cu-page *, [data-ds="diaphane"].cu-page *::before, [data-ds="diaphane"].cu-page *::after { animation: none !important; transition: none !important; }
+.cu-figure { margin: 0; }
+.cu-figure figcaption { padding: 6px 4px; font: 13px/1.3 system-ui, sans-serif; color: #6e6e73; }
+
+.cu-shot { position: relative; width: 402px; height: 300px; overflow: hidden; border-radius: 28px; isolation: isolate; }
+
+/* Photo-like backdrop: soft colour fields plus large type, so glass has detail to bend. */
+.cu-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; background: #eef0f4; }
+.cu-bg__blob { position: absolute; border-radius: 50%;  }
+.cu-bg__blob--a { width: 220px; height: 220px; left: -40px; top: -60px; background: #ff7f6e; }
+.cu-bg__blob--b { width: 260px; height: 260px; right: -70px; top: 40px; background: #4f9cf0; }
+.cu-bg__blob--c { width: 200px; height: 200px; left: 120px; bottom: -110px; background: #b58cf2; }
+.cu-bg__words { position: absolute; inset: -6px -20px; display: flex; flex-direction: column; gap: 0; transform: rotate(-8deg); }
+.cu-bg__words span { font: 800 46px/1.05 "Inter Variable", Inter, sans-serif; letter-spacing: -1.5px; color: rgb(255 255 255 / 0.55); white-space: nowrap; }
+.cu-bg__words span:nth-child(even) { color: rgb(255 255 255 / 0.35); margin-left: 60px; }
+
+.cu-label {
+  display: inline-block; padding: 3px 10px; border-radius: 999px; background: rgb(0 0 0 / 0.38); color: #fff;
+  font: 600 12px/16px "Inter Variable", Inter, sans-serif; letter-spacing: 0.2px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.cu-pressed { display: inline-flex; }
+
+/* Buttons: two columns, rest and pressed. */
+.cu-grid { position: absolute; inset: 22px 24px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; justify-items: center; row-gap: 14px; }
+
+/* Zoomed controls: rendered at 1.7× so the lens detail reads in the README. */
+.cu-zoom__inner { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 0 22px; zoom: 1.7; }
+.cu-zoom .cu-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 10px 4px 4px; }
+.cu-zoom__inner--slider { gap: 4px; padding: 0 14px; }
+.cu-zoom__inner--slider .cu-label { align-self: flex-start; margin-top: 4px; }
+[data-ds="diaphane"] .cu-zoom__inner--slider .dph-slider { color: #fff; }
+
+/* Tab bar over a photo grid. */
+.cu-tabbar { height: 260px; background: #111; }
+.cu-tiles { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 118px; gap: 6px; padding: 6px; }
+.cu-tile { display: flex; align-items: flex-end; padding: 10px; border-radius: 16px; color: #fff; font: 700 15px/1 "Inter Variable", Inter, sans-serif; }
+.cu-tile--0 { background: #f2994a; }
+.cu-tile--1 { background: #5b7fe8; }
+.cu-tile--2 { background: #27ae8f; }
+.cu-tile--3 { background: #b36ad6; }
+.cu-tile--4 { background: #e0a24a; }
+.cu-tile--5 { background: #3f9d78; }
+.cu-tabbar__bar { position: absolute; left: 0; right: 0; bottom: 18px; }
+
+/* Glass card and levels. */
+.cu-refraction__cards { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+.cu-card { width: 300px; }
+.cu-card .dph-card { min-height: 96px; display: grid; place-items: center; }
+.cu-levels { display: flex; gap: 10px; }
+.cu-levels > * { min-width: 104px; height: 48px; display: grid; place-items: center; }
+
+/* Controls at a glance: bar buttons and a glass panel with toggles. */
+.cu-controls__bar { position: absolute; left: 16px; right: 16px; top: 20px; display: flex; justify-content: space-between; align-items: center; }
+.cu-controls__group { display: inline-flex; gap: 12px; align-items: center; }
+.cu-controls__panel { position: absolute; left: 24px; right: 24px; bottom: 34px; }
+.cu-controls__panel > * { display: block; width: 100%; }
+.cu-controls__rows { display: flex; flex-direction: column; width: 100%; box-sizing: border-box; padding: 6px 18px; }
+.cu-controls .cu-row { display: flex; align-items: center; justify-content: space-between; min-height: 56px; }
+.cu-controls .cu-row + .cu-row { border-top: 0.5px solid rgb(0 0 0 / 0.12); }
+
+.cu-hg { width: 332px; height: 216px; border-radius: 20px; background: var(--dph-secondary-system-grouped-background); }
+.cu-hg .dph-card { border-radius: 0 !important; box-shadow: none !important; }
+.cu-hg__card { position: absolute; inset: 0; }
+.cu-hg__card > * { display: block; width: 100%; height: 100%; box-sizing: border-box; border-radius: 0; }
+.cu-hg__buttons { position: absolute; right: 12px; top: 10px; display: flex; gap: 10px; }
+.cu-hg__bar { position: absolute; left: 0; right: 0; bottom: 8px; padding: 0 12px; }
+/* Banner card: the active tab reads in the primary label colour (white in dark mode) instead of the accent. */
+[data-ds="diaphane"] .cu-hg .dph-tabbar__item[aria-selected="true"] { color: var(--dph-label); }

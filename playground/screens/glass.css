@@ -1,0 +1,10 @@
+.pg-glass { position: relative; width: 402px; height: 874px; overflow: hidden; background: #fff; }
+.pg-glass__bands { position: absolute; inset: 0 0 auto; height: 420px;
+  background: repeating-linear-gradient(to bottom, #ff3b30 0 30px, #ff9500 30px 60px, #ffcc00 60px 90px, #34c759 90px 120px, #007aff 120px 150px, #af52de 150px 180px); }
+.pg-glass__stripes { position: absolute; inset: 420px 0 0; background: repeating-linear-gradient(to right, #000 0 12px, #fff 12px 24px); }
+.pg-glass__at { position: absolute; transform: translate(-50%, -50%); display: grid; width: max-content; }
+.pg-glass__title { font: 700 40px/1 system-ui; color: #000; white-space: nowrap; }
+.pg-glass__card .dph-card { width: 300px; height: 90px; box-sizing: border-box; display: grid; place-items: center; padding: 0; }
+.pg-glass__capsule .dph-card { width: 260px; height: 48px; box-sizing: border-box; display: grid; place-items: center; padding: 0; --_radius: 24px; }
+.pg-glass .dph-card__content { display: grid; place-items: center; height: 100%; }
+.pg-glass__level .dph-glass { width: 170px; height: 56px; }

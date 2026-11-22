@@ -1,0 +1,76 @@
+/* ProgressView: see docs/design-specs/overlays.md. */
+[data-ds="diaphane"] .dph-progress {
+  --_tint: var(--dph-secondary-label);
+  --_bar: var(--dph-accent);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6.333px;
+}
+[data-ds="diaphane"] .dph-progress[data-variant="linear"] { display: flex; align-items: stretch; gap: 0; width: 100%; }
+[data-ds="diaphane"] .dph-progress[data-tint="accent"] { --_tint: var(--dph-accent); --_bar: var(--dph-accent); }
+[data-ds="diaphane"] .dph-progress[data-tint="blue"] { --_tint: var(--dph-system-blue); --_bar: var(--dph-system-blue); }
+[data-ds="diaphane"] .dph-progress[data-tint="green"] { --_tint: var(--dph-system-green); --_bar: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-progress[data-tint="red"] { --_tint: var(--dph-system-red); --_bar: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-progress[data-tint="orange"] { --_tint: var(--dph-system-orange); --_bar: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-progress[data-tint="yellow"] { --_tint: var(--dph-system-yellow); --_bar: var(--dph-system-yellow); }
+[data-ds="diaphane"] .dph-progress[data-tint="pink"] { --_tint: var(--dph-system-pink); --_bar: var(--dph-system-pink); }
+[data-ds="diaphane"] .dph-progress[data-tint="purple"] { --_tint: var(--dph-system-purple); --_bar: var(--dph-system-purple); }
+[data-ds="diaphane"] .dph-progress[data-tint="gray"] { --_tint: var(--dph-system-gray); --_bar: var(--dph-system-gray); }
+
+/* Spinner label: body, secondary, 6.33pt under the indicator. */
+[data-ds="diaphane"] .dph-progress__label { font: var(--dph-font-body); letter-spacing: var(--dph-text-body-tracking); color: var(--dph-secondary-label); text-align: center; }
+/* Linear: title (body, label) 4pt above the bar; current value (footnote, secondary) 2.67pt below it. */
+[data-ds="diaphane"] .dph-progress__title { margin-bottom: 4px; font: var(--dph-font-body); letter-spacing: var(--dph-text-body-tracking); color: var(--dph-label); }
+[data-ds="diaphane"] .dph-progress__value { margin-top: 2.667px; font: var(--dph-font-footnote); letter-spacing: var(--dph-text-footnote-tracking); color: var(--dph-secondary-label); }
+
+/* ── Activity indicator: 8 capsule spokes (.medium 20pt, .large 37pt), 0.135d wide, r 0.125d → 0.46d,
+      opacity 0.78 → 0.2, stepped rotation ── */
+[data-ds="diaphane"] .dph-progress__spinner {
+  --_d: 20px;
+  position: relative;
+  display: block;
+  width: var(--_d);
+  height: var(--_d);
+  color: var(--_tint);
+  animation: dph-spin 0.8s steps(8) infinite;
+}
+[data-ds="diaphane"] .dph-progress[data-size="large"] .dph-progress__spinner { --_d: 37px; }
+[data-ds="diaphane"] .dph-progress__spoke {
+  position: absolute;
+  top: calc(var(--_d) * 0.04);
+  inset-inline-start: calc(50% - var(--_d) * 0.0675);
+  width: calc(var(--_d) * 0.135);
+  height: calc(var(--_d) * 0.335);
+  border-radius: 999px;
+  background: currentColor;
+  transform-origin: 50% calc(var(--_d) * 0.46);
+  transform: rotate(calc(var(--i) * 45deg));
+  opacity: calc(0.78 - var(--i) * 0.0829);
+}
+@keyframes dph-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  [data-ds="diaphane"] .dph-progress__spinner { animation-duration: 2.4s; }
+}
+
+/* ── Linear bar: 4pt capsule on systemGray5 ── */
+[data-ds="diaphane"] .dph-progress__track {
+  position: relative;
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--dph-system-gray5);
+}
+[data-ds="diaphane"] .dph-progress__bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc(var(--v, 0) * 100%);
+  border-radius: inherit;
+  background: var(--_bar);
+}
+[data-ds="diaphane"] .dph-progress__bar[data-indeterminate] { width: 30%; animation: dph-indeterminate 1.2s var(--dph-ease-standard) infinite; }
+[data-ds="diaphane"][dir="rtl"] .dph-progress__bar[data-indeterminate], [data-ds="diaphane"] [dir="rtl"] .dph-progress__bar[data-indeterminate] { animation-name: dph-indeterminate-rtl; }
+@keyframes dph-indeterminate { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+@keyframes dph-indeterminate-rtl { from { transform: translateX(100%); } to { transform: translateX(-340%); } }

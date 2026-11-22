@@ -1,0 +1,348 @@
+/* ── List (rows 52pt, sections inset 16pt with 26pt corners, 1pt separators) ── */
+[data-ds="diaphane"] .dph-list {
+  --_inset: var(--dph-margin);
+  --_row-bg: var(--dph-secondary-system-grouped-background);
+  --_row-pad: 20px;
+  --_row-min: 52px;
+  display: flex;
+  flex-direction: column;
+  padding-inline: var(--_inset);
+  padding-bottom: var(--dph-space-5);
+  background: var(--dph-system-grouped-background);
+}
+[data-ds="diaphane"] .dph-list[data-variant="plain"] {
+  --_inset: 0px;
+  --_row-bg: var(--dph-system-background);
+  --_row-pad: var(--dph-margin);
+  background: var(--dph-system-background);
+}
+
+/* Section */
+[data-ds="diaphane"] .dph-list-section { display: flex; flex-direction: column; }
+[data-ds="diaphane"] .dph-list-section__header {
+  margin: 0;
+  padding: 10.333px var(--_row-pad) 8.333px;
+  min-height: 40.333px;
+  font: var(--dph-font-headline);
+  letter-spacing: var(--dph-text-headline-tracking);
+  color: var(--dph-secondary-label);
+}
+[data-ds="diaphane"] .dph-list-section:not(:first-child):not(:has(.dph-list-section__header)) { margin-top: 20px; }
+/* Headerless section after a footer-less one: 35pt (). */
+[data-ds="diaphane"] .dph-list-section:not(:has(.dph-list-section__footer)) + .dph-list-section:not(:has(.dph-list-section__header)) { margin-top: 35px; }
+[data-ds="diaphane"] .dph-list-section__rows {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--dph-radius-lg);
+  overflow: hidden;
+  background: var(--_row-bg);
+}
+[data-ds="diaphane"] .dph-list[data-variant="plain"] .dph-list-section__rows { border-radius: 0; }
+[data-ds="diaphane"] .dph-list-section__footer {
+  margin: 0;
+  padding: 8px var(--_row-pad) 6px;
+  font: var(--dph-font-footnote);
+  line-height: 16px;
+  letter-spacing: var(--dph-text-footnote-tracking);
+  color: var(--dph-secondary-label);
+}
+[data-ds="diaphane"] .dph-list-section__footer[data-error] { color: var(--dph-system-red); }
+
+/* Row */
+[data-ds="diaphane"] .dph-list-item { position: relative; --_sep-start: var(--_row-pad); }
+[data-ds="diaphane"] .dph-list-item:has(.dph-list-item__icon) { --_sep-start: 60px; }
+[data-ds="diaphane"] .dph-list-item:has(.dph-list-item__select) { --_sep-start: 60px; }
+[data-ds="diaphane"] .dph-list-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: var(--_sep-start);
+  inset-inline-end: var(--_row-pad);
+  height: 1px;
+  background: var(--dph-separator);
+  pointer-events: none;
+}
+[data-ds="diaphane"] .dph-list[data-variant="plain"] .dph-list-item:not(:last-child)::after { inset-inline-end: 0; }
+
+[data-ds="diaphane"] .dph-list-item__body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: var(--_row-min);
+  margin: 0;
+  padding-block: 11px;
+  padding-inline: var(--_row-pad);
+  border: 0;
+  background: transparent;
+  color: var(--dph-label);
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  text-align: start;
+}
+[data-ds="diaphane"] button.dph-list-item__body { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+[data-ds="diaphane"] button.dph-list-item__body:not(:disabled):active { background: var(--dph-system-gray4); }
+[data-ds="diaphane"] button.dph-list-item__body:focus-visible { outline: none; box-shadow: inset var(--dph-focus-ring); }
+
+[data-ds="diaphane"] .dph-list-item__text { display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; min-width: 0; padding-block: 4px; /* text gets 15pt, icons 11pt */ }
+[data-ds="diaphane"] .dph-list-item__title { overflow-wrap: anywhere; }
+[data-ds="diaphane"] .dph-list-item__subtitle {
+  font: var(--dph-font-subheadline);
+  letter-spacing: var(--dph-text-subheadline-tracking);
+  color: var(--dph-secondary-label);
+}
+[data-ds="diaphane"] .dph-list-item__value {
+  flex: 0 1 auto;
+  min-width: min-content; /* never narrower than its longest word; the title gives way instead */
+  max-width: 60%;
+  color: var(--dph-secondary-label);
+  text-align: end;
+  /* Words wrap whole; only a single overlong word may break. */
+  overflow-wrap: break-word;
+}
+[data-ds="diaphane"] :is(.dph-list-item__value, .dph-list-item__badge) + .dph-list-item__chevron { margin-inline-start: -4px; }
+/* Count bubble (unread / badge): filled red pill, min 20pt, 6pt side padding, white 13pt semibold digits. */
+[data-ds="diaphane"] .dph-list-item__badge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 6px;
+  border-radius: 10px;
+  background: var(--dph-system-red);
+  color: rgb(255 255 255);
+  font: var(--dph-weight-semibold) 13px / 1 var(--dph-font-family);
+  letter-spacing: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+[data-ds="diaphane"] .dph-list-item__chevron { flex: none; display: inline-flex; font-size: 14px; color: var(--dph-tertiary-label); }
+[data-ds="diaphane"] .dph-list-item__check { flex: none; display: inline-flex; color: var(--dph-accent); }
+[data-ds="diaphane"] .dph-list-item__info { flex: none; display: inline-flex; color: var(--dph-accent); font-size: 20px; }
+
+/* Leading icon: 30pt column; with a color it becomes the Settings tile (7pt continuous corners, white glyph). */
+[data-ds="diaphane"] .dph-list-item__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-inline-start: -3px;
+  margin-inline-end: 1px;
+  color: var(--dph-accent);
+  font-size: 17px;
+}
+[data-ds="diaphane"] .dph-list-item__icon[data-tile] { border-radius: 7px; color: rgb(255 255 255); font-size: 15px; background: var(--_tile); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="blue"] { --_tile: var(--dph-system-blue); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="green"] { --_tile: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="red"] { --_tile: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="orange"] { --_tile: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="yellow"] { --_tile: var(--dph-system-yellow); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="pink"] { --_tile: var(--dph-system-pink); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="purple"] { --_tile: var(--dph-system-purple); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="indigo"] { --_tile: var(--dph-system-indigo); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="teal"] { --_tile: var(--dph-system-teal); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="cyan"] { --_tile: var(--dph-system-cyan); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="mint"] { --_tile: var(--dph-system-mint); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="brown"] { --_tile: var(--dph-system-brown); }
+[data-ds="diaphane"] .dph-list-item__icon[data-tile="gray"] { --_tile: var(--dph-system-gray); }
+
+/* Edit-mode selection circle (checkbox): 22pt, empty ring or filled accent with a white check. */
+[data-ds="diaphane"] .dph-list-item__select {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-inline-end: 6px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--dph-tertiary-label);
+  color: rgb(255 255 255);
+  font-size: 13px;
+}
+[data-ds="diaphane"] .dph-list-item__select[data-selected] { background: var(--dph-accent); box-shadow: none; }
+
+/* Roles & states */
+[data-ds="diaphane"] .dph-list-item[data-role="action"] .dph-list-item__title { color: var(--dph-accent); }
+[data-ds="diaphane"] .dph-list-item[data-role="destructive"] .dph-list-item__title { color: var(--dph-system-red); }
+/* Disabled rows dim their text, except toggle rows: a disabled Toggle keeps its label color and dims only the switch. */
+[data-ds="diaphane"] .dph-list-item[data-disabled]:not(:has(.dph-toggle)) :is(.dph-list-item__title, .dph-list-item__icon:not([data-tile]), .dph-list-item__value) { color: var(--dph-tertiary-label); }
+[data-ds="diaphane"] .dph-list-item[data-disabled] .dph-list-item__icon[data-tile] { opacity: 0.4; }
+
+/* ── Plain list row metrics ── */
+[data-ds="diaphane"] .dph-list[data-variant="plain"] .dph-list-section__header { margin-top: 22px; padding-block: 10px; }
+/* 2. Plain list: separators stop at the trailing 16pt margin and also follow the last row of a section. */
+[data-ds="diaphane"] .dph-list[data-variant="plain"] .dph-list-item:not(:last-child)::after { inset-inline-end: var(--_row-pad); }
+[data-ds="diaphane"] .dph-list[data-variant="plain"] .dph-list-item:last-child::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: var(--_sep-start);
+  inset-inline-end: var(--_row-pad);
+  height: 1px;
+  background: var(--dph-separator);
+  pointer-events: none;
+}
+/* 3. Inset grouped: a header that follows a footer-less section sits 17.33pt below it. */
+[data-ds="diaphane"] .dph-list:not([data-variant="plain"]) .dph-list-section:not(:has(.dph-list-section__footer)) + .dph-list-section > .dph-list-section__header { margin-top: 17.5px; /* 17.33–17.67 natively: 17.5 snapped to the device pixel grid */ }
+/* 4. Leading slot (Avatar, 40pt): separator starts at the text (16 + 40 + 12 = 68pt). */
+[data-ds="diaphane"] .dph-list-item__leading { flex: none; display: inline-flex; }
+[data-ds="diaphane"] .dph-list-item:has(.dph-list-item__leading) { --_sep-start: calc(var(--_row-pad) + 52px); }
+/* 5. Prominent rows (Messages/Mail summary): headline title, subheadline trailing value. */
+[data-ds="diaphane"] .dph-list-item[data-prominent] .dph-list-item__title { font: var(--dph-font-headline); letter-spacing: var(--dph-text-headline-tracking); }
+[data-ds="diaphane"] .dph-list-item[data-prominent] .dph-list-item__value { font: var(--dph-font-subheadline); letter-spacing: var(--dph-text-subheadline-tracking); }
+/* 6. Edit-mode selection: selected rows fill with systemGray4, separators next to a selected row hide,
+      circle sits 21pt from the row edge (text stays at 60pt). */
+[data-ds="diaphane"] .dph-list-item:has(.dph-list-item__select[data-selected]) { background: var(--dph-system-gray4); }
+[data-ds="diaphane"] .dph-list-item:has(.dph-list-item__select[data-selected])::after,
+[data-ds="diaphane"] .dph-list-item:has(+ .dph-list-item .dph-list-item__select[data-selected])::after { display: none; }
+[data-ds="diaphane"] .dph-list-item__select { margin-inline-start: 1px; margin-inline-end: 5px; }
+/* Prominent rows keep the trailing value (time, count) on one line; the text column wraps instead (Mail). */
+[data-ds="diaphane"] .dph-list-item[data-prominent] .dph-list-item__value { flex: none; white-space: nowrap; align-self: flex-start; padding-top: 4px; }
+
+/* ── Grouped style: full-width sections on the grouped
+      background, a full-width hairline above and below each section, inner separators from the text to 16pt. ── */
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] { --_inset: 0px; --_row-pad: var(--dph-margin); }
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-section__header { min-height: 0; padding-block: 10.333px 9.667px; }
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-section__footer { padding-bottom: 5.667px; }
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-section__rows { position: relative; border-radius: 0; }
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-section__rows::before,
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-section__rows::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  height: 1px;
+  background: var(--dph-separator);
+  pointer-events: none;
+}
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-section__rows::before { inset-block-start: 0; }
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-section__rows::after { inset-block-end: 0; }
+[data-ds="diaphane"] .dph-list[data-variant="grouped"] .dph-list-item:has(:is(.dph-list-item__icon, .dph-list-item__select)) { --_sep-start: calc(var(--_row-pad) + 40px); }
+
+/* ── Swipe actions: the row slides over 60pt capsules (10pt apart, 10pt from the edge);
+      the open row turns systemGray5 with rounded ends; capsule = row − 28pt tall, 13pt label 4pt below it. ── */
+[data-ds="diaphane"] .dph-list-item[data-swipe] { overflow: clip; touch-action: pan-y; --_dir: 1; }
+[data-ds="diaphane"][dir="rtl"] .dph-list-item[data-swipe],
+[data-ds="diaphane"] [dir="rtl"] .dph-list-item[data-swipe] { --_dir: -1; }
+[data-ds="diaphane"] .dph-list-item[data-swipe] > .dph-list-item__body {
+  position: relative;
+  z-index: 1;
+  translate: calc(var(--_x, 0px) * var(--_dir)) 0;
+  transition: translate 0.35s cubic-bezier(0.2, 0.9, 0.25, 1), background-color var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-list-item[data-dragging] > .dph-list-item__body { transition: none; }
+[data-ds="diaphane"] .dph-list-item[data-swipe]:not([data-swipe="closed"]) > .dph-list-item__body {
+  border-radius: 24px;
+  background: var(--dph-system-gray5);
+}
+/* The open row hides its own separator and the one above it. */
+[data-ds="diaphane"] .dph-list-item[data-swipe]:not([data-swipe="closed"])::after,
+[data-ds="diaphane"] .dph-list-item:has(+ .dph-list-item[data-swipe]:not([data-swipe="closed"]))::after { display: none; }
+
+[data-ds="diaphane"] .dph-list-item__actions {
+  position: absolute;
+  inset-block: 0;
+  display: flex;
+  gap: 10px;
+  padding-inline: 10px;
+  opacity: 0;
+  transition: opacity var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-list-item__actions[data-edge="trailing"] { inset-inline-end: 0; flex-direction: row-reverse; }
+[data-ds="diaphane"] .dph-list-item__actions[data-edge="leading"] { inset-inline-start: 0; }
+[data-ds="diaphane"] .dph-list-item[data-swipe="trailing"] > .dph-list-item__actions[data-edge="trailing"],
+[data-ds="diaphane"] .dph-list-item[data-swipe="leading"] > .dph-list-item__actions[data-edge="leading"],
+[data-ds="diaphane"] .dph-list-item[data-swipe="dragging"] > .dph-list-item__actions,
+[data-ds="diaphane"] .dph-list-item__actions:focus-within { opacity: 1; }
+
+[data-ds="diaphane"] .dph-list-item__action {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  width: 60px;
+  margin: 0;
+  padding: 4.167px 0;
+  border: 0;
+  background: transparent;
+  color: var(--dph-secondary-label);
+  font: var(--dph-font-footnote);
+  letter-spacing: var(--dph-text-footnote-tracking);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-ds="diaphane"] .dph-list-item__action:focus-visible { outline: none; }
+[data-ds="diaphane"] .dph-list-item__action:focus-visible .dph-list-item__action-shape { box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-list-item__action-shape {
+  flex: 1 1 auto;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  border-radius: var(--dph-radius-full);
+  background: var(--_tone);
+  color: rgb(255 255 255);
+  font: var(--dph-font-subheadline);
+  font-weight: var(--dph-weight-semibold);
+  font-size: 17px;
+}
+[data-ds="diaphane"] .dph-list-item__action:not([data-icon]) .dph-list-item__action-shape { font-size: 13px; }
+[data-ds="diaphane"] .dph-list-item__action:active .dph-list-item__action-shape { filter: brightness(0.85); }
+[data-ds="diaphane"] .dph-list-item__action-label { text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 15.667px; }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="destructive"] { --_tone: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="accent"] { --_tone: var(--dph-accent); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="gray"] { --_tone: var(--dph-system-gray); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="orange"] { --_tone: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="blue"] { --_tone: var(--dph-system-blue); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="green"] { --_tone: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="yellow"] { --_tone: var(--dph-system-yellow); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="purple"] { --_tone: var(--dph-system-purple); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="indigo"] { --_tone: var(--dph-system-indigo); }
+[data-ds="diaphane"] .dph-list-item__action[data-tone="teal"] { --_tone: var(--dph-system-teal); }
+@media (prefers-reduced-motion: reduce) {
+  [data-ds="diaphane"] .dph-list-item[data-swipe] > .dph-list-item__body { transition: none; }
+}
+
+/* ── Text size (at xSmall / Large / xxxLarge / AX3) ─────────────────────────────
+   Rows grow with the body line height (49 / 52 / 59pt); the Settings tile stays 30pt but its gap to the
+   text scales with the body size (9.67 / 13 / 20.67pt); chevrons and footer lines scale with their text. */
+[data-ds="diaphane"] .dph-list { --_row-min: calc(var(--dph-text-body-lh) + 31.667px); }
+[data-ds="diaphane"] .dph-list-item__icon { margin-inline-end: calc(var(--dph-text-body-size) * 1.2222 - 19.778px); }
+[data-ds="diaphane"] .dph-list-item:has(.dph-list-item__icon) { --_sep-start: calc(var(--dph-text-body-size) * 1.2222 + 39.222px); }
+[data-ds="diaphane"] .dph-list-item__chevron { font-size: calc(var(--dph-text-body-size) * 0.8235); }
+[data-ds="diaphane"] .dph-list-section__footer { line-height: calc(var(--dph-text-footnote-lh) + 0.333px); }
+[data-ds="diaphane"] .dph-list-item__title { hyphens: auto; -webkit-hyphens: auto; }
+
+/* Accessibility sizes: separators span the row, and label/value rows stack the value under the title. */
+[data-ds="diaphane"] :is([data-text-size^="AX"]) .dph-list-item,
+[data-ds="diaphane"][data-text-size^="AX"] .dph-list-item { --_sep-start: var(--_row-pad); }
+[data-ds="diaphane"] :is([data-text-size^="AX"]) .dph-list-item:not(:has(.dph-list-item__icon, .dph-list-item__leading, .dph-toggle)):has(.dph-list-item__value) .dph-list-item__body,
+[data-ds="diaphane"][data-text-size^="AX"] .dph-list-item:not(:has(.dph-list-item__icon, .dph-list-item__leading, .dph-toggle)):has(.dph-list-item__value) .dph-list-item__body { flex-wrap: wrap; }
+[data-ds="diaphane"] :is([data-text-size^="AX"]) .dph-list-item:not(:has(.dph-list-item__icon, .dph-list-item__leading, .dph-toggle)) .dph-list-item__text,
+[data-ds="diaphane"][data-text-size^="AX"] .dph-list-item:not(:has(.dph-list-item__icon, .dph-list-item__leading, .dph-toggle)) .dph-list-item__text { flex-basis: 100%; }
+[data-ds="diaphane"] :is([data-text-size^="AX"]) .dph-list-item:not(:has(.dph-list-item__icon, .dph-list-item__leading, .dph-toggle)) .dph-list-item__value,
+[data-ds="diaphane"][data-text-size^="AX"] .dph-list-item:not(:has(.dph-list-item__icon, .dph-list-item__leading, .dph-toggle)) .dph-list-item__value { flex: 1 1 auto; text-align: start; margin-top: -11px; }
+/* The 30pt tile never sets the row height: at small text sizes it overhangs the 11pt padding (row 49pt at xSmall). */
+[data-ds="diaphane"] .dph-list-item__icon { margin-block: min(0px, calc((var(--_row-min) - 52px) / 2)); }
+
+/* valueAlignment="top": message-style row — title and value share the first line, the subtitle spans the full width. */
+[data-ds="diaphane"] .dph-list-item__title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; min-width: 0; }
+[data-ds="diaphane"] .dph-list-item__title-row .dph-list-item__title { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+[data-ds="diaphane"] .dph-list-item__value[data-inline] { flex: none; max-width: 50%; font: var(--dph-font-subheadline); letter-spacing: var(--dph-text-subheadline-tracking); white-space: nowrap; }
+/* Message previews: the subtitle under a title row stops at two lines. */
+[data-ds="diaphane"] .dph-list-item__title-row + .dph-list-item__subtitle { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+/* detail: a control under the title (a slider, rating stars) gets the row's rhythm above and below. */
+[data-ds="diaphane"] .dph-list-item__detail { display: flex; padding-block: 6px 4px; }
+
+/* Message-style rows (value on top + count badge): the text block is a two-column grid, so the time shares the title line
+   (baseline) and the bubble sits on the first subtitle line, both end-aligned in one trailing column. */
+[data-ds="diaphane"] .dph-list-item__text[data-stacked] { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; row-gap: 2px; align-items: start; }
+[data-ds="diaphane"] .dph-list-item__text[data-stacked] > .dph-list-item__title { grid-column: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; align-self: baseline; }
+[data-ds="diaphane"] .dph-list-item .dph-list-item__text[data-stacked] > .dph-list-item__value[data-stacked] { grid-column: 2; grid-row: 1; align-self: baseline; min-width: 0; max-width: none; padding-top: 0; }
+[data-ds="diaphane"] .dph-list-item__text[data-stacked] > .dph-list-item__subtitle { grid-column: 1; grid-row: 2; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+[data-ds="diaphane"] .dph-list-item__text[data-stacked] > .dph-list-item__badge { grid-column: 2; grid-row: 2; justify-self: end; align-self: start; }
+[data-ds="diaphane"] .dph-list-item__text[data-stacked] > .dph-list-item__detail { grid-column: 1 / -1; }

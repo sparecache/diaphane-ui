@@ -1,0 +1,82 @@
+/* ── Glass bar surface shared by NavigationBar, Toolbar, TabBar, SearchField, PageControl.
+ * Design values: fill ≈ backdrop + white veil, 1 device-px rim,
+ * specular highlight on the top edge, soft 4/16 shadow underneath. */
+[data-ds="diaphane"] .dph-bar-glass {
+  background: var(--dph-glass-fill);
+  box-shadow: var(--dph-glass-rim), var(--dph-glass-shadow);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+}
+
+/* ── Bar actions: navigation bar items are 44pt tall, bottom toolbar items 48pt. ── */
+[data-ds="diaphane"] .dph-bar-actions {
+  --_h: 44px;
+  --_pad: 4px;           /* glass edge → item */
+  --_item-px: 7px;       /* item padding around its glyph box inside a group (item hosts 39.67 / 38pt) */
+  --_gap: 16px;          /* between items inside one glass group */
+  --_text-px: 11.667px;  /* text item padding (capsule = 4 + 11.67 + text + 11.67 + 4) */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+[data-ds="diaphane"] .dph-bar-actions[data-size="toolbar"] { --_h: 48px; --_pad: 5px; }
+
+[data-ds="diaphane"] .dph-bar-group {
+  display: flex;
+  align-items: stretch;
+  flex: none;
+  gap: var(--_gap);
+  height: var(--_h);
+  min-width: var(--_h);
+  padding-inline: var(--_pad);
+  border-radius: var(--dph-radius-full);
+  color: var(--dph-label);
+}
+[data-ds="diaphane"] .dph-bar-group[data-prominent] {
+  background: var(--dph-accent);
+  color: var(--dph-on-accent);
+  box-shadow: var(--dph-glass-prominent-rim), var(--dph-glass-shadow);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* A lone icon is a circle. */
+[data-ds="diaphane"] .dph-bar-group[data-kind="icon"][data-count="1"] { width: var(--_h); padding-inline: 0; }
+
+[data-ds="diaphane"] .dph-bar-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0 var(--_item-px);
+  border: 0;
+  border-radius: var(--dph-radius-full);
+  background: transparent;
+  color: inherit;
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-standard);
+}
+[data-ds="diaphane"] .dph-bar-group[data-count="1"][data-kind="icon"] .dph-bar-item { padding: 0; }
+/* A bar item with a menu sits inside the Menu wrapper; the wrapper takes the item's place in the group so the glyph
+   stays centred in its circle or capsule. */
+[data-ds="diaphane"] .dph-bar-group > .dph-menu,
+[data-ds="diaphane"] .dph-bar-group > .dph-menu > .dph-menu__trigger { display: flex; flex: 1 0 auto; min-width: 0; }
+[data-ds="diaphane"] .dph-bar-group > .dph-menu > .dph-menu__trigger > .dph-bar-item { flex: 1 0 auto; }
+[data-ds="diaphane"] .dph-bar-group[data-kind="text"] .dph-bar-item { padding-inline: var(--_text-px); font: var(--dph-font-body); font-weight: var(--dph-weight-medium); }
+[data-ds="diaphane"] .dph-bar-item__label { overflow: hidden; text-overflow: ellipsis; }
+[data-ds="diaphane"] .dph-bar-item:focus-visible { outline: none; box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-bar-item:disabled { color: var(--dph-tertiary-label); cursor: default; }
+[data-ds="diaphane"] .dph-bar-group:has(.dph-bar-item:not(:disabled):active) { transform: scale(1.2133); transition: transform var(--dph-duration-standard) var(--dph-ease-spring); }
+[data-ds="diaphane"] .dph-bar-group { transition: transform var(--dph-duration-standard) var(--dph-ease-spring); }
+[data-ds="diaphane"] .dph-bar-group { transition: transform var(--dph-duration-fast) var(--dph-ease-spring); }
+
+/* Long-press must not start text selection or the system callout. */
+[data-ds="diaphane"] .dph-bar-item { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }

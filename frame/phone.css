@@ -1,0 +1,88 @@
+/* Generic phone frame. Screen 402×874, 62px display corners. Original neutral shape, not a copy of any device. */
+[data-ds="diaphane"].dph-device {
+  display: inline-block;
+  border-radius: 74px;
+  background: transparent;
+}
+[data-ds="diaphane"].dph-device[data-bezel] {
+  padding: 10px;
+  background: #1d1d20;
+  box-shadow: 0 24px 56px rgb(0 0 0 / 0.22);
+}
+[data-ds="diaphane"] .dph-device__screen {
+  --dph-frame-safe-top: 62px;
+  --dph-frame-safe-bottom: 34px;
+  --dph-frame-safe-start: 0px;
+  --dph-frame-safe-end: 0px;
+  position: relative;
+  width: 402px;
+  height: 874px;
+  overflow: hidden;
+  border-radius: var(--dph-radius-display);
+  background: var(--dph-system-background);
+  /* Contain position:fixed overlays (sheets, alerts) inside the screen. */
+  transform: translateZ(0);
+  isolation: isolate;
+}
+[data-ds="diaphane"] .dph-device__content { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; }
+[data-ds="diaphane"] .dph-device__content > * { flex: 1 1 auto; min-height: 0; }
+
+/* Status bar: drawn above content, never intercepts touches. */
+[data-ds="diaphane"] .dph-device__status {
+  --_glyph: var(--dph-label);
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 1000;
+  height: 54px;
+  pointer-events: none;
+  color: var(--_glyph);
+}
+[data-ds="diaphane"] .dph-device__status[data-style="light"] { --_glyph: rgb(255 255 255); }
+[data-ds="diaphane"] .dph-device__status[data-style="dark"] { --_glyph: rgb(0 0 0); }
+[data-ds="diaphane"] .dph-device__time {
+  position: absolute;
+  inset-block-start: 21.667px;
+  inset-inline-start: 0;
+  width: 147.333px;
+  text-align: center;
+  font: var(--dph-weight-semibold) 17px / 20.333px var(--dph-font-family);
+  font-variant-numeric: tabular-nums;
+}
+[data-ds="diaphane"] .dph-device__glyphs {
+  position: absolute;
+  inset-block-start: 26px;
+  inset-inline-end: 34px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 14px;
+}
+[data-ds="diaphane"] .dph-device__glyphs svg { display: block; fill: currentColor; }
+[data-ds="diaphane"] .dph-device__glyphs .dph-device__wifi { fill: none; }
+[data-ds="diaphane"] .dph-device__battery-case { fill: none; stroke: currentColor; stroke-opacity: 0.4; }
+[data-ds="diaphane"] .dph-device__battery-cap { fill-opacity: 0.4; }
+/* RTL mirrors the bar layout (time moves to the trailing ear) but glyphs keep their shape. */
+
+[data-ds="diaphane"] .dph-device__cutout {
+  position: absolute;
+  z-index: 1001;
+  inset-block-start: 20px;
+  inset-inline-start: calc(50% - 6px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #000;
+  pointer-events: none;
+}
+[data-ds="diaphane"] .dph-device__home {
+  position: absolute;
+  z-index: 1000;
+  inset-block-end: 8px;
+  inset-inline-start: calc(50% - 69.5px);
+  width: 139px;
+  height: 5px;
+  border-radius: 2.5px;
+  background: var(--dph-label);
+  pointer-events: none;
+}

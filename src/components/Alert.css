@@ -1,0 +1,106 @@
+/* ── Alert (320pt card, 34pt continuous corners, 22/30pt header padding,
+ *    48pt capsule actions with 16pt padding and 8pt gaps; centered in the safe area) ── */
+[data-ds="diaphane"] .dph-alert {
+  /* Glass alert: near-opaque, 7% label over the (elevated) background — #EDEDED light, #2C2C2E dark. */
+  --_surface: color-mix(in srgb, var(--dph-label) 7%, var(--dph-system-background));
+  --_action-fill: color-mix(in srgb, var(--dph-label) 13%, transparent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(320px, 100% - 48px);
+  max-height: 100%;
+  overflow: hidden;
+  border-radius: var(--dph-radius-xl);
+  background: var(--_surface);
+  box-shadow: var(--dph-glass-rim), 0 12px 40px rgb(0 0 0 / 0.12);
+  -webkit-backdrop-filter: blur(var(--dph-glass-blur)) saturate(var(--dph-glass-saturate));
+  backdrop-filter: blur(var(--dph-glass-blur)) saturate(var(--dph-glass-saturate));
+  text-align: start;
+  outline: none;
+  /* Present: scale 1.2 → 1 and fade in on one critically damped spring; dismiss: fade only. */
+  animation: dph-alert-in var(--dph-motion-alert-in) backwards;
+}
+
+[data-ds="diaphane"] .dph-alert__header { padding: 22px 30px 0; min-width: 0; }
+[data-ds="diaphane"] .dph-alert__title {
+  margin: 0;
+  font: var(--dph-font-headline);
+  letter-spacing: var(--dph-text-headline-tracking);
+  color: var(--dph-label);
+  overflow-wrap: anywhere;
+}
+/* Message text: 18pt first line, 20pt pitch after it (2 lines = 38pt). */
+[data-ds="diaphane"] .dph-alert__message {
+  margin: 6.333px 0 -1px;
+  font: var(--dph-font-subheadline);
+  line-height: var(--dph-text-subheadline-leading);
+  letter-spacing: var(--dph-text-subheadline-tracking);
+  color: var(--dph-secondary-label);
+  overflow-wrap: anywhere;
+}
+[data-ds="diaphane"] .dph-alert__message:first-child { margin-top: -1px; }
+/* Dark glass renders the message with vibrancy: dimmer than plain secondaryLabel (#7A7A7B on #2C2C2E). */
+[data-ds="diaphane"][data-theme="dark"] .dph-alert__message,
+[data-ds="diaphane"] [data-theme="dark"] .dph-alert__message { color: color-mix(in srgb, var(--dph-secondary-label) 68%, transparent); }
+
+/* Text field: 48pt capsule inset 15pt, 16pt below the message. */
+[data-ds="diaphane"] .dph-alert__field { padding: 16.333px 15px 0; }
+[data-ds="diaphane"] .dph-alert__input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin: 0;
+  padding: 0 15px;
+  border: 0;
+  border-radius: var(--dph-radius-full);
+  background: var(--_action-fill);
+  color: var(--dph-label);
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  caret-color: var(--dph-accent);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+[data-ds="diaphane"] .dph-alert__input::placeholder { color: var(--dph-placeholder-text); opacity: 1; }
+[data-ds="diaphane"] .dph-alert__input:focus-visible { box-shadow: var(--dph-focus-ring); }
+
+[data-ds="diaphane"] .dph-alert__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20.333px 16px 16px;
+}
+[data-ds="diaphane"] .dph-alert__field + .dph-alert__actions { padding-top: 20px; }
+[data-ds="diaphane"] .dph-alert__actions[data-layout="row"] { flex-direction: row; }
+[data-ds="diaphane"] .dph-alert__actions[data-layout="row"] > * { flex: 1 1 0; }
+
+[data-ds="diaphane"] .dph-alert__action {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 48px;
+  margin: 0;
+  padding: 7px 16px;
+  border: 0;
+  border-radius: var(--dph-radius-full);
+  background: var(--_action-fill);
+  color: var(--dph-label);
+  font: var(--dph-font-body);
+  font-weight: var(--dph-weight-medium);
+  letter-spacing: var(--dph-text-body-tracking);
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-standard), filter var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-alert__action-label { min-width: 0; overflow-wrap: anywhere; }
+[data-ds="diaphane"] .dph-alert__action[data-role="destructive"] { color: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-alert__action:active { transform: scale(1.03); filter: brightness(0.94); }
+[data-ds="diaphane"] .dph-alert__action:focus-visible { outline: none; box-shadow: var(--dph-focus-ring); }
+
+@keyframes dph-alert-in { from { opacity: 0; transform: scale(1.2); } }
+[data-ds="diaphane"] .dph-overlay[data-kind="alert"] .dph-overlay__scrim { animation: dph-overlay-fade var(--dph-motion-alert-in) backwards; }
+[data-ds="diaphane"] .dph-overlay[data-kind="alert"][data-closing] :is(.dph-alert, .dph-overlay__scrim) { opacity: 0; transition: opacity var(--dph-motion-alert-out); }

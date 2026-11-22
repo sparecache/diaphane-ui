@@ -1,0 +1,46 @@
+[data-ds="diaphane"] .dph-stack { display: flex; flex-direction: column; min-width: 0; }
+[data-ds="diaphane"] .dph-stack[data-direction="horizontal"] { flex-direction: row; }
+[data-ds="diaphane"] .dph-stack[data-wrap] { flex-wrap: wrap; }
+/* Grow from a zero basis: sibling grow-stacks split the row equally (card grids), and a single one fills the rest. */
+[data-ds="diaphane"] .dph-stack[data-grow] { flex: 1 1 0; min-width: 0; }
+
+[data-ds="diaphane"] .dph-stack[data-gap="none"] { gap: 0; }
+[data-ds="diaphane"] .dph-stack[data-gap="1"] { gap: var(--dph-space-1); }
+[data-ds="diaphane"] .dph-stack[data-gap="2"] { gap: var(--dph-space-2); }
+[data-ds="diaphane"] .dph-stack[data-gap="3"] { gap: var(--dph-space-3); }
+[data-ds="diaphane"] .dph-stack[data-gap="4"] { gap: var(--dph-space-4); }
+[data-ds="diaphane"] .dph-stack[data-gap="5"] { gap: var(--dph-space-5); }
+[data-ds="diaphane"] .dph-stack[data-gap="6"] { gap: var(--dph-space-6); }
+[data-ds="diaphane"] .dph-stack[data-gap="7"] { gap: var(--dph-space-7); }
+[data-ds="diaphane"] .dph-stack[data-gap="8"] { gap: var(--dph-space-8); }
+
+[data-ds="diaphane"] .dph-stack[data-padding="margin"] { padding: var(--dph-margin); }
+[data-ds="diaphane"] .dph-stack[data-padding="inline"] { padding-inline: var(--dph-margin); }
+[data-ds="diaphane"] .dph-stack[data-padding="1"] { padding: var(--dph-space-1); }
+[data-ds="diaphane"] .dph-stack[data-padding="2"] { padding: var(--dph-space-2); }
+[data-ds="diaphane"] .dph-stack[data-padding="3"] { padding: var(--dph-space-3); }
+[data-ds="diaphane"] .dph-stack[data-padding="4"] { padding: var(--dph-space-4); }
+[data-ds="diaphane"] .dph-stack[data-padding="5"] { padding: var(--dph-space-5); }
+[data-ds="diaphane"] .dph-stack[data-padding="6"] { padding: var(--dph-space-6); }
+
+[data-ds="diaphane"] .dph-stack[data-align="start"] { align-items: flex-start; }
+[data-ds="diaphane"] .dph-stack[data-align="center"] { align-items: center; }
+[data-ds="diaphane"] .dph-stack[data-align="end"] { align-items: flex-end; }
+[data-ds="diaphane"] .dph-stack[data-align="stretch"] { align-items: stretch; }
+[data-ds="diaphane"] .dph-stack[data-align="baseline"] { align-items: baseline; }
+
+[data-ds="diaphane"] .dph-stack[data-justify="center"] { justify-content: center; }
+[data-ds="diaphane"] .dph-stack[data-justify="end"] { justify-content: flex-end; }
+[data-ds="diaphane"] .dph-stack[data-justify="between"] { justify-content: space-between; }
+
+/* Horizontal ScrollView: snaps children to the leading margin, scroll bar hidden. */
+[data-ds="diaphane"] .dph-stack[data-scroll] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--dph-margin);
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+[data-ds="diaphane"] .dph-stack[data-scroll] > * { flex: 0 0 var(--_item, auto); scroll-snap-align: start; }
+[data-ds="diaphane"] .dph-stack[data-scroll][data-padding="inline"]::after { content: ""; flex: 0 0 1px; }

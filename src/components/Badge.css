@@ -1,0 +1,24 @@
+/* ── Badge (20pt capsule, caption1 semibold white; numbers 6pt / text 7pt side padding) ── */
+[data-ds="diaphane"] .dph-badge {
+  --_fill: var(--dph-system-red);
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  min-height: 20px;
+  padding-inline: 6px;
+  border-radius: var(--dph-radius-full);
+  background: var(--_fill);
+  color: var(--dph-on-accent);
+  font: var(--dph-font-caption1);
+  font-weight: var(--dph-weight-semibold);
+  letter-spacing: var(--dph-text-caption1-tracking);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+[data-ds="diaphane"] .dph-badge[data-kind="text"] { padding-inline: 7px; }
+[data-ds="diaphane"] .dph-badge[data-kind="dot"] { min-width: 10px; min-height: 10px; width: 10px; height: 10px; padding: 0; }
+[data-ds="diaphane"] .dph-badge[data-tone="accent"] { --_fill: var(--dph-accent); }
+[data-ds="diaphane"] .dph-badge[data-tone="gray"] { --_fill: var(--dph-system-gray); }

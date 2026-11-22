@@ -1,0 +1,7 @@
+/* Playground-only styles for the list screens. Not part of the design system. */
+.pg-lists-stack { display: flex; flex-direction: column; align-items: stretch; gap: 16px; padding-inline: 16px; }
+.pg-lists-stack > .dph-text { align-self: flex-start; }
+.pg-lists-row { display: flex; gap: 12px; align-items: center; }
+.pg-lists-label { display: block; }
+.pg-lists-label > .dph-icon { margin-inline-end: 8px; }
+.pg-lists-center { display: grid; place-items: center; min-height: 48px; text-align: center; }

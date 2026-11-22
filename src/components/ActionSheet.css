@@ -1,0 +1,31 @@
+/* ── Action sheet / confirmation dialog: shown as a 240pt glass popover centered in the safe area,
+ *    without dimming; same header and capsule metrics as Alert. ── */
+[data-ds="diaphane"] .dph-action-sheet {
+  --_surface: color-mix(in srgb, var(--dph-label) 0.5%, var(--dph-system-background));
+  width: min(240px, 100% - 48px);
+  margin-top: -1.667px; /* popovers center 0.83pt above the safe-area center */
+  box-shadow: var(--dph-glass-rim), 0 10px 44px rgb(0 0 0 / 0.13);
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-action-sheet,
+[data-ds="diaphane"] [data-theme="dark"] .dph-action-sheet {
+  --_surface: color-mix(in srgb, var(--dph-label) 11%, var(--dph-system-background));
+  box-shadow: var(--dph-glass-rim), 0 10px 44px rgb(0 0 0 / 0.4);
+}
+[data-ds="diaphane"] .dph-action-sheet .dph-alert__message { margin-top: 6.667px; }
+
+/* Cancel is announced, not drawn (tap outside dismisses). */
+[data-ds="diaphane"] .dph-action-sheet__cancel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Dismiss: the popover fades out on the 0.33s curve. */
+[data-ds="diaphane"] .dph-overlay[data-closing] .dph-action-sheet,
+[data-ds="diaphane"] .dph-overlay[data-closing] .dph-overlay__scrim { opacity: 0; transition: opacity var(--dph-motion-popover-out); }

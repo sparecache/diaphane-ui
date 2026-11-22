@@ -1,0 +1,191 @@
+/* ── DatePicker, compact style (compact pills)
+ * Date pill: 34.33pt tall, capsule, tertiarySystemFill, 12pt × 7pt insets, 17pt label text ("20 Nov 2026" = 123.67pt).
+ * Time pill: 36pt tall (its label is 22pt: monospaced digits), 12pt × 7pt insets ("14:00" = 70pt).
+ * Rows: 15pt above/below → 64.67 / 66pt (form cells). */
+[data-ds="diaphane"] .dph-date-picker[data-standalone] { display: flex; align-items: center; gap: 12px; color: var(--dph-label); }
+[data-ds="diaphane"] .dph-date-picker[data-standalone] .dph-form-row__label { flex: 1 1 auto; }
+[data-ds="diaphane"] .dph-date-picker__pills { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; min-width: 0; }
+[data-ds="diaphane"] .dph-date-picker__pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34.667px; /* row 64.67pt (form-controls cell) */
+  padding: 7px 12px;
+  border-radius: var(--dph-radius-full);
+  background: var(--dph-tertiary-system-fill);
+  color: var(--dph-label);
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-date-picker__pill[data-part="time"] { min-height: 36px; line-height: 22px; font-variant-numeric: tabular-nums; }
+[data-ds="diaphane"] .dph-date-picker__pills[data-disabled] .dph-date-picker__pill { color: var(--dph-tertiary-label); }
+/* The real <input type=date|time> sits invisibly on the pill: tapping opens the system picker, and it carries a11y. */
+[data-ds="diaphane"] .dph-date-picker__input {
+  position: absolute;
+  inset-inline: 0;
+  inset-block: -5px; /* ≥ 44pt touch target */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+[data-ds="diaphane"] .dph-date-picker__input:disabled { cursor: default; }
+[data-ds="diaphane"] .dph-date-picker__pill:has(.dph-date-picker__input:focus-visible) { box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-date-picker__pill:has(.dph-date-picker__input:not(:disabled):active) { opacity: 0.6; }
+/* Formatted dates are in the locale's own direction (e.g. "20 Nov 2026" inside an RTL screen). */
+[data-ds="diaphane"] .dph-date-picker__text { unicode-bidi: plaintext; }
+
+/* ── Wheels (wheels; geometry in DateWheels.tsx / Wheel.css) */
+[data-ds="diaphane"] .dph-date-wheels__text { position: relative; display: inline-flex; align-items: center; height: 100%; }
+[data-ds="diaphane"] .dph-date-wheels__text[data-tabular] { font-variant-numeric: tabular-nums; }
+/* dateTime day column: "Fri" hangs before "Nov 20" (5pt gap at 23.5pt); "Today" ends 74pt after the "Nov 20" anchor. */
+[data-ds="diaphane"] .dph-date-wheels__weekday { position: absolute; inset-inline-end: calc(100% + 0.213em); }
+[data-ds="diaphane"] .dph-date-wheels__text[data-today] { position: absolute; top: 0; inset-inline-end: -3.149em; }
+/* Countdown units: semibold 17 on the band, centre 1pt below the band's. */
+[data-ds="diaphane"] .dph-date-wheels__unit {
+  position: absolute;
+  top: calc(50% - 9.167px);
+  font: var(--dph-font-headline);
+  letter-spacing: var(--dph-text-headline-tracking);
+  color: var(--dph-label);
+  white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-date-picker-row .dph-form-row__control { display: block; }
+
+/* ── Graphical (inline calendar), 330pt wide:
+ * header 16 from the top, 37.67 tall: title button at +8 (4pt insets, headline, chevron.forward accent 4pt after);
+ * month steppers 43.33 × 37.67 each, the last one overhanging the trailing edge by 6 (glyphs 15.33 × 21, accent).
+ * Weekdays 16 below: footnote semibold, secondaryLabel, uppercase, 15.67 tall. Day grid 1 below: 7 × 47pt cells,
+ * 44pt circles, title3 numbers. Selected: label-colour circle, semibold, background-colour text (accent circle and
+ * white text when it is today). Today: accent text on accent 12%.
+ * Height: date 96 + 47·rows (331 for 5 rows); dateTime: time row (38) 5.67 below the grid, total ≥ 417. */
+[data-ds="diaphane"] .dph-date-calendar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-block: 16px 9.667px;
+  color: var(--dph-label);
+}
+[data-ds="diaphane"] .dph-date-calendar[data-mode="dateTime"] { min-height: 417px; padding-block-end: 0; }
+[data-ds="diaphane"] .dph-date-calendar__header { position: relative; display: flex; align-items: center; height: 37.667px; }
+[data-ds="diaphane"] .dph-date-calendar__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  margin: 0 0 0 0;
+  margin-inline-start: 8px;
+  padding-block: 0;
+  padding-inline: 4px;
+  border: 0;
+  border-radius: var(--dph-radius-sm);
+  background: transparent;
+  color: var(--dph-label);
+  font: var(--dph-font-headline);
+  letter-spacing: var(--dph-text-headline-tracking);
+  white-space: nowrap;
+  cursor: pointer;
+}
+[data-ds="diaphane"] .dph-date-calendar__title[aria-expanded="true"] { color: var(--dph-accent); }
+[data-ds="diaphane"] .dph-date-calendar__title-chevron {
+  display: inline-flex;
+  color: var(--dph-accent);
+  font-size: 14px;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-standard);
+}
+[data-ds="diaphane"] .dph-date-calendar__title[aria-expanded="true"] .dph-date-calendar__title-chevron { transform: rotate(90deg); }
+[data-ds="diaphane"] [dir="rtl"] .dph-date-calendar__title[aria-expanded="true"] .dph-date-calendar__title-chevron,
+[data-ds="diaphane"][dir="rtl"] .dph-date-calendar__title[aria-expanded="true"] .dph-date-calendar__title-chevron { transform: rotate(-90deg); }
+[data-ds="diaphane"] .dph-date-calendar__nav { position: absolute; inset-block: 0; inset-inline-end: -6px; display: flex; }
+[data-ds="diaphane"] .dph-date-calendar__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 43.333px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--dph-radius-sm);
+  background: transparent;
+  color: var(--dph-accent);
+  font-size: 21px;
+  cursor: pointer;
+}
+[data-ds="diaphane"] :is(.dph-date-calendar__title, .dph-date-calendar__step, .dph-date-calendar__day > button):focus-visible { outline: none; box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] :is(.dph-date-calendar__title, .dph-date-calendar__step):not(:disabled):active { opacity: 0.6; }
+[data-ds="diaphane"] :is(.dph-date-calendar__title, .dph-date-calendar__step):disabled { color: var(--dph-tertiary-label); cursor: default; }
+[data-ds="diaphane"] .dph-date-calendar__weekdays,
+[data-ds="diaphane"] .dph-date-calendar__row {
+  display: grid;
+  grid-template-columns: repeat(7, calc((100% - 1px) / 7));
+}
+[data-ds="diaphane"] .dph-date-calendar__weekdays {
+  /* Weekday labels are spaced 47.06pt apart, a third of a point in. */
+  grid-template-columns: repeat(7, calc((100% - 1px) / 7 + 0.056px));
+  padding-inline-start: 0.333px;
+  margin-block-start: 16px;
+  height: 15.667px;
+  color: var(--dph-secondary-label);
+  font: var(--dph-font-footnote);
+  font-weight: var(--dph-weight-semibold);
+  letter-spacing: var(--dph-text-footnote-tracking);
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-date-calendar__grid { margin-block-start: 1px; }
+[data-ds="diaphane"] .dph-date-calendar__row { height: 47px; }
+[data-ds="diaphane"] .dph-date-calendar__day { display: flex; align-items: center; justify-content: center; }
+[data-ds="diaphane"] .dph-date-calendar__day > button {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--dph-radius-full);
+  background: transparent;
+  color: var(--dph-label);
+  padding-block-end: 1.333px; /* The number is drawn 0.67pt above the circle's centre */
+  font: var(--dph-font-title3);
+  letter-spacing: var(--dph-text-title3-tracking);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-ds="diaphane"] .dph-date-calendar__day > button[data-today] { color: var(--dph-accent); background: color-mix(in srgb, var(--dph-accent) 12%, transparent); }
+[data-ds="diaphane"] .dph-date-calendar__day > button[data-selected] { color: var(--dph-system-background); background: var(--dph-label); font-weight: var(--dph-weight-semibold); }
+[data-ds="diaphane"] .dph-date-calendar__day > button[data-selected][data-today] { color: var(--dph-on-accent); background: var(--dph-accent); }
+[data-ds="diaphane"] .dph-date-calendar__day > button:disabled { color: var(--dph-tertiary-label); background: transparent; cursor: default; }
+/* Month/year wheels replace weekdays + grid, centred in the same height (the time row doesn't move). */
+[data-ds="diaphane"] .dph-date-calendar__month-year {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(32.667px + 47px * var(--_rows, 5));
+}
+[data-ds="diaphane"] .dph-date-calendar__time {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  height: 38px;
+  margin-block-start: 5.667px;
+  padding-inline: 8px;
+}
+[data-ds="diaphane"] .dph-date-calendar__time-label {
+  padding-block-start: 8px;
+  font: var(--dph-font-headline);
+  letter-spacing: var(--dph-text-headline-tracking);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Band labels pixel-snap 0.67pt above the row centre. */
+[data-ds="diaphane"] .dph-wheel__center .dph-date-wheels__text:not([data-today]) { top: -0.667px; }
+[data-ds="diaphane"] .dph-wheel__center .dph-date-wheels__text[data-today] { top: -0.667px; }

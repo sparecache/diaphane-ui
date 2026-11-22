@@ -1,0 +1,948 @@
+{
+  "components": [
+    {
+      "name": "Screen",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "background": {
+          "type": "enum",
+          "values": [
+            "plain",
+            "grouped"
+          ],
+          "default": "plain"
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "header": {
+          "type": "node"
+        },
+        "bottomBar": {
+          "type": "node"
+        },
+        "topEdgeEffect": {
+          "type": "enum",
+          "values": [
+            "soft",
+            "hard"
+          ],
+          "default": "soft",
+          "description": "Scroll-edge effect under the header; hard = opaque blurred bar with a hairline (inline title in a TabView)."
+        },
+        "onRefresh": {
+          "type": "callback",
+          "description": "Pull to refresh (.refreshable): called when the user pulls the content down past the threshold."
+        },
+        "refreshing": {
+          "type": "boolean",
+          "description": "Shows the refresh spinner above the content until set back to false."
+        },
+        "refreshLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Accessible name of the refresh spinner."
+        },
+        "testId": {
+          "type": "string"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow"
+          ],
+          "description": "Tinted wash behind the top of the page that scrolls away."
+        }
+      },
+      "slots": [
+        "NavigationBar",
+        "TabBar",
+        "Toolbar",
+        "List",
+        "Form",
+        "Card",
+        "EmptyState",
+        "Text",
+        "Button"
+      ],
+      "use": "The root of every page: it fills the device frame, scrolls the content, applies safe areas, floats the header and bottom bar over the content, and hosts pull to refresh.",
+      "avoid": "Nesting a Screen inside another component or Screen; use one per page and put the NavigationBar in header and the TabBar or Toolbar in bottomBar.",
+      "a11y": "Renders header / main / footer landmarks; the header and bottom bar stay reachable while the main region scrolls. The refresh spinner is a labelled progressbar; pull to refresh is a gesture, so also offer a refresh button where it matters.",
+      "since": "1.0"
+    },
+    {
+      "name": "Form",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "onSubmit": {
+          "type": "callback"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "ListSection"
+      ],
+      "use": "Settings and data-entry screens: inset-grouped sections of fields, toggles and pickers that are submitted together.",
+      "avoid": "Read-only lists or navigation menus; use List.",
+      "a11y": "Native <form> (named by label) wrapping an inset-grouped List; Return or a submit Button calls onSubmit without a page reload.",
+      "since": "1.0"
+    },
+    {
+      "name": "Card",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "groupBox",
+            "grouped",
+            "glass"
+          ],
+          "default": "groupBox",
+          "description": "groupBox: plain group box. grouped: white card on a grouped Screen. glass: glass panel."
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "icon": {
+          "type": "icon",
+          "description": "Symbol before the title, sized to the headline line and centred with it."
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent",
+          "description": "Colour of the title symbol (the title text stays primary). Use a category colour per card, e.g. an orange flame."
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "testId": {
+          "type": "string"
+        },
+        "onPress": {
+          "type": "callback",
+          "description": "Makes the whole card tappable (push a detail page); it scales down slightly while pressed."
+        }
+      },
+      "slots": [
+        "Text",
+        "Button",
+        "Badge",
+        "Avatar",
+        "ProgressView",
+        "Icon"
+      ],
+      "use": "A self-contained block of related content on a grouped page, such as a summary, status or tip; glass for a floating highlight.",
+      "avoid": "Rows of a list or form fields; use ListSection and ListItem.",
+      "a11y": "A <section> labelled by its title heading.",
+      "since": "1.0"
+    },
+    {
+      "name": "Badge",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "value": {
+          "type": "string",
+          "i18n": true
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "red",
+            "accent",
+            "gray"
+          ],
+          "default": "red"
+        },
+        "dot": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "A small count or status word next to content (red for notifications, accent for new, gray for neutral counts), or a dot for unread.",
+      "avoid": "Counts at the end of list rows (use ListItem badge) or long text (use Text).",
+      "a11y": "The value is read as text; give label (e.g. \"3 unread\") for context, and always for dot.",
+      "since": "1.0"
+    },
+    {
+      "name": "Avatar",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "initials": {
+          "type": "string",
+          "i18n": true
+        },
+        "name": {
+          "type": "string",
+          "i18n": true
+        },
+        "src": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "icon",
+          "default": "person.fill"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "blue",
+            "green",
+            "orange",
+            "pink",
+            "purple",
+            "teal",
+            "indigo",
+            "red",
+            "yellow",
+            "gray"
+          ],
+          "description": "Soft tinted background with initials in the strong tone color (like Media fill=soft). auto picks a stable tone from a hash of name (or initials) so the same person always gets the same color. Omit for the gray Contacts look."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "A person or account: Contacts-style initials on a gray gradient or in a soft tone (tone=auto gives each person a stable color), a photo (a failed image falls back to the initials), or a person symbol when nothing else is known.",
+      "avoid": "App or category icons; use Icon or a ListItem icon tile.",
+      "a11y": "role=img named by name; decorative (hidden) when name is omitted because the name is visible nearby.",
+      "since": "1.0"
+    },
+    {
+      "name": "Checkbox",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "checked": {
+          "type": "boolean",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Multi-select or to-do completion outside a List, drawn as a selection circle.",
+      "avoid": "On/off settings (use Toggle) or selecting rows in a List (use ListItem selectable).",
+      "a11y": "Native checkbox input with a label (visually hidden with labelHidden); 44pt hit area; disabled sets aria-disabled.",
+      "since": "1.0"
+    },
+    {
+      "name": "Glass",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "regular",
+            "clear"
+          ],
+          "default": "regular",
+          "description": "regular: legible over anything (backdrop brightness compressed, colour kept). clear: nearly untouched backdrop, for glass over photos and video."
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow"
+          ],
+          "description": "Glass.tint(_:): regular tint is practically opaque; clear tint lets the backdrop shade the colour."
+        },
+        "shape": {
+          "type": "enum",
+          "values": [
+            "capsule",
+            "circle",
+            "rect"
+          ],
+          "default": "capsule"
+        },
+        "cornerRadius": {
+          "type": "number",
+          "default": 26,
+          "description": "Corner radius for shape=\"rect\", in points."
+        },
+        "interactive": {
+          "type": "boolean",
+          "default": false,
+          "description": "Glass.interactive(): swells ×1.2133 on a spring and lights up while pressed."
+        },
+        "children": {
+          "type": "node"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Text",
+        "Icon",
+        "Button",
+        "IconButton",
+        "Stack"
+      ],
+      "use": "Custom floating controls and panels that sit on top of content: a media overlay, a floating action cluster, a custom pill.",
+      "avoid": "Content areas, list rows or full-screen backgrounds (glass is for the control layer above content); stacking glass on glass; re-creating Button, TabBar, Toolbar or SearchField, which already draw their own glass.",
+      "a11y": "A plain container with no role; give interactive content its own button semantics. Text on .clear glass over bright media can drop below AA: prefer .regular behind text.",
+      "since": "1.1"
+    },
+    {
+      "name": "Chart",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "kind": {
+          "type": "enum",
+          "values": [
+            "bar",
+            "line",
+            "donut",
+            "comparison"
+          ],
+          "required": true
+        },
+        "data": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "i18n": true
+            },
+            "value": {
+              "type": "number"
+            }
+          }
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "height": {
+          "type": "number",
+          "default": 170,
+          "description": "Frame height in points, axis labels included."
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent"
+        },
+        "area": {
+          "type": "boolean",
+          "default": false,
+          "description": "line: fill under the line (AreaMark at 15%)."
+        },
+        "points": {
+          "type": "boolean",
+          "default": false,
+          "description": "line: dot on each value (PointMark)."
+        },
+        "formatValue": {
+          "type": "callback",
+          "description": "Formats axis and selection values."
+        },
+        "yMax": {
+          "type": "number"
+        },
+        "selected": {
+          "type": "number",
+          "description": "Selected index (chartXSelection); controlled with onSelect."
+        },
+        "onSelect": {
+          "type": "callback",
+          "description": "Tap or drag across the plot to select a value."
+        },
+        "testId": {
+          "type": "string"
+        },
+        "axes": {
+          "type": "enum",
+          "values": [
+            "full",
+            "minimal",
+            "none"
+          ],
+          "default": "full",
+          "description": "full: default axes. minimal: x labels only (highlight cards). none: sparkline."
+        },
+        "highlight": {
+          "type": "enum",
+          "values": [
+            "none",
+            "last"
+          ],
+          "default": "none",
+          "description": "last: grey bars with the latest tinted (summary cards)."
+        },
+        "highlightIndex": {
+          "type": "number",
+          "description": "Like highlight last, for the bar at this index: grey bars with that one tinted."
+        },
+        "barRadius": {
+          "type": "number",
+          "default": 0
+        },
+        "smooth": {
+          "type": "boolean",
+          "default": false,
+          "description": "line: Catmull-Rom curve."
+        },
+        "compare": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "line: grey comparison series (last week, average)."
+        },
+        "rule": {
+          "type": "number",
+          "description": "RuleMark value (average / goal)."
+        },
+        "ruleLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "unit": {
+          "type": "string",
+          "i18n": true
+        },
+        "formatAxis": {
+          "type": "callback",
+          "description": "Formats y-axis ticks (e.g. $2.5K); values use formatValue."
+        },
+        "summaryLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Detail header label (TOTAL, AVERAGE); setting it shows the header, which becomes a callout over the selection."
+        },
+        "summaryValue": {
+          "type": "string",
+          "description": "Formatted header number."
+        },
+        "summaryUnit": {
+          "type": "string",
+          "i18n": true
+        },
+        "summaryCaption": {
+          "type": "string",
+          "i18n": true,
+          "description": "Line under the number (date range)."
+        }
+      },
+      "use": "Data in dashboards and detail pages: bar / line trends, sparklines (axes none), highlight cards (axes minimal + rule), comparison bars, donut part-of-whole.",
+      "avoid": "Dense or scientific charts, more than ~12 categories, or donuts with more than 5 slices; show a table or list instead.",
+      "a11y": "The SVG is hidden from assistive tech and the data is exposed as a visually hidden table with the chart label as its caption; the selection callout is a polite live region.",
+      "since": "1.1"
+    },
+    {
+      "name": "Media",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "src": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string",
+          "i18n": true,
+          "description": "Required for meaningful images; omit for decorative ones."
+        },
+        "ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:2",
+            "16:9",
+            "3:4",
+            "2:3"
+          ],
+          "default": "4:3"
+        },
+        "radius": {
+          "type": "enum",
+          "values": [
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "blue",
+            "green",
+            "orange",
+            "pink",
+            "purple",
+            "teal",
+            "indigo",
+            "red",
+            "yellow",
+            "gray"
+          ],
+          "default": "blue",
+          "description": "Placeholder gradient when there is no src."
+        },
+        "icon": {
+          "type": "icon",
+          "description": "Symbol centred on the placeholder."
+        },
+        "fill": {
+          "type": "enum",
+          "values": [
+            "soft",
+            "vivid"
+          ],
+          "default": "soft",
+          "description": "Icon placeholder fill: soft = tone-tinted surface with a tone glyph (default, for content tiles); vivid = saturated gradient with a white glyph (app icons only)."
+        },
+        "width": {
+          "type": "number",
+          "description": "Fixed width in points (thumbnails in list rows)."
+        },
+        "onPress": {
+          "type": "callback",
+          "description": "Makes the image tappable."
+        },
+        "children": {
+          "type": "node",
+          "description": "Overlay pinned to the bottom (a Glass caption, a badge, a progress bar)."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Glass",
+        "Text",
+        "ProgressView",
+        "Badge"
+      ],
+      "use": "Photos, artwork and video thumbnails in cards, rows and detail headers; gradient placeholders while prototyping.",
+      "avoid": "Icons or symbols on their own (use Icon) and avatars of people (use Avatar).",
+      "a11y": "Pass alt for meaningful images (role img); without alt the image is decorative and hidden. With onPress it becomes a button named by alt.",
+      "since": "1.1"
+    },
+    {
+      "name": "StatCard",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent"
+        },
+        "value": {
+          "type": "string",
+          "required": true,
+          "description": "Formatted value."
+        },
+        "unit": {
+          "type": "string",
+          "i18n": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "description": "Small label above the value (Latest, Average)."
+        },
+        "caption": {
+          "type": "string",
+          "i18n": true,
+          "description": "Top-trailing caption (time of the latest sample)."
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "Recent values for the mini chart; the last is highlighted."
+        },
+        "chart": {
+          "type": "enum",
+          "values": [
+            "bars",
+            "line"
+          ],
+          "default": "bars"
+        },
+        "trend": {
+          "type": "enum",
+          "values": [
+            "up",
+            "down",
+            "flat"
+          ]
+        },
+        "trendLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "regular",
+            "compact"
+          ],
+          "default": "regular"
+        },
+        "onPress": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "KPI / metric tiles on dashboards (summary card style): one number, its unit, recent trend, tap for the detail page.",
+      "avoid": "Long text or several numbers per card; tables of figures (use List with values).",
+      "a11y": "With onPress it is one button whose name reads title, value and unit; the mini chart is decorative (the detail page carries the data).",
+      "since": "1.1"
+    },
+    {
+      "name": "NotificationCard",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "description": "Small caps header (NOTIFICATIONS); omit for a promo card."
+        },
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent"
+        },
+        "actionLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onAction": {
+          "type": "callback"
+        },
+        "onDismiss": {
+          "type": "callback"
+        },
+        "dismissLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "In-page notices and suggestions on a grouped Screen (e.g. a \"Notifications\" card): something needs attention, with one action and a close button.",
+      "avoid": "Transient confirmations (use Banner) or blocking decisions (use Alert).",
+      "a11y": "A section with the title as text; action and close are labelled buttons.",
+      "since": "1.1"
+    },
+    {
+      "name": "Checklist",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "progressLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "title": {
+              "type": "string",
+              "i18n": true
+            },
+            "subtitle": {
+              "type": "string",
+              "i18n": true
+            },
+            "done": {
+              "type": "boolean"
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "onToggle": {
+          "type": "callback"
+        },
+        "hideCompleted": {
+          "type": "boolean",
+          "default": false
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Setup and onboarding progress (\"Finish Setting Up\"): a handful of steps with a progress bar.",
+      "avoid": "Ordinary to-do lists the user manages (use List with Checkbox rows).",
+      "a11y": "Progress is a labelled progressbar; each step is a button with aria-pressed (or navigates when it has onPress).",
+      "since": "1.1"
+    },
+    {
+      "name": "Rating",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "value": {
+          "type": "number",
+          "required": true,
+          "description": "Stars filled 0–5 (half stars when displayed)."
+        },
+        "onChange": {
+          "type": "callback",
+          "description": "Makes it an input: tap a star or drag across (Tap to Rate)."
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "small",
+            "regular",
+            "large"
+          ],
+          "default": "regular"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "orange",
+            "gray"
+          ]
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Five-star ratings: showing an average in rows, or letting someone rate (Tap to Rate).",
+      "avoid": "Precise scores or proficiency levels (use Text, Gauge or a Picker).",
+      "a11y": "Display: role img named with the value. Input: role slider (1–5) with arrow keys; dragging is optional.",
+      "since": "1.2"
+    },
+    {
+      "name": "RatingSummary",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "average": {
+          "type": "number",
+          "required": true
+        },
+        "distribution": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "number"
+          },
+          "description": "Counts per level, five stars first."
+        },
+        "outOfLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "countLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Ratings summary header: big average, out of 5, 5→1 histogram and the rating count.",
+      "avoid": "Single ratings (use Rating).",
+      "a11y": "One image with an accessible summary (average and count); the bars are decorative.",
+      "since": "1.2"
+    },
+    {
+      "name": "SectionHeader",
+      "category": "layout",
+      "props": {
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "actionLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Trailing text button, e.g. See All."
+        },
+        "onAction": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Title 2 bold heading over a group of cards on a dashboard (summary and store-style card groups), with an optional See All.",
+      "avoid": "Headings inside a List or Form (use ListSection header); more than one heading style on the same screen.",
+      "a11y": "Renders an h2; the action is a separate button named by actionLabel."
+    }
+  ]
+}

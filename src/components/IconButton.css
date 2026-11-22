@@ -1,0 +1,67 @@
+[data-ds="diaphane"] .dph-icon-button {
+  --_d: 32px;
+  --_fill: transparent;
+  --_fg: var(--dph-accent);
+  --_shadow: none;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--_d);
+  height: var(--_d);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--_fill);
+  box-shadow: var(--_shadow);
+  color: var(--_fg);
+  font: var(--dph-font-body);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-standard), opacity var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-icon-button::after {
+  content: "";
+  position: absolute;
+  inset: min(0px, calc((var(--_d) - var(--dph-hit-min)) / 2));
+  border-radius: 50%;
+}
+[data-ds="diaphane"] .dph-icon-button:focus-visible { outline: none; box-shadow: var(--_shadow), var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-icon-button[data-size="small"] { --_d: 28px; font: var(--dph-font-subheadline); }
+[data-ds="diaphane"] .dph-icon-button[data-size="large"] { --_d: 44px; font-size: 19px; }
+
+[data-ds="diaphane"] .dph-icon-button[data-variant="borderedProminent"] { --_fill: var(--dph-accent); --_fg: var(--dph-on-accent); }
+[data-ds="diaphane"] .dph-icon-button[data-variant="bordered"] { --_fill: var(--dph-secondary-system-fill); }
+[data-ds="diaphane"] .dph-icon-button[data-variant="glass"] {
+  --_fill: var(--dph-glass-fill);
+  --_fg: var(--dph-label);
+  --_shadow: var(--dph-glass-rim), var(--dph-glass-shadow);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+}
+[data-ds="diaphane"] .dph-icon-button[data-variant="glassProminent"] { --_fill: var(--dph-accent); --_fg: var(--dph-on-accent); --_shadow: var(--dph-glass-prominent-rim), var(--dph-glass-shadow); }
+[data-ds="diaphane"] .dph-icon-button[data-variant="plain"] { --_fg: var(--dph-label); }
+[data-ds="diaphane"] .dph-icon-button[data-role="destructive"]:not([data-variant$="Prominent"]) { --_fg: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-icon-button[data-role="destructive"][data-variant$="Prominent"] { --_fill: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-icon-button[aria-pressed="true"]:not([data-variant$="Prominent"]) { --_fg: var(--dph-accent); }
+
+[data-ds="diaphane"] .dph-icon-button:disabled { --_fg: var(--dph-tertiary-label); cursor: default; }
+[data-ds="diaphane"] .dph-icon-button:disabled[data-variant$="Prominent"] { --_fill: var(--dph-tertiary-system-fill); }
+[data-ds="diaphane"] .dph-icon-button:not(:disabled):active { opacity: 0.7; }
+/* Glass press: same interaction as Button (×1.2133 spring, white glow, dimmed glyph). */
+[data-ds="diaphane"] .dph-icon-button:is([data-variant="glass"], [data-variant="glassProminent"]) { transition: transform var(--dph-duration-standard) var(--dph-ease-spring), background var(--dph-duration-fast) linear, color var(--dph-duration-fast) linear; }
+[data-ds="diaphane"] .dph-icon-button:not(:disabled):is([data-variant="glass"], [data-variant="glassProminent"]):active { opacity: 1; transform: scale(1.2133); }
+[data-ds="diaphane"] .dph-icon-button:not(:disabled)[data-variant="glass"]:active {
+  --_fill: radial-gradient(closest-side, rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.7) 60%, rgb(255 255 255 / 0.55));
+  --_fg: color-mix(in srgb, var(--dph-label) 66%, rgb(255 255 255));
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-icon-button:not(:disabled)[data-variant="glass"]:active,
+[data-ds="diaphane"] [data-theme="dark"] .dph-icon-button:not(:disabled)[data-variant="glass"]:active {
+  --_fill: radial-gradient(closest-side, rgb(255 255 255 / 0.3), rgb(255 255 255 / 0.14) 60%, rgb(255 255 255 / 0.1));
+  --_fg: color-mix(in srgb, var(--dph-label) 80%, transparent);
+}
+[data-ds="diaphane"] .dph-icon-button:not(:disabled)[data-variant="glassProminent"]:active { --_fill: radial-gradient(closest-side, rgb(255 255 255 / 0.32), transparent), var(--dph-accent); }
+
+/* Long-press must not start text selection or the system callout. */
+[data-ds="diaphane"] .dph-icon-button { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
