@@ -19,5 +19,20 @@ body { font-family: system-ui, sans-serif; background: #e9e9ee; }
 /* Inside the frame the scaffold fills the screen and scrolls. */
 .dph-device__content .pg-ref { height: 100%; min-height: 0; overflow: auto; }
 .pg-select { padding: 6px 8px; border: 1px solid #c7c7cc; border-radius: 8px; background: #fff; font: inherit; }
-.pg-nav summary { cursor: pointer; padding: 4px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #6e6e73; }
+.pg-nav summary { list-style: none; cursor: pointer; padding: 4px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #6e6e73; }
+.pg-nav summary::-webkit-details-marker { display: none; }
+.pg-nav summary::after { content: "  ›"; }
+.pg-nav details[open] > summary::after { content: "  ⌄"; }
 .pg-nav details section { margin-top: 10px; }
+
+/* Controls: one segmented Light / Dark switch and a quiet Options drawer. */
+.pg-seg { display: grid; grid-template-columns: 1fr 1fr; padding: 3px; border-radius: 10px; background: rgb(60 60 67 / 0.12); }
+.pg-seg button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 8px; border: 0; border-radius: 8px; background: none; font: inherit; font-weight: 500; color: #3c3c43; cursor: pointer; }
+.pg-seg button[aria-pressed="true"] { background: #fff; color: #1d1d1f; box-shadow: 0 1px 3px rgb(0 0 0 / 0.14); }
+.pg-opts { font: inherit; }
+.pg-switch, .pg-field { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 8px; color: #1d1d1f; }
+.pg-switch input { appearance: none; width: 34px; height: 20px; margin: 0; border-radius: 10px; background: rgb(120 120 128 / 0.32); position: relative; cursor: pointer; transition: background 0.15s; }
+.pg-switch input::after { content: ""; position: absolute; inset: 2px auto 2px 2px; width: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / 0.25); transition: transform 0.15s; }
+.pg-switch input:checked { background: #1d1d1f; }
+.pg-switch input:checked::after { transform: translateX(14px); }
+.pg-field select { max-width: 110px; padding: 3px 6px; border: 0; border-radius: 6px; background: rgb(60 60 67 / 0.12); font: inherit; color: inherit; }
