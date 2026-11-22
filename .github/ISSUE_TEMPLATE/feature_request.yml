@@ -1,0 +1,28 @@
+name: Feature request
+description: A component, prop or token you would like
+labels: [enhancement]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to build?
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: What is missing or hard today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea or sketch
+      description: Optional. Describe any reference in your own words.
+  - type: checkboxes
+    id: originality
+    attributes:
+      label: Originality
+      options:
+        - label: I am not pasting copyrighted designs, assets or code from any vendor.
+          required: true

@@ -1,0 +1,48 @@
+name: Bug report
+description: Something looks or behaves wrong
+labels: [bug]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      placeholder: Sheet, TabBar, ListItem...
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: The smallest code that shows it, with the props you passed.
+      render: tsx
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Edge refraction on glass is Chromium-only, so the engine matters.
+      options:
+        - Chrome or Edge
+        - Safari
+        - Firefox
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: 0.1.0 or a commit
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshot or recording
+      description: Optional. Drag a file here.

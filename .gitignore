@@ -5,3 +5,9 @@ dist/
 *.log
 .worktrees/
 dist-playground/
+
+# Secrets and keys
+.env
+.env.*
+*.pem
+*.key
