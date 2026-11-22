@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { screens } from "./screens";
+import { samples } from "./screens";
 import { Gallery } from "./Gallery";
 import "../src/styles/tokens.css";
 import { installGlassRefraction } from "../src/components/glassRefraction";
@@ -16,7 +16,7 @@ const theme = (params.get("theme") ?? "light") as "light" | "dark";
 const dir = (params.get("dir") ?? "ltr") as "ltr" | "rtl";
 
 function App() {
-  return <Gallery initial={screenId ?? screens[0]!.id} theme={theme} dir={dir} />;
+  return <Gallery initial={screenId ?? samples[0]!.id} theme={theme} dir={dir} />;
 }
 
 createRoot(document.getElementById("root")!).render(<StrictMode><App /></StrictMode>);

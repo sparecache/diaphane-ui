@@ -67,7 +67,7 @@ To explore locally: `git clone https://github.com/sparecache/diaphane-ui.git && 
 ## Samples
 
 Every image above is a live screen in the [playground](https://sparecache.github.io/diaphane-ui/), with light, dark,
-RTL and text-size toggles.
+RTL and text-size toggles. Single-component specimens are tucked under Components in its sidebar.
 
 | Image | Open it |
 |---|---|

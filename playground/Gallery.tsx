@@ -1,6 +1,6 @@
 import { Suspense, useState } from "react";
 import Frame, { type TextSize } from "../frame/phone";
-import { screens } from "./screens";
+import { screens, samples } from "./screens";
 import { PseudoLocale } from "./pseudo";
 
 /** Desktop viewer: every screen inside the phone frame, with theme / direction / pseudo-locale toggles. */
@@ -12,7 +12,9 @@ export function Gallery({ initial, theme: initialTheme, dir: initialDir }: { ini
   const [aa, setAA] = useState(false);
   const [dt, setDt] = useState<TextSize>("large");
   const entry = screens.find((s) => s.id === id) ?? screens[0]!;
-  const groups = [...new Set(screens.map((s) => s.group))];
+  const sampleIds = new Set(samples.map((s) => s.id));
+  const specimens = screens.filter((s) => !sampleIds.has(s.id));
+  const groups = [...new Set(specimens.map((s) => s.group))];
   const select = (next: string) => {
     setId(next);
     const u = new URL(location.href);
@@ -45,14 +47,23 @@ export function Gallery({ initial, theme: initialTheme, dir: initialDir }: { ini
             <option key={s} value={s}>{s === "large" ? "Text size: Large (default)" : `Text size: ${s}`}</option>
           ))}
         </select>
-        {groups.map((g) => (
-          <section key={g}>
-            <h4>{g}</h4>
-            {screens.filter((s) => s.group === g).map((s) => (
-              <button key={s.id} className="pg-link" aria-current={s.id === id} onClick={() => select(s.id)}>{s.title}</button>
-            ))}
-          </section>
-        ))}
+        <section>
+          <h4>Samples</h4>
+          {samples.map((s) => (
+            <button key={s.id} className="pg-link" aria-current={s.id === id} onClick={() => select(s.id)}>{s.title}</button>
+          ))}
+        </section>
+        <details open={!sampleIds.has(id)}>
+          <summary>Components</summary>
+          {groups.map((g) => (
+            <section key={g}>
+              <h4>{g}</h4>
+              {specimens.filter((s) => s.group === g).map((s) => (
+                <button key={s.id} className="pg-link" aria-current={s.id === id} onClick={() => select(s.id)}>{s.title}</button>
+              ))}
+            </section>
+          ))}
+        </details>
       </nav>
       <main className="pg-stage">
         <Frame theme={theme} dir={dir} contrast={aa ? "high" : "standard"} textSize={dt}>

@@ -19,3 +19,5 @@ body { font-family: system-ui, sans-serif; background: #e9e9ee; }
 /* Inside the frame the scaffold fills the screen and scrolls. */
 .dph-device__content .pg-ref { height: 100%; min-height: 0; overflow: auto; }
 .pg-select { padding: 6px 8px; border: 1px solid #c7c7cc; border-radius: 8px; background: #fff; font: inherit; }
+.pg-nav summary { cursor: pointer; padding: 4px 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #6e6e73; }
+.pg-nav details section { margin-top: 10px; }

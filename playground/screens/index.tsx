@@ -94,3 +94,16 @@ export const screens: ScreenDef[] = [
   { id: "flow-fitness", group: "Use cases", title: "Fitness & activity", Component: example(() => import("../../examples/flows/fitness")) },
   { id: "flow-travel", group: "Use cases", title: "Trip booking", Component: example(() => import("../../examples/flows/travel")) },
 ];
+
+/** The screens worth opening first: real apps, in this order. Everything else in `screens` is a component specimen. */
+export const samples: { id: string; title: string }[] = [
+  { id: "flow-fitness", title: "Activity" },
+  { id: "flow-shop", title: "Shop" },
+  { id: "flow-shop-detail", title: "Product page" },
+  { id: "flow-banking", title: "Wallet" },
+  { id: "flow-messages", title: "Messages" },
+  { id: "flow-travel", title: "Trips" },
+  { id: "flow-onboarding", title: "Onboarding" },
+  { id: "flow-dashboard", title: "Dashboard" },
+  { id: "flow-settings", title: "Settings" },
+];
