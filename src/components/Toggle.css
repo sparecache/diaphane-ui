@@ -1,0 +1,90 @@
+[data-ds="diaphane"] .dph-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dph-space-3);
+  min-height: var(--dph-hit-min);
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  color: var(--dph-label);
+  cursor: pointer;
+}
+[data-ds="diaphane"] .dph-toggle[data-label-hidden] { display: inline-flex; min-height: 28px; }
+[data-ds="diaphane"] .dph-toggle[data-label-hidden] .dph-toggle__label {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-toggle__label { flex: 1 1 auto; min-width: 0; }
+[data-ds="diaphane"] .dph-toggle[data-disabled] { cursor: default; }
+/* A disabled Toggle keeps its label color; only the switch dims. */
+
+/* Track 63×28, knob 37×24 inset 2pt. */
+[data-ds="diaphane"] .dph-toggle__input {
+  --_on: var(--dph-system-green);
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: none;
+  width: 63px;
+  height: 28px;
+  margin: 0;
+  /* The switch is laid out 61pt wide but drawn 63pt, overhanging the trailing edge by 2pt. */
+  margin-inline-end: -2px;
+  border-radius: 14px;
+  background: var(--dph-tertiary-label);
+  cursor: inherit;
+  transition: background-color var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-toggle__input[data-tint="accent"] { --_on: var(--dph-accent); }
+[data-ds="diaphane"] .dph-toggle__input::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 2px;
+  width: 37px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgb(255 255 255);
+  transition: inset-inline-start var(--dph-duration-standard) var(--dph-ease-spring), transform var(--dph-duration-fast) var(--dph-ease-standard);
+}
+[data-ds="diaphane"] .dph-toggle__input:checked { background: var(--_on); }
+[data-ds="diaphane"] .dph-toggle__input:checked::before { inset-inline-start: 24px; }
+/* Pressed: the knob becomes the liquid lens, 58 × 38.333pt centred on the knob (clear glass,
+   no blur, displacement 9 / -17.5, key+fill highlights, shadow 0 7 r3 @ 0.06). The lens refracts what's behind it:
+   the page shows as a white band where it overhangs, and the track appears inset to 22.67pt tall (::after). */
+[data-ds="diaphane"] .dph-toggle__input::before {
+  transition: inset-inline-start var(--dph-duration-standard) var(--dph-ease-spring), top var(--dph-duration-standard) var(--dph-ease-spring),
+    width var(--dph-duration-standard) var(--dph-ease-spring), height var(--dph-duration-standard) var(--dph-ease-spring),
+    border-radius var(--dph-duration-standard) var(--dph-ease-spring), background var(--dph-duration-fast) linear, box-shadow var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-toggle__input:not(:disabled):active::before {
+  top: -5.167px;
+  inset-inline-start: -8.5px;
+  width: 58px;
+  height: 38.333px;
+  border-radius: 19.167px;
+  background: var(--dph-lens-glass);
+  box-shadow: var(--dph-lens-rim);
+}
+[data-ds="diaphane"] .dph-toggle__input:not(:disabled):checked:active::before { inset-inline-start: 13.5px; }
+/* The refracted track inside the lens: crisp, inset 2.67pt from the track's top/bottom, reaching the lens edge on
+   the track side (with the dark refraction line there) and ending ≈12pt short of the overhanging side. */
+[data-ds="diaphane"] .dph-toggle__input::after {
+  content: "";
+  position: absolute;
+  top: 2.667px;
+  height: 22.667px;
+  width: 46px;
+  inset-inline-start: 3.5px;
+  border-radius: 11.333px;
+  background: var(--dph-tertiary-label);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-toggle__input:checked::after { inset-inline-start: 13.5px; width: 46.833px; background: var(--_on); filter: brightness(1.05); }
+[data-ds="diaphane"] .dph-toggle__input:not(:disabled):active::after { opacity: 1; }
+[data-ds="diaphane"] .dph-toggle__input:checked:not(:disabled):active::after { box-shadow: inset 1.5px 0 1px -0.5px var(--dph-lens-edge); border-start-start-radius: 4px; border-end-start-radius: 4px; }
+[data-ds="diaphane"] .dph-toggle__input:not(:checked):not(:disabled):active::after { box-shadow: inset -1.5px 0 1px -0.5px var(--dph-lens-edge); border-start-end-radius: 4px; border-end-end-radius: 4px; }
+
+/* Long-press must not start text selection or the system callout. */
+[data-ds="diaphane"] .dph-toggle { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }

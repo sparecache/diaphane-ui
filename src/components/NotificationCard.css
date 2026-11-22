@@ -1,0 +1,73 @@
+[data-ds="diaphane"] .dph-notice {
+  --_tint: var(--dph-accent);
+  overflow: hidden;
+  border-radius: var(--dph-radius-lg);
+  background: var(--dph-secondary-system-grouped-background);
+  color: var(--dph-label);
+}
+[data-ds="diaphane"] .dph-notice__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 4px 12px 4px 17px;
+  border-bottom: 0.667px solid var(--dph-separator);
+}
+[data-ds="diaphane"] .dph-notice__label { font: 600 13px/18px var(--dph-font-family); letter-spacing: 0.3px; text-transform: uppercase; color: var(--dph-secondary-label); }
+[data-ds="diaphane"] .dph-notice__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--dph-tertiary-system-fill);
+  color: var(--dph-secondary-label);
+  font-size: 10px;
+  cursor: pointer;
+}
+[data-ds="diaphane"] .dph-notice__close::after { content: ""; position: absolute; inset: -11px; }
+[data-ds="diaphane"] .dph-notice__close { position: relative; }
+[data-ds="diaphane"] .dph-notice__body { display: flex; align-items: flex-start; gap: 14px; padding: 16px 17px 18px; }
+[data-ds="diaphane"] .dph-notice__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--_tint);
+  color: rgb(255 255 255);
+  font-size: 20px;
+}
+/* Promo cards use the same 40pt tinted circle, so every notice reads at the same weight. */
+[data-ds="diaphane"] .dph-notice__text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+[data-ds="diaphane"] .dph-notice__title { margin: 0; font: 600 17px/22px var(--dph-font-family); letter-spacing: -0.43px; }
+[data-ds="diaphane"] .dph-notice__message { margin: 0; font: var(--dph-font-subheadline); color: var(--dph-secondary-label); }
+[data-ds="diaphane"] .dph-notice__action {
+  margin: 8px 0 0;
+  min-height: 30px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--dph-radius-full);
+  background: color-mix(in srgb, var(--_tint) 18%, transparent);
+  color: var(--_tint);
+  font: 400 17px/30px var(--dph-font-family);
+  letter-spacing: -0.43px;
+  cursor: pointer;
+}
+[data-ds="diaphane"] .dph-notice__action:active { opacity: 0.7; }
+[data-ds="diaphane"] :is(.dph-notice__action, .dph-notice__close):focus-visible { outline: none; box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-notice[data-tint="blue"] { --_tint: var(--dph-system-blue); }
+[data-ds="diaphane"] .dph-notice[data-tint="green"] { --_tint: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-notice[data-tint="indigo"] { --_tint: var(--dph-system-indigo); }
+[data-ds="diaphane"] .dph-notice[data-tint="orange"] { --_tint: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-notice[data-tint="pink"] { --_tint: var(--dph-system-pink); }
+[data-ds="diaphane"] .dph-notice[data-tint="purple"] { --_tint: var(--dph-system-purple); }
+[data-ds="diaphane"] .dph-notice[data-tint="red"] { --_tint: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-notice[data-tint="teal"] { --_tint: var(--dph-system-cyan); }
+[data-ds="diaphane"] .dph-notice[data-tint="yellow"] { --_tint: var(--dph-system-yellow); }
+[data-ds="diaphane"] .dph-notice[data-tint="gray"] { --_tint: var(--dph-system-gray); }

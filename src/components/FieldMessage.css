@@ -1,0 +1,15 @@
+/* ── FieldHint / FieldError (textfields-form footer "Enter a valid phone number.")
+ * footer placement = section footer: 8pt above, 6pt below, 20pt inline (36pt from the screen edge in an inset list),
+ * footnote 13/15.67, secondaryLabel or systemRed. inline placement sits directly under a standalone field. */
+[data-ds="diaphane"] .dph-field-message {
+  margin: 0;
+  font: var(--dph-font-footnote);
+  letter-spacing: var(--dph-text-footnote-tracking);
+  color: var(--dph-secondary-label);
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+[data-ds="diaphane"] .dph-field-message[data-tone="error"] { color: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-field-message[data-placement="footer"] { padding: 8px var(--_row-pad, 20px) 6px; }
+[data-ds="diaphane"] .dph-list .dph-field-message[data-placement="footer"] { padding-inline: var(--_row-pad); }
+[data-ds="diaphane"] .dph-field-message[data-placement="inline"] { padding-block: 6px 0; }

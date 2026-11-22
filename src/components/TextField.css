@@ -1,0 +1,110 @@
+/* ── TextField (textfields-form, textfields-standalone)
+ * form: text field 22pt tall in a 52pt row (15pt above/below), 20pt row padding; LabeledContent puts the
+ *       field after the label with trailing-aligned text. Vertical (multiline) TextField: 64.33pt for 3 lines.
+ * roundedBorder: 34pt, 5pt corners, 0.33pt border label@20%, systemBackground fill, 7pt text inset.
+ * plain: 22pt. search (roundedBorder): 44pt glass capsule, 12pt padding, magnifier + 8pt + field.
+ * Placeholder = placeholderText; text 17pt body. */
+[data-ds="diaphane"] .dph-text-field { --_h: 22px; display: flex; flex-direction: column; align-items: stretch; width: 100%; min-width: 0; }
+[data-ds="diaphane"] .dph-text-field.dph-list-item { display: block; }
+
+[data-ds="diaphane"] .dph-text-field__label {
+  margin-bottom: 6px;
+  font: var(--dph-font-subheadline);
+  letter-spacing: var(--dph-text-subheadline-tracking);
+  color: var(--dph-secondary-label);
+}
+
+[data-ds="diaphane"] .dph-text-field__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--_h);
+}
+
+[data-ds="diaphane"] .dph-text-field__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  height: var(--_h);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--dph-label);
+  caret-color: var(--dph-accent);
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  text-align: start;
+  appearance: none;
+  -webkit-appearance: none;
+}
+[data-ds="diaphane"] .dph-text-field__input::placeholder { color: var(--dph-placeholder-text); opacity: 1; }
+[data-ds="diaphane"] .dph-text-field__input::-webkit-search-decoration,
+[data-ds="diaphane"] .dph-text-field__input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+[data-ds="diaphane"] .dph-text-field__input:disabled { color: var(--dph-tertiary-label); -webkit-text-fill-color: var(--dph-tertiary-label); opacity: 1; }
+[data-ds="diaphane"] .dph-text-field__input:focus-visible { outline: none; }
+[data-ds="diaphane"] .dph-text-field__box:has(.dph-text-field__input:focus-visible) { border-radius: 4px; box-shadow: var(--dph-focus-ring); }
+
+/* SecureField: WebKit's password bullets match the design (7.33pt dots, 10.25pt pitch) with no extra tracking. */
+
+/* Multiline (axis: .vertical) */
+[data-ds="diaphane"] .dph-text-field[data-multiline] .dph-text-field__box { align-items: flex-start; }
+[data-ds="diaphane"] .dph-text-field__input:is(textarea) {
+  height: auto;
+  min-height: var(--_min);
+  max-height: var(--_max);
+  line-height: 21.444px;
+  resize: none;
+  overflow-y: auto;
+  field-sizing: content;
+}
+
+/* LabeledContent row: field after the label, text trailing-aligned. */
+[data-ds="diaphane"] .dph-text-field[data-labeled] .dph-text-field__input { text-align: end; }
+[data-ds="diaphane"] .dph-text-field[data-labeled] .dph-form-row__label { flex: 0 0 auto; max-width: 50%; }
+
+/* Leading magnifier / trailing button glyphs. */
+[data-ds="diaphane"] .dph-text-field__glyph { flex: none; display: inline-flex; color: var(--dph-secondary-label); font-size: 17px; }
+[data-ds="diaphane"] .dph-text-field__trailing {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--dph-secondary-label);
+  font-size: 17px;
+  cursor: pointer;
+}
+[data-ds="diaphane"] .dph-text-field__trailing::after { content: ""; position: absolute; inset: -12px; }
+[data-ds="diaphane"] .dph-text-field__trailing:focus-visible { outline: none; border-radius: 4px; box-shadow: var(--dph-focus-ring); }
+
+/* roundedBorder */
+[data-ds="diaphane"] .dph-text-field[data-variant="roundedBorder"] .dph-text-field__box {
+  min-height: 34px;
+  padding-inline: 7px;
+  border-radius: 5px;
+  background: var(--dph-system-background);
+  box-shadow: inset 0 0 0 0.333px color-mix(in srgb, var(--dph-label) 20%, transparent);
+}
+[data-ds="diaphane"] .dph-text-field[data-variant="roundedBorder"][data-multiline] .dph-text-field__box { padding-block: 6px; }
+[data-ds="diaphane"] .dph-text-field[data-variant="roundedBorder"][data-invalid] .dph-text-field__box { box-shadow: inset 0 0 0 1px var(--dph-system-red); }
+
+/* search in roundedBorder → glass capsule */
+[data-ds="diaphane"] .dph-text-field[data-variant="roundedBorder"][data-type="search"] .dph-text-field__box {
+  min-height: 44px;
+  padding-inline: 12px;
+  border-radius: var(--dph-radius-full);
+  background: var(--dph-glass-fill);
+  box-shadow: var(--dph-glass-rim), var(--dph-glass-shadow);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+}
+
+[data-ds="diaphane"] .dph-text-field[data-disabled] .dph-text-field__glyph { color: var(--dph-tertiary-label); }

@@ -1,0 +1,3027 @@
+{
+  "schema": "catalog@1",
+  "ds": "diaphane",
+  "components": [
+    {
+      "name": "Form",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "onSubmit": {
+          "type": "callback"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "ListSection"
+      ],
+      "use": "Settings and data-entry screens: inset-grouped sections of fields, toggles and pickers that are submitted together.",
+      "avoid": "Read-only lists or navigation menus; use List.",
+      "a11y": "Native <form> (named by label) wrapping an inset-grouped List; Return or a submit Button calls onSubmit without a page reload.",
+      "since": "1.0"
+    },
+    {
+      "name": "List",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "insetGrouped",
+            "grouped",
+            "plain"
+          ],
+          "default": "insetGrouped"
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "ListSection"
+      ],
+      "use": "Any vertical collection of rows: insetGrouped for settings and forms, grouped for full-width settings sections, plain for content feeds like mail or contacts.",
+      "avoid": "Grids of media or free-form layouts; use Card.",
+      "a11y": "role=list with labelled sections.",
+      "since": "1.0"
+    },
+    {
+      "name": "ListItem",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "subtitle": {
+          "type": "string",
+          "i18n": true
+        },
+        "value": {
+          "type": "string",
+          "i18n": true
+        },
+        "valueAlignment": {
+          "type": "enum",
+          "values": [
+            "center",
+            "top"
+          ],
+          "default": "center",
+          "description": "top: message-list row — value (date) on the title line, subtitle full width below, clamped to two lines; with a count badge the subtitle stops at the trailing time/bubble column."
+        },
+        "detail": {
+          "type": "node",
+          "description": "Control under the title inside the row (a brightness Slider, input Rating stars)."
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "iconColor": {
+          "type": "enum",
+          "values": [
+            "blue",
+            "green",
+            "red",
+            "orange",
+            "yellow",
+            "pink",
+            "purple",
+            "indigo",
+            "teal",
+            "cyan",
+            "mint",
+            "brown",
+            "gray"
+          ]
+        },
+        "leading": {
+          "type": "node"
+        },
+        "prominent": {
+          "type": "boolean"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Trailing count bubble: a red filled pill (min 20pt, white 13pt semibold digits) for a number (badge={3}); 0 or empty shows nothing; other text (\"Home\") stays a plain trailing value. With valueAlignment=top the time sits on the title line and the bubble under it in one end-aligned column; pass 0 on read rows to keep every row aligned."
+        },
+        "accessory": {
+          "type": "enum",
+          "values": [
+            "none",
+            "chevron",
+            "checkmark",
+            "toggle",
+            "info"
+          ],
+          "default": "none"
+        },
+        "toggled": {
+          "type": "boolean"
+        },
+        "onToggle": {
+          "type": "callback"
+        },
+        "selectable": {
+          "type": "boolean"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "role": {
+          "type": "enum",
+          "values": [
+            "default",
+            "action",
+            "destructive"
+          ],
+          "default": "default"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "onPress": {
+          "type": "callback"
+        },
+        "trailingActions": {
+          "type": "array",
+          "items": {
+            "label": "string (i18n, required)",
+            "icon": "icon (use .fill variants)",
+            "tone": "enum destructive|accent|gray|orange|blue|green|yellow|purple|indigo|teal (default gray)",
+            "onPress": "callback (required)"
+          },
+          "description": "Swipe actions revealed by swiping the row toward the leading side; the first is at the trailing edge."
+        },
+        "leadingActions": {
+          "type": "array",
+          "items": {
+            "label": "string (i18n, required)",
+            "icon": "icon",
+            "tone": "enum (as trailingActions)",
+            "onPress": "callback (required)"
+          },
+          "description": "Swipe actions revealed by swiping toward the trailing side; the first is at the leading edge."
+        },
+        "swiped": {
+          "type": "enum",
+          "values": [
+            "leading",
+            "trailing"
+          ],
+          "description": "Which actions are open; renders the open state statically. The row also opens and closes on swipe."
+        },
+        "onSwipeChange": {
+          "type": "callback",
+          "description": "Called with the open edge, or undefined when the row closes."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Avatar"
+      ],
+      "use": "One row: navigation (chevron), a setting (toggle or value), a single-choice option (checkmark), an in-list action (role), or a content row with swipe actions (delete, flag).",
+      "avoid": "Primary screen actions; use Button outside the list.",
+      "a11y": "role=listitem; interactive rows render a native button; toggles keep the title as their label. Swipe actions are real buttons named by their label: tabbing to one opens the row, Escape closes it.",
+      "since": "1.0"
+    },
+    {
+      "name": "ListSection",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "header": {
+          "type": "string",
+          "i18n": true
+        },
+        "footer": {
+          "type": "string",
+          "i18n": true
+        },
+        "footerError": {
+          "type": "boolean"
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "ListItem",
+        "TextField",
+        "Toggle",
+        "Picker",
+        "Stepper",
+        "Slider",
+        "DatePicker"
+      ],
+      "use": "Grouping related rows under an optional header and explanatory footer.",
+      "avoid": "A section with a single row and no header; merge it into a neighbouring section.",
+      "a11y": "<section> labelled by its header; error footers are announced (role=alert).",
+      "since": "1.0"
+    },
+    {
+      "name": "Screen",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "background": {
+          "type": "enum",
+          "values": [
+            "plain",
+            "grouped"
+          ],
+          "default": "plain"
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "header": {
+          "type": "node"
+        },
+        "bottomBar": {
+          "type": "node"
+        },
+        "topEdgeEffect": {
+          "type": "enum",
+          "values": [
+            "soft",
+            "hard"
+          ],
+          "default": "soft",
+          "description": "Scroll-edge effect under the header; hard = opaque blurred bar with a hairline (inline title in a TabView)."
+        },
+        "onRefresh": {
+          "type": "callback",
+          "description": "Pull to refresh (.refreshable): called when the user pulls the content down past the threshold."
+        },
+        "refreshing": {
+          "type": "boolean",
+          "description": "Shows the refresh spinner above the content until set back to false."
+        },
+        "refreshLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Accessible name of the refresh spinner."
+        },
+        "testId": {
+          "type": "string"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow"
+          ],
+          "description": "Tinted wash behind the top of the page that scrolls away."
+        }
+      },
+      "slots": [
+        "NavigationBar",
+        "TabBar",
+        "Toolbar",
+        "List",
+        "Form",
+        "Card",
+        "EmptyState",
+        "Text",
+        "Button"
+      ],
+      "use": "The root of every page: it fills the device frame, scrolls the content, applies safe areas, floats the header and bottom bar over the content, and hosts pull to refresh.",
+      "avoid": "Nesting a Screen inside another component or Screen; use one per page and put the NavigationBar in header and the TabBar or Toolbar in bottomBar.",
+      "a11y": "Renders header / main / footer landmarks; the header and bottom bar stay reachable while the main region scrolls. The refresh spinner is a labelled progressbar; pull to refresh is a gesture, so also offer a refresh button where it matters.",
+      "since": "1.0"
+    },
+    {
+      "name": "SectionHeader",
+      "category": "layout",
+      "props": {
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "actionLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Trailing text button, e.g. See All."
+        },
+        "onAction": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Title 2 bold heading over a group of cards on a dashboard (summary and store-style card groups), with an optional See All.",
+      "avoid": "Headings inside a List or Form (use ListSection header); more than one heading style on the same screen.",
+      "a11y": "Renders an h2; the action is a separate button named by actionLabel.",
+      "import": "diaphane-ui"
+    },
+    {
+      "name": "Stack",
+      "import": "diaphane-ui",
+      "category": "layout",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "direction": {
+          "type": "enum",
+          "values": [
+            "vertical",
+            "horizontal"
+          ],
+          "default": "vertical"
+        },
+        "gap": {
+          "type": "enum",
+          "values": [
+            "none",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "default": "3"
+        },
+        "padding": {
+          "type": "enum",
+          "values": [
+            "none",
+            "margin",
+            "inline",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "default": "none"
+        },
+        "align": {
+          "type": "enum",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "stretch",
+            "baseline"
+          ],
+          "default": "stretch"
+        },
+        "justify": {
+          "type": "enum",
+          "values": [
+            "start",
+            "center",
+            "end",
+            "between"
+          ],
+          "default": "start"
+        },
+        "wrap": {
+          "type": "boolean"
+        },
+        "grow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        },
+        "scroll": {
+          "type": "boolean",
+          "default": false,
+          "description": "Horizontal ScrollView: children scroll sideways and snap; use with direction=\"horizontal\"."
+        },
+        "itemWidth": {
+          "type": "number",
+          "description": "Width of each child in a scrolling stack, in points."
+        }
+      },
+      "slots": [],
+      "use": "Spacing and margins around content that isn't a List, such as a segmented control under the navigation bar, a row of buttons or a bottom call to action.",
+      "avoid": "Rows of data; use List with ListItem.",
+      "a11y": "Plain <div>; adds no semantics.",
+      "since": "1.0"
+    },
+    {
+      "name": "NavigationBar",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "subtitle": {
+          "type": "string",
+          "i18n": true
+        },
+        "displayMode": {
+          "type": "enum",
+          "values": [
+            "large",
+            "inline"
+          ],
+          "default": "large"
+        },
+        "backLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onBack": {
+          "type": "callback",
+          "description": "Shows the back button. Inside a NavigationStack, pushed pages get it automatically."
+        },
+        "leading": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "trailing": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "account": {
+          "type": "object",
+          "description": "The signed-in person: an avatar button in a glass circle after the trailing actions.",
+          "shape": {
+            "name": "string (i18n, required) — accessible name",
+            "src": "string — photo URL",
+            "initials": "string — fallback when there is no photo",
+            "onPress": "callback"
+          }
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "The header of every stack page, in Screen's header slot: large title on root pages, inline title plus back button on pushed pages, up to three glass actions per side.",
+      "avoid": "Switching between top-level sections or putting form controls in the bar; use TabBar for sections and SegmentedControl in the content for filters.",
+      "a11y": "Renders a header with an h1 title; the back button is a native button named by backLabel; icon actions use their label as accessible name; adjacent icon actions merge visually but stay separate buttons.",
+      "since": "1.0"
+    },
+    {
+      "name": "NavigationStack",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true,
+          "description": "Root page, usually a Screen with a NavigationBar."
+        },
+        "backLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true,
+          "description": "Accessible name of the automatic back button on pushed pages."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Screen"
+      ],
+      "use": "Drill-down navigation: list → detail → sub-detail. Call useNavigation().push(<Screen…/>) from a row or card; pushed pages get a back button and swipe-from-edge back automatically, with a push/pop transition.",
+      "avoid": "Switching top-level sections (use TabBar) or modal tasks such as create/edit forms (use Sheet).",
+      "a11y": "Only the top page is exposed; covered pages are inert and aria-hidden. Back is a labelled button; the swipe is an extra gesture, never the only way back.",
+      "since": "1.1"
+    },
+    {
+      "name": "PageControl",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "count": {
+          "type": "number",
+          "required": true
+        },
+        "current": {
+          "type": "number",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "background": {
+          "type": "boolean",
+          "default": false
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Showing the position in a horizontally paged carousel or onboarding flow; bare dots over imagery or colour, background=true over plain backgrounds.",
+      "avoid": "More than about ten pages or step-by-step progress (use ProgressView).",
+      "a11y": "A labelled group of dot buttons; the current one has aria-current=page; arrow keys move between pages.",
+      "since": "1.0"
+    },
+    {
+      "name": "TabBar",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "icon": "icon (use .fill variants)",
+            "label": "string (i18n, required)",
+            "badge": "string | number"
+          }
+        },
+        "selected": {
+          "type": "number",
+          "required": true,
+          "description": "Index of the selected item; the search tab is index items.length."
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "searchLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Adds the search tab (Tab role .search)."
+        },
+        "searchIcon": {
+          "type": "icon",
+          "default": "magnifyingglass"
+        },
+        "searchPlacement": {
+          "type": "enum",
+          "values": [
+            "inline",
+            "separate"
+          ],
+          "default": "inline"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "accessory": {
+          "type": "node",
+          "description": "Bottom accessory, e.g. a mini player: 48pt glass capsule above the bar, inline when minimized."
+        },
+        "accessoryLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "minimizeBehavior": {
+          "type": "enum",
+          "values": [
+            "never",
+            "onScrollDown"
+          ],
+          "default": "never",
+          "description": "onScrollDown collapses the bar to the selected tab and search while Screen's content scrolls down."
+        },
+        "minimized": {
+          "type": "boolean",
+          "description": "Forces the minimized (true) or expanded (false) state."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "accessory"
+      ],
+      "use": "Top-level navigation between 2–5 sections of the app, in Screen's bottomBar slot, with an optional search tab, count badges, a persistent accessory such as a mini player, and minimize-on-scroll for long content.",
+      "avoid": "Actions or filters (use Toolbar or SegmentedControl) and more than five sections.",
+      "a11y": "A nav landmark containing a tablist; each tab is a button with role tab and aria-selected; the badge text is part of the tab's name. The accessory is a labelled region; minimized tabs keep their names.",
+      "since": "1.0"
+    },
+    {
+      "name": "Button",
+      "import": "diaphane-ui",
+      "category": "action",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "glassProminent",
+            "glass",
+            "borderedProminent",
+            "bordered",
+            "borderless",
+            "plain"
+          ],
+          "default": "borderedProminent"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "small",
+            "regular",
+            "large"
+          ],
+          "default": "regular"
+        },
+        "shape": {
+          "type": "enum",
+          "values": [
+            "capsule",
+            "roundedRectangle"
+          ],
+          "default": "capsule"
+        },
+        "role": {
+          "type": "enum",
+          "values": [
+            "default",
+            "destructive",
+            "cancel"
+          ],
+          "default": "default"
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "fullWidth": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "loading": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "enum",
+          "values": [
+            "button",
+            "submit"
+          ],
+          "default": "button"
+        },
+        "onPress": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Primary and secondary actions: borderedProminent/glassProminent for the one main action, bordered or glass for the rest, large + fullWidth for a bottom call to action.",
+      "avoid": "Navigating to another screen (use ListItem with a chevron) and icon-only actions (use IconButton).",
+      "a11y": "Native <button>; label is the accessible name; aria-busy while loading.",
+      "since": "1.0"
+    },
+    {
+      "name": "IconButton",
+      "import": "diaphane-ui",
+      "category": "action",
+      "props": {
+        "icon": {
+          "type": "icon",
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "glassProminent",
+            "glass",
+            "borderedProminent",
+            "bordered",
+            "borderless",
+            "plain"
+          ],
+          "default": "glass"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "small",
+            "regular",
+            "large"
+          ],
+          "default": "regular"
+        },
+        "role": {
+          "type": "enum",
+          "values": [
+            "default",
+            "destructive"
+          ],
+          "default": "default"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "onPress": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Circular icon-only actions such as add, share, more or close, including floating glass buttons.",
+      "avoid": "Actions whose icon isn't universally understood; use Button with a label.",
+      "a11y": "Native <button> with aria-label; aria-pressed when selected is set; 44pt hit area.",
+      "since": "1.0"
+    },
+    {
+      "name": "Toolbar",
+      "import": "diaphane-ui",
+      "category": "action",
+      "props": {
+        "leading": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "trailing": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "status": {
+          "type": "string",
+          "i18n": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Page-level actions at the bottom of a pushed or document page (compose, filter, share) with an optional short status such as an item count, in Screen's bottomBar slot.",
+      "avoid": "Navigating between top-level sections, or pages that already have a TabBar.",
+      "a11y": "role toolbar named by label; icon actions are buttons named by their label; status is a live status region.",
+      "since": "1.0"
+    },
+    {
+      "name": "Checkbox",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "checked": {
+          "type": "boolean",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Multi-select or to-do completion outside a List, drawn as a selection circle.",
+      "avoid": "On/off settings (use Toggle) or selecting rows in a List (use ListItem selectable).",
+      "a11y": "Native checkbox input with a label (visually hidden with labelHidden); 44pt hit area; disabled sets aria-disabled.",
+      "since": "1.0"
+    },
+    {
+      "name": "DatePicker",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "string",
+          "required": true,
+          "description": "ISO 8601 date-time (e.g. 2026-11-20T10:00:00Z); for mode=countdown an ISO 8601 duration (e.g. PT1H30M)"
+        },
+        "mode": {
+          "type": "enum",
+          "values": [
+            "date",
+            "time",
+            "dateTime",
+            "countdown"
+          ],
+          "default": "date",
+          "description": "countdown (hours and minutes, max 23 h 59 min) always uses wheels"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "compact",
+            "graphical",
+            "wheels"
+          ],
+          "default": "compact",
+          "description": "compact pills, inline calendar (graphical; time row for dateTime), or spinning wheels"
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "locale": {
+          "type": "string",
+          "default": "en-US"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time zone for graphical and wheels (device zone by default)"
+        },
+        "timeLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "graphical + dateTime: label of the time row, e.g. \"Time\""
+        },
+        "min": {
+          "type": "string"
+        },
+        "max": {
+          "type": "string"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Picking a date and/or time: compact pills in Form rows, graphical when the calendar context matters (booking a day), wheels for precise times or a countdown duration; value is an ISO string.",
+      "avoid": "Free-form or relative dates (\"next week\"); use a Picker or TextField. Avoid graphical in tight layouts (it needs ~330 × 417pt).",
+      "a11y": "compact: an invisible native date/time input on each pill. graphical: grid of day buttons (arrow keys move by day/week and page months, Enter selects, aria-current=date on today), month steppers and a month/year toggle with aria-expanded. wheels: a spinbutton per column (arrows, Page Up/Down, drag, scroll, tap).",
+      "since": "1.0"
+    },
+    {
+      "name": "Picker",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "options": {
+          "type": "array",
+          "required": true,
+          "i18n": true,
+          "description": "{ value: string; label: string; disabled?: boolean }[] — label is visible text"
+        },
+        "value": {
+          "type": "string",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "menu",
+            "inline",
+            "segmented",
+            "wheel",
+            "navigationLink"
+          ],
+          "default": "menu"
+        },
+        "columns": {
+          "type": "array",
+          "i18n": true,
+          "description": "wheel only: { label: string; options: PickerOption[]; value: string }[] — several picker components side by side; replaces options/value"
+        },
+        "onColumnChange": {
+          "type": "callback",
+          "description": "wheel with columns: (column: number, value: string) => void"
+        },
+        "onNavigate": {
+          "type": "callback",
+          "description": "navigationLink: the row was tapped; the app pushes the option list"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Choosing one option: menu as a Form row (label, value, chevron), inline as checkmark rows, segmented for 2–5 view modes, wheel for long ordered lists or several linked columns, navigationLink when the options live on a pushed screen.",
+      "avoid": "Navigating to unrelated screens or triggering actions (use ListItem with a chevron or a Button); wheels for fewer than ~5 options (use menu or segmented).",
+      "a11y": "menu: button with aria-haspopup=menu opening menuitemradio items (Escape closes, arrows move); inline and segmented: radiogroup with radios; wheel: one spinbutton per column (arrows, Page Up/Down, Home/End, drag, scroll, tap a row); navigationLink: button.",
+      "since": "1.0"
+    },
+    {
+      "name": "SearchField",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "value": {
+          "type": "string",
+          "required": true
+        },
+        "placeholder": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "onSubmit": {
+          "type": "callback"
+        },
+        "onCancel": {
+          "type": "callback"
+        },
+        "onMic": {
+          "type": "callback"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "clearLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "cancelLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "micLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "bottomBar",
+            "inline"
+          ],
+          "default": "bottomBar"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Searching or filtering the current page's content; on phones put it in Screen's bottomBar slot.",
+      "avoid": "General text entry or forms; use TextField.",
+      "a11y": "A search landmark with a native type=search input named by label or placeholder; clear, mic and close are buttons named by clearLabel, micLabel and cancelLabel.",
+      "since": "1.0"
+    },
+    {
+      "name": "SegmentedControl",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "segments": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": "string (i18n, required)",
+            "icon": "icon",
+            "disabled": "boolean"
+          }
+        },
+        "selected": {
+          "type": "number",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Switching between 2–5 mutually exclusive views or filters of the same content, such as Day / Week / Month.",
+      "avoid": "Top-level navigation (use TabBar) or more than five options (use a Picker or menu).",
+      "a11y": "role radiogroup of role radio buttons with aria-checked; arrow keys move the selection (mirrored in RTL); icon segments are named by their label.",
+      "since": "1.0"
+    },
+    {
+      "name": "Slider",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        },
+        "min": {
+          "type": "number",
+          "default": 0
+        },
+        "max": {
+          "type": "number",
+          "default": 1
+        },
+        "step": {
+          "type": "number"
+        },
+        "showTicks": {
+          "type": "boolean"
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "valueText": {
+          "type": "string",
+          "i18n": true
+        },
+        "minIcon": {
+          "type": "icon"
+        },
+        "maxIcon": {
+          "type": "icon"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Choosing a value in a continuous or stepped range such as volume or brightness, optionally with min/max symbols.",
+      "avoid": "Exact numeric entry or a handful of discrete counts; use TextField type number or Stepper.",
+      "a11y": "Native range input (invisible, on top of the visuals); label is the accessible name, valueText the spoken value; arrow keys adjust.",
+      "since": "1.0"
+    },
+    {
+      "name": "Stepper",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number",
+          "default": 1
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "valueText": {
+          "type": "string",
+          "i18n": true
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Small increments of a count, like a quantity row \"Quantity: 3\" with the −/+ control trailing.",
+      "avoid": "Large or continuous ranges; use Slider or a number TextField.",
+      "a11y": "role=spinbutton with aria-valuenow/min/max, labelled by the visible label; arrow, Home and End keys step; the −/+ halves are pointer targets.",
+      "since": "1.0"
+    },
+    {
+      "name": "TextField",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "form",
+            "roundedBorder",
+            "plain"
+          ],
+          "default": "form"
+        },
+        "type": {
+          "type": "enum",
+          "values": [
+            "text",
+            "email",
+            "password",
+            "number",
+            "tel",
+            "search"
+          ],
+          "default": "text"
+        },
+        "value": {
+          "type": "string",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "onSubmit": {
+          "type": "callback"
+        },
+        "placeholder": {
+          "type": "string",
+          "i18n": true
+        },
+        "multiline": {
+          "type": "boolean"
+        },
+        "minLines": {
+          "type": "number",
+          "default": 1
+        },
+        "maxLines": {
+          "type": "number"
+        },
+        "invalid": {
+          "type": "boolean"
+        },
+        "errorText": {
+          "type": "string",
+          "i18n": true
+        },
+        "hint": {
+          "type": "string",
+          "i18n": true
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "trailingIcon": {
+          "type": "icon"
+        },
+        "trailingIconLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onTrailingPress": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Text entry: variant form as a row inside a Form ListSection (visible label = LabeledContent with the value trailing), roundedBorder or plain on their own, and type search for the glass search capsule.",
+      "avoid": "Choosing from a fixed set of values or picking dates; use Picker or DatePicker.",
+      "a11y": "Native <input>/<textarea>; label is the accessible name (visible or aria-label), aria-invalid/aria-required, hint and error linked with aria-describedby.",
+      "since": "1.0"
+    },
+    {
+      "name": "Toggle",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "checked": {
+          "type": "boolean",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "green",
+            "accent"
+          ],
+          "default": "green"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Turning a setting on or off immediately.",
+      "avoid": "Choices that need a Save step or more than two options; use Checkbox or Picker.",
+      "a11y": "Native checkbox with role=switch and aria-checked; the label is always present for screen readers.",
+      "since": "1.0"
+    },
+    {
+      "name": "Avatar",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "initials": {
+          "type": "string",
+          "i18n": true
+        },
+        "name": {
+          "type": "string",
+          "i18n": true
+        },
+        "src": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "icon",
+          "default": "person.fill"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "blue",
+            "green",
+            "orange",
+            "pink",
+            "purple",
+            "teal",
+            "indigo",
+            "red",
+            "yellow",
+            "gray"
+          ],
+          "description": "Soft tinted background with initials in the strong tone color (like Media fill=soft). auto picks a stable tone from a hash of name (or initials) so the same person always gets the same color. Omit for the gray Contacts look."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "A person or account: Contacts-style initials on a gray gradient or in a soft tone (tone=auto gives each person a stable color), a photo (a failed image falls back to the initials), or a person symbol when nothing else is known.",
+      "avoid": "App or category icons; use Icon or a ListItem icon tile.",
+      "a11y": "role=img named by name; decorative (hidden) when name is omitted because the name is visible nearby.",
+      "since": "1.0"
+    },
+    {
+      "name": "Badge",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "value": {
+          "type": "string",
+          "i18n": true
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "red",
+            "accent",
+            "gray"
+          ],
+          "default": "red"
+        },
+        "dot": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "A small count or status word next to content (red for notifications, accent for new, gray for neutral counts), or a dot for unread.",
+      "avoid": "Counts at the end of list rows (use ListItem badge) or long text (use Text).",
+      "a11y": "The value is read as text; give label (e.g. \"3 unread\") for context, and always for dot.",
+      "since": "1.0"
+    },
+    {
+      "name": "Card",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "groupBox",
+            "grouped",
+            "glass"
+          ],
+          "default": "groupBox",
+          "description": "groupBox: plain group box. grouped: white card on a grouped Screen. glass: glass panel."
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "icon": {
+          "type": "icon",
+          "description": "Symbol before the title, sized to the headline line and centred with it."
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent",
+          "description": "Colour of the title symbol (the title text stays primary). Use a category colour per card, e.g. an orange flame."
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "testId": {
+          "type": "string"
+        },
+        "onPress": {
+          "type": "callback",
+          "description": "Makes the whole card tappable (push a detail page); it scales down slightly while pressed."
+        }
+      },
+      "slots": [
+        "Text",
+        "Button",
+        "Badge",
+        "Avatar",
+        "ProgressView",
+        "Icon"
+      ],
+      "use": "A self-contained block of related content on a grouped page, such as a summary, status or tip; glass for a floating highlight.",
+      "avoid": "Rows of a list or form fields; use ListSection and ListItem.",
+      "a11y": "A <section> labelled by its title heading.",
+      "since": "1.0"
+    },
+    {
+      "name": "Chart",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "kind": {
+          "type": "enum",
+          "values": [
+            "bar",
+            "line",
+            "donut",
+            "comparison"
+          ],
+          "required": true
+        },
+        "data": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "i18n": true
+            },
+            "value": {
+              "type": "number"
+            }
+          }
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "height": {
+          "type": "number",
+          "default": 170,
+          "description": "Frame height in points, axis labels included."
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent"
+        },
+        "area": {
+          "type": "boolean",
+          "default": false,
+          "description": "line: fill under the line (AreaMark at 15%)."
+        },
+        "points": {
+          "type": "boolean",
+          "default": false,
+          "description": "line: dot on each value (PointMark)."
+        },
+        "formatValue": {
+          "type": "callback",
+          "description": "Formats axis and selection values."
+        },
+        "yMax": {
+          "type": "number"
+        },
+        "selected": {
+          "type": "number",
+          "description": "Selected index (chartXSelection); controlled with onSelect."
+        },
+        "onSelect": {
+          "type": "callback",
+          "description": "Tap or drag across the plot to select a value."
+        },
+        "testId": {
+          "type": "string"
+        },
+        "axes": {
+          "type": "enum",
+          "values": [
+            "full",
+            "minimal",
+            "none"
+          ],
+          "default": "full",
+          "description": "full: default axes. minimal: x labels only (highlight cards). none: sparkline."
+        },
+        "highlight": {
+          "type": "enum",
+          "values": [
+            "none",
+            "last"
+          ],
+          "default": "none",
+          "description": "last: grey bars with the latest tinted (summary cards)."
+        },
+        "highlightIndex": {
+          "type": "number",
+          "description": "Like highlight last, for the bar at this index: grey bars with that one tinted."
+        },
+        "barRadius": {
+          "type": "number",
+          "default": 0
+        },
+        "smooth": {
+          "type": "boolean",
+          "default": false,
+          "description": "line: Catmull-Rom curve."
+        },
+        "compare": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "line: grey comparison series (last week, average)."
+        },
+        "rule": {
+          "type": "number",
+          "description": "RuleMark value (average / goal)."
+        },
+        "ruleLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "unit": {
+          "type": "string",
+          "i18n": true
+        },
+        "formatAxis": {
+          "type": "callback",
+          "description": "Formats y-axis ticks (e.g. $2.5K); values use formatValue."
+        },
+        "summaryLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Detail header label (TOTAL, AVERAGE); setting it shows the header, which becomes a callout over the selection."
+        },
+        "summaryValue": {
+          "type": "string",
+          "description": "Formatted header number."
+        },
+        "summaryUnit": {
+          "type": "string",
+          "i18n": true
+        },
+        "summaryCaption": {
+          "type": "string",
+          "i18n": true,
+          "description": "Line under the number (date range)."
+        }
+      },
+      "use": "Data in dashboards and detail pages: bar / line trends, sparklines (axes none), highlight cards (axes minimal + rule), comparison bars, donut part-of-whole.",
+      "avoid": "Dense or scientific charts, more than ~12 categories, or donuts with more than 5 slices; show a table or list instead.",
+      "a11y": "The SVG is hidden from assistive tech and the data is exposed as a visually hidden table with the chart label as its caption; the selection callout is a polite live region.",
+      "since": "1.1"
+    },
+    {
+      "name": "Checklist",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "progressLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "title": {
+              "type": "string",
+              "i18n": true
+            },
+            "subtitle": {
+              "type": "string",
+              "i18n": true
+            },
+            "done": {
+              "type": "boolean"
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "onToggle": {
+          "type": "callback"
+        },
+        "hideCompleted": {
+          "type": "boolean",
+          "default": false
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Setup and onboarding progress (\"Finish Setting Up\"): a handful of steps with a progress bar.",
+      "avoid": "Ordinary to-do lists the user manages (use List with Checkbox rows).",
+      "a11y": "Progress is a labelled progressbar; each step is a button with aria-pressed (or navigates when it has onPress).",
+      "since": "1.1"
+    },
+    {
+      "name": "Gauge",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "value": {
+          "type": "number",
+          "required": true
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "capacity",
+            "value"
+          ],
+          "default": "capacity"
+        },
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "currentValueLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "default",
+            "accent",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "default"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Show a level within a range at a glance, such as battery capacity or a reading on a scale.",
+      "avoid": "Task progress over time; use ProgressView.",
+      "a11y": "role=meter with aria-valuenow 0-100, labelled by label, with currentValueLabel as the value text.",
+      "since": "1.0"
+    },
+    {
+      "name": "Glass",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "regular",
+            "clear"
+          ],
+          "default": "regular",
+          "description": "regular: legible over anything (backdrop brightness compressed, colour kept). clear: nearly untouched backdrop, for glass over photos and video."
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow"
+          ],
+          "description": "Glass.tint(_:): regular tint is practically opaque; clear tint lets the backdrop shade the colour."
+        },
+        "shape": {
+          "type": "enum",
+          "values": [
+            "capsule",
+            "circle",
+            "rect"
+          ],
+          "default": "capsule"
+        },
+        "cornerRadius": {
+          "type": "number",
+          "default": 26,
+          "description": "Corner radius for shape=\"rect\", in points."
+        },
+        "interactive": {
+          "type": "boolean",
+          "default": false,
+          "description": "Glass.interactive(): swells ×1.2133 on a spring and lights up while pressed."
+        },
+        "children": {
+          "type": "node"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Text",
+        "Icon",
+        "Button",
+        "IconButton",
+        "Stack"
+      ],
+      "use": "Custom floating controls and panels that sit on top of content: a media overlay, a floating action cluster, a custom pill.",
+      "avoid": "Content areas, list rows or full-screen backgrounds (glass is for the control layer above content); stacking glass on glass; re-creating Button, TabBar, Toolbar or SearchField, which already draw their own glass.",
+      "a11y": "A plain container with no role; give interactive content its own button semantics. Text on .clear glass over bright media can drop below AA: prefer .regular behind text.",
+      "since": "1.1"
+    },
+    {
+      "name": "Icon",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "name": {
+          "type": "icon",
+          "required": true
+        },
+        "scale": {
+          "type": "enum",
+          "values": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "weight": {
+          "type": "enum",
+          "values": [
+            "regular",
+            "medium",
+            "semibold",
+            "bold"
+          ],
+          "default": "regular"
+        },
+        "color": {
+          "type": "enum",
+          "values": [
+            "inherit",
+            "primary",
+            "secondary",
+            "tertiary",
+            "accent",
+            "danger",
+            "success",
+            "warning",
+            "onAccent"
+          ],
+          "default": "inherit"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "An icon (built-in or registered name) inline with text; it sizes and baseline-aligns with the current font.",
+      "avoid": "Tappable icons; use IconButton, which provides a 44pt target and a label.",
+      "a11y": "Decorative (aria-hidden) unless label is set; directional symbols mirror in RTL.",
+      "since": "1.0"
+    },
+    {
+      "name": "Media",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "src": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string",
+          "i18n": true,
+          "description": "Required for meaningful images; omit for decorative ones."
+        },
+        "ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:2",
+            "16:9",
+            "3:4",
+            "2:3"
+          ],
+          "default": "4:3"
+        },
+        "radius": {
+          "type": "enum",
+          "values": [
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": "medium"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "blue",
+            "green",
+            "orange",
+            "pink",
+            "purple",
+            "teal",
+            "indigo",
+            "red",
+            "yellow",
+            "gray"
+          ],
+          "default": "blue",
+          "description": "Placeholder gradient when there is no src."
+        },
+        "icon": {
+          "type": "icon",
+          "description": "Symbol centred on the placeholder."
+        },
+        "fill": {
+          "type": "enum",
+          "values": [
+            "soft",
+            "vivid"
+          ],
+          "default": "soft",
+          "description": "Icon placeholder fill: soft = tone-tinted surface with a tone glyph (default, for content tiles); vivid = saturated gradient with a white glyph (app icons only)."
+        },
+        "width": {
+          "type": "number",
+          "description": "Fixed width in points (thumbnails in list rows)."
+        },
+        "onPress": {
+          "type": "callback",
+          "description": "Makes the image tappable."
+        },
+        "children": {
+          "type": "node",
+          "description": "Overlay pinned to the bottom (a Glass caption, a badge, a progress bar)."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Glass",
+        "Text",
+        "ProgressView",
+        "Badge"
+      ],
+      "use": "Photos, artwork and video thumbnails in cards, rows and detail headers; gradient placeholders while prototyping.",
+      "avoid": "Icons or symbols on their own (use Icon) and avatars of people (use Avatar).",
+      "a11y": "Pass alt for meaningful images (role img); without alt the image is decorative and hidden. With onPress it becomes a button named by alt.",
+      "since": "1.1"
+    },
+    {
+      "name": "NotificationCard",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "description": "Small caps header (NOTIFICATIONS); omit for a promo card."
+        },
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent"
+        },
+        "actionLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onAction": {
+          "type": "callback"
+        },
+        "onDismiss": {
+          "type": "callback"
+        },
+        "dismissLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "In-page notices and suggestions on a grouped Screen (e.g. a \"Notifications\" card): something needs attention, with one action and a close button.",
+      "avoid": "Transient confirmations (use Banner) or blocking decisions (use Alert).",
+      "a11y": "A section with the title as text; action and close are labelled buttons.",
+      "since": "1.1"
+    },
+    {
+      "name": "Rating",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "value": {
+          "type": "number",
+          "required": true,
+          "description": "Stars filled 0–5 (half stars when displayed)."
+        },
+        "onChange": {
+          "type": "callback",
+          "description": "Makes it an input: tap a star or drag across (Tap to Rate)."
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "small",
+            "regular",
+            "large"
+          ],
+          "default": "regular"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "orange",
+            "gray"
+          ]
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Five-star ratings: showing an average in rows, or letting someone rate (Tap to Rate).",
+      "avoid": "Precise scores or proficiency levels (use Text, Gauge or a Picker).",
+      "a11y": "Display: role img named with the value. Input: role slider (1–5) with arrow keys; dragging is optional.",
+      "since": "1.2"
+    },
+    {
+      "name": "RatingSummary",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "average": {
+          "type": "number",
+          "required": true
+        },
+        "distribution": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "number"
+          },
+          "description": "Counts per level, five stars first."
+        },
+        "outOfLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "countLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "Ratings summary header: big average, out of 5, 5→1 histogram and the rating count.",
+      "avoid": "Single ratings (use Rating).",
+      "a11y": "One image with an accessible summary (average and count); the bars are decorative.",
+      "since": "1.2"
+    },
+    {
+      "name": "StatCard",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "title": {
+          "type": "string",
+          "i18n": true,
+          "required": true
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "accent",
+            "blue",
+            "green",
+            "indigo",
+            "orange",
+            "pink",
+            "purple",
+            "red",
+            "teal",
+            "yellow",
+            "gray"
+          ],
+          "default": "accent"
+        },
+        "value": {
+          "type": "string",
+          "required": true,
+          "description": "Formatted value."
+        },
+        "unit": {
+          "type": "string",
+          "i18n": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true,
+          "description": "Small label above the value (Latest, Average)."
+        },
+        "caption": {
+          "type": "string",
+          "i18n": true,
+          "description": "Top-trailing caption (time of the latest sample)."
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "Recent values for the mini chart; the last is highlighted."
+        },
+        "chart": {
+          "type": "enum",
+          "values": [
+            "bars",
+            "line"
+          ],
+          "default": "bars"
+        },
+        "trend": {
+          "type": "enum",
+          "values": [
+            "up",
+            "down",
+            "flat"
+          ]
+        },
+        "trendLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "regular",
+            "compact"
+          ],
+          "default": "regular"
+        },
+        "onPress": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "use": "KPI / metric tiles on dashboards (summary card style): one number, its unit, recent trend, tap for the detail page.",
+      "avoid": "Long text or several numbers per card; tables of figures (use List with values).",
+      "a11y": "With onPress it is one button whose name reads title, value and unit; the mini chart is decorative (the detail page carries the data).",
+      "since": "1.1"
+    },
+    {
+      "name": "Text",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true,
+          "i18n": true
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "largeTitle",
+            "title1",
+            "title2",
+            "title3",
+            "headline",
+            "body",
+            "callout",
+            "subheadline",
+            "footnote",
+            "caption1",
+            "caption2"
+          ],
+          "default": "body"
+        },
+        "color": {
+          "type": "enum",
+          "values": [
+            "primary",
+            "secondary",
+            "tertiary",
+            "quaternary",
+            "accent",
+            "danger",
+            "success",
+            "warning",
+            "onAccent",
+            "inherit"
+          ],
+          "default": "primary"
+        },
+        "weight": {
+          "type": "enum",
+          "values": [
+            "regular",
+            "medium",
+            "semibold",
+            "bold",
+            "heavy"
+          ]
+        },
+        "emphasized": {
+          "type": "boolean"
+        },
+        "design": {
+          "type": "enum",
+          "values": [
+            "default",
+            "rounded",
+            "monospaced"
+          ],
+          "default": "default"
+        },
+        "align": {
+          "type": "enum",
+          "values": [
+            "start",
+            "center",
+            "end"
+          ]
+        },
+        "lines": {
+          "type": "number",
+          "default": 0
+        },
+        "paragraph": {
+          "type": "boolean"
+        },
+        "as": {
+          "type": "enum",
+          "values": [
+            "span",
+            "p",
+            "h1",
+            "h2",
+            "h3",
+            "label",
+            "div"
+          ],
+          "default": "span"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Any standalone text, set in a dynamic-type style (body by default, largeTitle for screen titles).",
+      "avoid": "Text inside other components; pass it to their title/label props instead.",
+      "a11y": "Renders the chosen semantic element; use as=\"h1\"–\"h3\" for headings.",
+      "since": "1.0"
+    },
+    {
+      "name": "Banner",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": true
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "neutral",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "neutral"
+        },
+        "actionLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onAction": {
+          "type": "callback"
+        },
+        "onDismiss": {
+          "type": "callback"
+        },
+        "dismissLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Confirm a completed action or report a background event without blocking the screen, optionally with one undo-style action.",
+      "avoid": "Decisions the person must make or errors that block the task; use Alert or ErrorState.",
+      "a11y": "role=status (polite) for neutral and success, role=alert (assertive) for warning and danger; the close button needs dismissLabel; Escape dismisses.",
+      "since": "1.0"
+    },
+    {
+      "name": "EmptyState",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "default",
+            "search"
+          ],
+          "default": "default"
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "description": {
+          "type": "string",
+          "i18n": true
+        },
+        "query": {
+          "type": "string"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "label": {
+              "type": "string",
+              "required": true,
+              "i18n": true
+            },
+            "variant": {
+              "type": "enum",
+              "values": [
+                "glassProminent",
+                "glass",
+                "borderedProminent",
+                "bordered",
+                "borderless",
+                "plain"
+              ]
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Fill a screen or list that has no content yet, or no search results, with a short explanation and at most two actions.",
+      "avoid": "Errors and loading; use ErrorState and ProgressView.",
+      "a11y": "Title is a heading; the search variant is a status region so results changes are announced; the icon is decorative.",
+      "since": "1.0"
+    },
+    {
+      "name": "ErrorState",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "description": {
+          "type": "string",
+          "i18n": true
+        },
+        "retryLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onRetry": {
+          "type": "callback"
+        },
+        "retrying": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Replace content that failed to load with what went wrong and a retry button.",
+      "avoid": "Validation messages on form fields or transient failures; use the field footer or a Banner.",
+      "a11y": "Wrapped in role=alert so the failure is announced; the retry button shows a spinner and stays labelled while retrying.",
+      "since": "1.0"
+    },
+    {
+      "name": "FieldError",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "text": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "footer",
+            "inline"
+          ],
+          "default": "footer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Red validation message, as the section footer under the invalid Form section or inline under a standalone field.",
+      "avoid": "Page-level failures or neutral guidance; use an Alert or Banner, or FieldHint.",
+      "a11y": "role=alert so it is announced when it appears; also set invalid on the TextField.",
+      "since": "1.0"
+    },
+    {
+      "name": "FieldHint",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "text": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "footer",
+            "inline"
+          ],
+          "default": "footer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Secondary helper text under a Form section (footer) or directly under a standalone field (inline).",
+      "avoid": "Validation errors; use FieldError.",
+      "a11y": "Plain paragraph; pass id and reference it from the field to have it read with the field.",
+      "since": "1.0"
+    },
+    {
+      "name": "ProgressView",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "circular",
+            "linear"
+          ],
+          "default": "circular"
+        },
+        "value": {
+          "type": "number"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "small",
+            "regular",
+            "large"
+          ],
+          "default": "regular"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "showLabel": {
+          "type": "boolean"
+        },
+        "currentValueLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "default",
+            "accent",
+            "blue",
+            "green",
+            "red",
+            "orange",
+            "yellow",
+            "pink",
+            "purple",
+            "gray"
+          ],
+          "default": "default"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Loading: a circular spinner while waiting, or a linear bar when progress is known.",
+      "avoid": "Placeholder layouts for content still loading; keep the real layout and show a spinner.",
+      "a11y": "role=progressbar with aria-valuenow when determinate; label names it.",
+      "since": "1.0"
+    },
+    {
+      "name": "ActionSheet",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onClose": {
+          "type": "callback",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "actions": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "required": true,
+              "i18n": true
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "cancel",
+                "destructive"
+              ],
+              "default": "default"
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "cancelLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Offer a short list of choices about one item (share, duplicate, delete) after the person taps a control.",
+      "avoid": "Navigation or long option lists; use Menu for persistent commands and Sheet for anything with more content.",
+      "a11y": "role=dialog with aria-modal; the cancel action is not drawn (outside tap dismisses) but stays available as a visually hidden button and on Escape.",
+      "since": "1.0"
+    },
+    {
+      "name": "Alert",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onClose": {
+          "type": "callback",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "actions": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "required": true,
+              "i18n": true
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "cancel",
+                "destructive"
+              ],
+              "default": "default"
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "fieldValue": {
+          "type": "string"
+        },
+        "fieldPlaceholder": {
+          "type": "string",
+          "i18n": true
+        },
+        "fieldLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onFieldChange": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Ask for confirmation of a consequential action or collect one short value, with two actions side by side or three or more stacked.",
+      "avoid": "Choices that are not a yes/no decision or more than three actions; use ActionSheet, and use Banner for non-blocking feedback.",
+      "a11y": "role=alertdialog with aria-modal, labelled by the title and described by the message; focus moves into the alert and Escape triggers the cancel action.",
+      "since": "1.0"
+    },
+    {
+      "name": "ContextMenu",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "i18n": true
+            },
+            "subtitle": {
+              "type": "string",
+              "i18n": true
+            },
+            "icon": {
+              "type": "icon"
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "destructive"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "checked": {
+              "type": "boolean"
+            },
+            "items": {
+              "type": "array"
+            },
+            "onPress": {
+              "type": "callback"
+            },
+            "divider": {
+              "type": "boolean"
+            },
+            "section": {
+              "type": "string",
+              "i18n": true
+            }
+          }
+        },
+        "layout": {
+          "type": "enum",
+          "values": [
+            "large",
+            "medium",
+            "small"
+          ],
+          "default": "large"
+        },
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onOpenChange": {
+          "type": "callback",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        },
+        "onPress": {
+          "type": "callback",
+          "description": "Tap action on the target (open the photo); a long press still opens the menu. Makes the target a button."
+        }
+      },
+      "slots": [
+        "Card",
+        "Avatar",
+        "ListItem"
+      ],
+      "use": "Touch-and-hold shortcuts for a piece of content (photo, card, row): the content lifts as a preview over a dimmed, blurred background with the menu below; also opens on right click and the context-menu key.",
+      "avoid": "The only way to reach an action (it is hidden); keep each command reachable elsewhere and don't use it for primary actions or on controls that already respond to long press.",
+      "a11y": "The target is focusable with aria-haspopup=menu and opens on the ContextMenu key or Shift+F10; the menu takes focus, Escape closes it and returns focus to the target; same item roles as Menu; give the target a label when its content isn't text.",
+      "since": "1.0"
+    },
+    {
+      "name": "Menu",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "trigger": {
+          "type": "node",
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "i18n": true
+            },
+            "subtitle": {
+              "type": "string",
+              "i18n": true
+            },
+            "icon": {
+              "type": "icon"
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "destructive"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "checked": {
+              "type": "boolean"
+            },
+            "items": {
+              "type": "array"
+            },
+            "onPress": {
+              "type": "callback"
+            },
+            "divider": {
+              "type": "boolean"
+            },
+            "section": {
+              "type": "string",
+              "i18n": true
+            }
+          }
+        },
+        "layout": {
+          "type": "enum",
+          "values": [
+            "large",
+            "medium",
+            "small"
+          ],
+          "default": "large"
+        },
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onOpenChange": {
+          "type": "callback",
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Button",
+        "IconButton"
+      ],
+      "use": "Group secondary commands (sort, filter, view options, more actions) behind a button: titled sections, checkmarks for toggled state, one level of submenus, and a palette row of 3 (medium) or 4 (small) frequent actions.",
+      "avoid": "Primary actions, long lists or deep hierarchies (submenus are one level, about 5 items); use Button, ActionSheet, Sheet or a List screen instead.",
+      "a11y": "role=menu with menuitem / menuitemcheckbox (aria-checked) buttons; submenu items have aria-haspopup and open with Enter or ArrowRight (ArrowLeft/Escape go back); arrow keys move between items and Escape closes; small palette items are labelled by their label prop; destructive items are tinted red and should say what they delete.",
+      "since": "1.0"
+    },
+    {
+      "name": "Sheet",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onClose": {
+          "type": "callback",
+          "required": true,
+          "description": "Called on a scrim tap, Escape, or a drag down past the dismiss threshold."
+        },
+        "detent": {
+          "type": "enum",
+          "values": [
+            "medium",
+            "large"
+          ],
+          "default": "large"
+        },
+        "showGrabber": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "cancelLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onCancel": {
+          "type": "callback"
+        },
+        "confirmLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onConfirm": {
+          "type": "callback"
+        },
+        "confirmDisabled": {
+          "type": "boolean"
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "testId": {
+          "type": "string"
+        },
+        "detents": {
+          "type": "array",
+          "items": {
+            "type": "enum",
+            "values": [
+              "medium",
+              "large"
+            ]
+          },
+          "description": "Detents the user can drag between (.presentationDetents). Default: only `detent`."
+        },
+        "onDetentChange": {
+          "type": "callback",
+          "description": "Called when a drag settles on another detent."
+        },
+        "dismissDisabled": {
+          "type": "boolean",
+          "default": false,
+          "description": ".interactiveDismissDisabled(): a drag down snaps back (unsaved changes)."
+        },
+        "onDismissAttempt": {
+          "type": "callback",
+          "description": "Called instead of onClose when dismissDisabled blocks a drag, scrim tap or Escape: show the Discard Changes action sheet here."
+        }
+      },
+      "slots": [
+        "List",
+        "ListSection",
+        "ListItem",
+        "Text",
+        "Button",
+        "EmptyState",
+        "ProgressView"
+      ],
+      "use": "Present a focused task or detail (create, edit, inspect) over the current screen, medium for quick input and large for full forms. Put a NavigationStack inside for pickers that push within the sheet (one path, no modal over modal).",
+      "avoid": "Confirmations and one-line messages; use Alert, and push a new screen for primary navigation.",
+      "a11y": "role=dialog with aria-modal, labelled by the title; header buttons take their accessible names from cancel.label and confirm.label; Escape and scrim tap call onClose. Dragging is a pointer gesture only; keep the cancel button or Escape for keyboard and switch users.",
+      "since": "1.0"
+    }
+  ]
+}

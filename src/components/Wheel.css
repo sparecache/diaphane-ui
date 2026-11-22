@@ -1,0 +1,83 @@
+/* ── Wheel engine (picker and date-picker wheels).
+ * 216 tall. multi-column: 32pt rows, 34pt band, band row 23.5pt, outer rows 21pt.
+ * single-column: 30pt rows, 32pt band, 21pt everywhere.
+ * Outer rows: label colour at 44.7% (both themes), on a cylinder (R ≈ 97, see Wheel.tsx) with perspective 900 from the picker centre.
+ * Band: quaternarySystemFill capsule, 9pt from both sides.
+ * The 23.5 / 21pt sizes are fixed metrics (the picker ignores dynamic type), kept as local vars. */
+[data-ds="diaphane"] .dph-wheel {
+  --_pitch: 32px;
+  --_band: 34px;
+  --_center-font: 23.5px;
+  --_outer-font: 21px;
+  --_outer-alpha: 0.447;
+  position: relative;
+  height: 216px;
+  margin-inline: auto;
+  overflow: hidden;
+  color: var(--dph-label);
+  font-family: var(--dph-font-family);
+  font-weight: var(--dph-weight-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+[data-ds="diaphane"] .dph-wheel[data-metrics="single"] { --_pitch: 30px; --_band: 32px; --_center-font: 21px; }
+[data-ds="diaphane"] .dph-wheel[data-disabled] { opacity: 0.5; }
+
+[data-ds="diaphane"] .dph-wheel__band {
+  position: absolute;
+  inset-inline: 9px;
+  top: calc(50% - var(--_band) / 2);
+  height: var(--_band);
+  border-radius: var(--dph-radius-full);
+  background: var(--dph-quaternary-system-fill);
+}
+[data-ds="diaphane"] .dph-wheel__outer {
+  position: absolute;
+  inset: 0;
+  opacity: var(--_outer-alpha);
+  font-size: var(--_outer-font);
+  perspective: 900px;
+  perspective-origin: 50% 50%;
+  /* Hide the outer rows where the band draws the selected row, and fade them toward the edges
+   * (80% of the 44.7% at the band, 74% at ±51pt, 47% at ±72pt, 20% at ±87pt, 0 at the edge). */
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0) 0px, rgb(0 0 0 / 0.2) 21px, rgb(0 0 0 / 0.22) 24px, rgb(0 0 0 / 0.32) 27px, rgb(0 0 0 / 0.42) 33px, rgb(0 0 0 / 0.47) 36px, rgb(0 0 0 / 0.64) 45px, rgb(0 0 0 / 0.69) 48px, rgb(0 0 0 / 0.72) 51px, rgb(0 0 0 / 0.74) 57px, rgb(0 0 0 / 0.76) 72px, rgb(0 0 0 / 0.78) 78px, rgb(0 0 0 / 0.8) calc(50% - var(--_band) / 2), transparent calc(50% - var(--_band) / 2), transparent calc(50% + var(--_band) / 2), rgb(0 0 0 / 0.8) calc(50% + var(--_band) / 2), rgb(0 0 0 / 0.78) calc(100% - 78px), rgb(0 0 0 / 0.76) calc(100% - 72px), rgb(0 0 0 / 0.74) calc(100% - 57px), rgb(0 0 0 / 0.72) calc(100% - 51px), rgb(0 0 0 / 0.69) calc(100% - 48px), rgb(0 0 0 / 0.64) calc(100% - 45px), rgb(0 0 0 / 0.47) calc(100% - 36px), rgb(0 0 0 / 0.42) calc(100% - 33px), rgb(0 0 0 / 0.32) calc(100% - 27px), rgb(0 0 0 / 0.22) calc(100% - 24px), rgb(0 0 0 / 0.2) calc(100% - 21px), rgb(0 0 0 / 0) calc(100% - 0px));
+  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0) 0px, rgb(0 0 0 / 0.2) 21px, rgb(0 0 0 / 0.22) 24px, rgb(0 0 0 / 0.32) 27px, rgb(0 0 0 / 0.42) 33px, rgb(0 0 0 / 0.47) 36px, rgb(0 0 0 / 0.64) 45px, rgb(0 0 0 / 0.69) 48px, rgb(0 0 0 / 0.72) 51px, rgb(0 0 0 / 0.74) 57px, rgb(0 0 0 / 0.76) 72px, rgb(0 0 0 / 0.78) 78px, rgb(0 0 0 / 0.8) calc(50% - var(--_band) / 2), transparent calc(50% - var(--_band) / 2), transparent calc(50% + var(--_band) / 2), rgb(0 0 0 / 0.8) calc(50% + var(--_band) / 2), rgb(0 0 0 / 0.78) calc(100% - 78px), rgb(0 0 0 / 0.76) calc(100% - 72px), rgb(0 0 0 / 0.74) calc(100% - 57px), rgb(0 0 0 / 0.72) calc(100% - 51px), rgb(0 0 0 / 0.69) calc(100% - 48px), rgb(0 0 0 / 0.64) calc(100% - 45px), rgb(0 0 0 / 0.47) calc(100% - 36px), rgb(0 0 0 / 0.42) calc(100% - 33px), rgb(0 0 0 / 0.32) calc(100% - 27px), rgb(0 0 0 / 0.22) calc(100% - 24px), rgb(0 0 0 / 0.2) calc(100% - 21px), rgb(0 0 0 / 0) calc(100% - 0px));
+}
+[data-ds="diaphane"] .dph-wheel__center {
+  position: absolute;
+  inset: 0;
+  font-size: var(--_center-font);
+  clip-path: inset(calc(50% - var(--_band) / 2) 0);
+}
+[data-ds="diaphane"] .dph-wheel__row {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(50% - var(--_pitch) / 2);
+  height: var(--_pitch);
+  backface-visibility: hidden;
+}
+/* Zero-width anchor: the text hangs off its start, centre or end like a label aligned in its cell. */
+[data-ds="diaphane"] .dph-wheel__anchor {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-wheel__anchor[data-align="center"] { justify-content: center; }
+[data-ds="diaphane"] .dph-wheel__anchor[data-align="end"] { justify-content: flex-end; }
+[data-ds="diaphane"] .dph-wheel__hit {
+  position: absolute;
+  inset-block: 0;
+  cursor: grab;
+  outline: none;
+  border-radius: var(--dph-radius-md);
+}
+[data-ds="diaphane"] .dph-wheel__hit:active { cursor: grabbing; }
+[data-ds="diaphane"] .dph-wheel__hit:focus-visible { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--dph-accent) 45%, transparent); }
+[data-ds="diaphane"] .dph-wheel[data-disabled] .dph-wheel__hit { cursor: default; }

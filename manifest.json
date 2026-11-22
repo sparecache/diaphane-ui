@@ -1,0 +1,75 @@
+{
+  "schema": "manifest@1",
+  "id": "diaphane",
+  "name": "Diaphane UI",
+  "description": "An open-source, iOS-inspired React component library with a translucent glass look, for prototyping mobile web apps. Not affiliated with or endorsed by Apple.",
+  "platform": "ios",
+  "version": "0.1.0",
+  "package": "diaphane-ui",
+  "entry": "src/index.ts",
+  "scope": "[data-ds=\"diaphane\"]",
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "tokens": {
+    "css": "src/styles/tokens.css",
+    "map": "tokens.map.json",
+    "prefix": "--dph-"
+  },
+  "catalog": "catalog.json",
+  "intents": "intents.json",
+  "rules": "rules.md",
+  "frames": [
+    {
+      "id": "phone",
+      "path": "frame/phone.tsx",
+      "width": 402,
+      "height": 874,
+      "scale": 3,
+      "safeArea": {
+        "top": 62,
+        "bottom": 34,
+        "start": 0,
+        "end": 0
+      },
+      "cornerRadius": 62,
+      "default": true
+    }
+  ],
+  "versions": {
+    "default": ">=27",
+    "rules": {},
+    "tokens": {}
+  },
+  "assets": [
+    {
+      "kind": "font",
+      "name": "Inter (variable)",
+      "license": "SIL Open Font License 1.1",
+      "source": "src/fonts/ (subsetted woff2 from @fontsource-variable/inter, licence text included)",
+      "fallback": "The font stack uses the device's own system font where the platform provides one (-apple-system, BlinkMacSystemFont); no platform font file is bundled."
+    },
+    {
+      "kind": "icons",
+      "name": "Lucide",
+      "license": "ISC (some icons MIT, from Feather)",
+      "source": "npm package `lucide`, curated in src/icons/icons.ts; see THIRD_PARTY_NOTICES.md",
+      "fallback": "Apps can add or override icons with registerIcons()."
+    }
+  ],
+  "examples": [
+    "examples/settings.tsx",
+    "examples/inbox.tsx",
+    "examples/checkout.tsx"
+  ],
+  "accessibility": {
+    "defaultPalette": "native",
+    "aaMode": {
+      "attribute": "data-contrast=\"high\"",
+      "frameProp": "contrast=\"high\"",
+      "description": "High-contrast palette; every text/background pair passes WCAG AA in light and dark."
+    },
+    "nativeExceptions": "The default palette is below AA for secondary text (3.44:1), white on the default blue (3.52:1 light, 3.23:1 dark) and the default red text (3.57:1). Kept by design for the standard look; use the AA mode when contrast compliance matters."
+  }
+}

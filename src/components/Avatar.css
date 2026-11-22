@@ -1,0 +1,50 @@
+/* ── Avatar (40pt circle, grey gradient top→bottom, 16pt medium white initials = 0.4 × size) ── */
+[data-ds="diaphane"] .dph-avatar {
+  --_size: 40px;
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--_size);
+  height: var(--_size);
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--dph-system-gray), rgb(255 255 255) 30%) 0%,
+    color-mix(in srgb, var(--dph-system-gray), rgb(255 255 255) 7%) 50%,
+    var(--dph-system-gray) 80%
+  );
+  color: var(--dph-on-accent);
+  user-select: none;
+  -webkit-user-select: none;
+}
+[data-ds="diaphane"] .dph-avatar[data-size="small"] { --_size: 32px; }
+[data-ds="diaphane"] .dph-avatar[data-size="large"] { --_size: 60px; }
+
+[data-ds="diaphane"] .dph-avatar__initials {
+  font-family: var(--dph-font-family);
+  font-size: calc(var(--_size) * 0.4);
+  font-weight: var(--dph-weight-medium);
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-avatar__icon { display: inline-flex; font-size: calc(var(--_size) * 0.5); line-height: 1; }
+[data-ds="diaphane"] .dph-avatar__image { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+/* tone: soft tinted wash with the strong tone color for the initials (Media fill="soft"). */
+[data-ds="diaphane"] .dph-avatar[data-tone] {
+  background: color-mix(in srgb, var(--_c) 20%, var(--dph-secondary-system-grouped-background));
+  color: color-mix(in srgb, var(--_c) 80%, var(--dph-label));
+}
+[data-ds="diaphane"] .dph-avatar[data-tone="blue"] { --_c: var(--dph-system-blue); }
+[data-ds="diaphane"] .dph-avatar[data-tone="green"] { --_c: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-avatar[data-tone="orange"] { --_c: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-avatar[data-tone="pink"] { --_c: var(--dph-system-pink); }
+[data-ds="diaphane"] .dph-avatar[data-tone="purple"] { --_c: var(--dph-system-purple); }
+[data-ds="diaphane"] .dph-avatar[data-tone="teal"] { --_c: var(--dph-system-teal); }
+[data-ds="diaphane"] .dph-avatar[data-tone="indigo"] { --_c: var(--dph-system-indigo); }
+[data-ds="diaphane"] .dph-avatar[data-tone="red"] { --_c: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-avatar[data-tone="yellow"] { --_c: var(--dph-system-yellow); }
+[data-ds="diaphane"] .dph-avatar[data-tone="gray"] { --_c: var(--dph-system-gray); }

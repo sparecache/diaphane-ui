@@ -1,0 +1,75 @@
+{
+  "schema": "intents@1",
+  "ds": "diaphane",
+  "intents": {
+    "navigation.top": {
+      "use": "Screen",
+      "with": [
+        "TabBar"
+      ]
+    },
+    "navigation.stack": {
+      "use": "Screen",
+      "with": [
+        "NavigationBar"
+      ]
+    },
+    "list": {
+      "use": "List",
+      "with": [
+        "ListSection",
+        "ListItem"
+      ]
+    },
+    "detail": {
+      "use": "Screen",
+      "with": [
+        "NavigationBar",
+        "List",
+        "ListSection",
+        "ListItem"
+      ]
+    },
+    "form.field": {
+      "use": "TextField",
+      "with": [
+        "FieldHint",
+        "FieldError"
+      ]
+    },
+    "form.submit": "Button",
+    "sheet": "Sheet",
+    "dialog.confirm": "Alert",
+    "feedback.toast": "Banner",
+    "empty": "EmptyState",
+    "loading": "ProgressView",
+    "error": "ErrorState",
+    "form.container": {
+      "use": "Form",
+      "with": [
+        "ListSection"
+      ]
+    },
+    "form.toggle": "Toggle",
+    "form.choice": "Picker",
+    "form.date": "DatePicker",
+    "form.number": "Stepper",
+    "form.range": "Slider",
+    "form.check": "Checkbox",
+    "navigation.search": "SearchField",
+    "navigation.toolbar": "Toolbar",
+    "navigation.pages": "PageControl",
+    "filter.segmented": "SegmentedControl",
+    "action.menu": "Menu",
+    "action.choice": "ActionSheet",
+    "action.icon": "IconButton",
+    "display.card": "Card",
+    "display.avatar": "Avatar",
+    "display.badge": "Badge",
+    "display.metric": "Gauge",
+    "action.context": "ContextMenu",
+    "list.refresh": "Screen",
+    "list.swipe": "ListItem",
+    "navigation.accessory": "TabBar"
+  }
+}

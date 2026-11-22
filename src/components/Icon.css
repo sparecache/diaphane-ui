@@ -1,0 +1,39 @@
+/* Icon scale relative to medium (small ≈ 0.78×, large ≈ 1.29×). Artwork is drawn on a 24-unit grid.
+ * Lucide outlines fill ~85% of that grid and read heavier than solid symbols, so the box is 1.17em (not 1.3em)
+ * and strokes are light: an icon next to body text matches the text's cap height plus a little, not the line. */
+[data-ds="diaphane"] .dph-icon {
+  --_s: 1;
+  --_sw: 1.6;
+  flex: none;
+  display: inline-block;
+  overflow: visible;
+  color: inherit;
+  width: calc(1.17em * var(--_s));
+  height: calc(1.17em * var(--_s));
+  vertical-align: calc(-0.175em * var(--_s));
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--_sw);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+[data-ds="diaphane"] .dph-icon[data-scale="small"] { --_s: 0.783; }
+[data-ds="diaphane"] .dph-icon[data-scale="large"] { --_s: 1.29; }
+[data-ds="diaphane"] .dph-icon[data-weight="medium"] { --_sw: 1.8; }
+[data-ds="diaphane"] .dph-icon[data-weight="semibold"] { --_sw: 2; }
+[data-ds="diaphane"] .dph-icon[data-weight="bold"] { --_sw: 2.3; }
+
+/* Knocked-out glyph inside a filled badge: drawn black into a mask, so it is erased from the shape. */
+[data-ds="diaphane"] .dph-icon__cut { fill: none; stroke: #000; stroke-width: var(--_sw); stroke-linecap: round; stroke-linejoin: round; }
+
+[data-ds="diaphane"][dir="rtl"] .dph-icon[data-mirror],
+[data-ds="diaphane"] [dir="rtl"] .dph-icon[data-mirror] { transform: scaleX(-1); }
+
+[data-ds="diaphane"] .dph-icon[data-color="primary"] { color: var(--dph-label); }
+[data-ds="diaphane"] .dph-icon[data-color="secondary"] { color: var(--dph-secondary-label); }
+[data-ds="diaphane"] .dph-icon[data-color="tertiary"] { color: var(--dph-tertiary-label); }
+[data-ds="diaphane"] .dph-icon[data-color="accent"] { color: var(--dph-accent); }
+[data-ds="diaphane"] .dph-icon[data-color="danger"] { color: var(--dph-system-red); }
+[data-ds="diaphane"] .dph-icon[data-color="success"] { color: var(--dph-system-green); }
+[data-ds="diaphane"] .dph-icon[data-color="warning"] { color: var(--dph-system-orange); }
+[data-ds="diaphane"] .dph-icon[data-color="onAccent"] { color: var(--dph-on-accent); }

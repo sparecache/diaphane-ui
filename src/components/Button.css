@@ -1,0 +1,119 @@
+[data-ds="diaphane"] .dph-button {
+  --_h: 34.333px;              /* regular control height: 20.33 line + 7 + 7 */
+  --_px: 12px;
+  --_py: 7px;
+  --_fill: transparent;
+  --_fg: var(--dph-accent);
+  --_shadow: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--_h);
+  min-width: var(--_h);
+  padding-block: var(--_py);
+  padding-inline: var(--_px);
+  margin: 0;
+  border: 0;
+  border-radius: var(--dph-radius-full);
+  background: var(--_fill);
+  box-shadow: var(--_shadow);
+  color: var(--_fg);
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-standard), opacity var(--dph-duration-fast) linear, filter var(--dph-duration-fast) linear;
+}
+/* Touch target ≥ 44pt even when the visual is 28/34pt. */
+[data-ds="diaphane"] .dph-button::after {
+  content: "";
+  position: absolute;
+  inset-block: min(0px, calc((var(--_h) - var(--dph-hit-min)) / 2));
+  inset-inline: 0;
+}
+[data-ds="diaphane"] .dph-button:focus-visible { outline: none; box-shadow: var(--_shadow), var(--dph-focus-ring); }
+
+[data-ds="diaphane"] .dph-button__content { display: inline-flex; align-items: center; gap: 8.333px; min-width: 0; }
+[data-ds="diaphane"] .dph-button__label { overflow: hidden; text-overflow: ellipsis; }
+[data-ds="diaphane"] .dph-button[data-loading] .dph-button__content { visibility: hidden; }
+[data-ds="diaphane"] .dph-button__spinner { position: absolute; inset: 0; display: grid; place-items: center; }
+
+/* ── Sizes (controlSize): small 28 · regular 34.33 · large 50.33pt. mini == small and extraLarge == large on phones. ── */
+[data-ds="diaphane"] .dph-button[data-size="small"] { --_h: 28px; --_px: 10px; --_py: 5px; font: var(--dph-font-subheadline); letter-spacing: var(--dph-text-subheadline-tracking); }
+[data-ds="diaphane"] .dph-button[data-size="large"] { --_h: 50.333px; --_px: 20px; --_py: 15px; }
+[data-ds="diaphane"] .dph-button[data-full] { display: flex; width: 100%; }
+
+/* ── Shapes ── */
+[data-ds="diaphane"] .dph-button[data-shape="roundedRectangle"] { border-radius: var(--dph-radius-control); }
+[data-ds="diaphane"] .dph-button[data-shape="roundedRectangle"][data-size="large"] { border-radius: var(--dph-radius-md); }
+
+/* ── Variants ── */
+[data-ds="diaphane"] .dph-button[data-variant="borderedProminent"] { --_fill: var(--dph-accent); --_fg: var(--dph-on-accent); }
+[data-ds="diaphane"] .dph-button[data-variant="borderedProminent"][data-role="destructive"] { --_fill: var(--dph-system-red); }
+
+[data-ds="diaphane"] .dph-button[data-variant="bordered"] { --_fill: var(--dph-secondary-system-fill); }
+[data-ds="diaphane"] .dph-button[data-variant="bordered"][data-role="destructive"] { --_fg: var(--dph-system-red); }
+
+[data-ds="diaphane"] .dph-button[data-variant="glass"] {
+  --_fill: var(--dph-glass-fill);
+  --_fg: var(--dph-label);
+  --_shadow: var(--dph-glass-rim), var(--dph-glass-shadow);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+}
+[data-ds="diaphane"] .dph-button[data-variant="glassProminent"] {
+  --_fill: var(--dph-accent);
+  --_fg: var(--dph-on-accent);
+  --_shadow: var(--dph-glass-prominent-rim), var(--dph-glass-shadow);
+}
+[data-ds="diaphane"] .dph-button[data-variant="glassProminent"][data-role="destructive"] {
+  --_fill: var(--dph-system-red);
+  --_shadow: 0 0 0 0.667px color-mix(in srgb, var(--dph-system-red) 60%, rgb(255 190 170)), var(--dph-glass-shadow);
+}
+
+[data-ds="diaphane"] .dph-button:is([data-variant="borderless"], [data-variant="plain"]) { --_px: 0px; --_py: 0px; --_h: auto; min-width: 0; }
+[data-ds="diaphane"] .dph-button[data-variant="plain"] { --_fg: var(--dph-label); }
+/* glass and plain keep the label color for destructive; only tinted styles turn red. */
+[data-ds="diaphane"] .dph-button[data-variant="borderless"][data-role="destructive"] { --_fg: var(--dph-system-red); }
+
+[data-ds="diaphane"] .dph-button[data-role="cancel"] { font-weight: var(--dph-weight-semibold); }
+
+/* ── Disabled: fills turn neutral, titles drop to tertiary. ── */
+[data-ds="diaphane"] .dph-button:disabled,
+[data-ds="diaphane"] .dph-button[aria-disabled="true"] { cursor: default; }
+[data-ds="diaphane"] .dph-button:disabled { --_fg: var(--dph-tertiary-label); }
+[data-ds="diaphane"] .dph-button:disabled[data-variant="borderedProminent"] { --_fill: var(--dph-secondary-system-fill); }
+[data-ds="diaphane"] .dph-button:disabled[data-variant="glassProminent"] { --_fill: var(--dph-disabled-fill); --_fg: var(--dph-disabled-label); --_shadow: var(--dph-glass-rim), var(--dph-glass-shadow); }
+[data-ds="diaphane"] .dph-button:disabled[data-variant="plain"] { --_fg: var(--dph-secondary-label); }
+
+/* ── Pressed ── */
+[data-ds="diaphane"] .dph-button:not(:disabled):active { opacity: 0.7; }
+/* Glass press: the whole control scales ×1.2133 on a spring, a white
+   glow (≈62pt, blur 25.75) blooms under the finger and the surface whitens; the label dims through vibrancy. */
+[data-ds="diaphane"] .dph-button:is([data-variant="glass"], [data-variant="glassProminent"]) {
+  transition: transform var(--dph-duration-standard) var(--dph-ease-spring), background var(--dph-duration-fast) linear, color var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-button:not(:disabled):is([data-variant="glass"], [data-variant="glassProminent"]):active { opacity: 1; filter: none; transform: scale(1.2133); }
+[data-ds="diaphane"] .dph-button:not(:disabled)[data-variant="glass"]:active {
+  --_fill: radial-gradient(closest-side, rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.7) 60%, rgb(255 255 255 / 0.55));
+  --_fg: color-mix(in srgb, var(--dph-label) 66%, rgb(255 255 255));
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-button:not(:disabled)[data-variant="glass"]:active,
+[data-ds="diaphane"] [data-theme="dark"] .dph-button:not(:disabled)[data-variant="glass"]:active {
+  --_fill: radial-gradient(closest-side, rgb(255 255 255 / 0.3), rgb(255 255 255 / 0.14) 60%, rgb(255 255 255 / 0.1));
+  --_fg: color-mix(in srgb, var(--dph-label) 80%, transparent);
+}
+[data-ds="diaphane"] .dph-button:not(:disabled)[data-variant="glassProminent"]:active {
+  --_fill: radial-gradient(closest-side, rgb(255 255 255 / 0.32), transparent), var(--dph-accent);
+}
+
+/* The loading spinner takes the button's label color (white on prominent fills, accent on bordered). */
+[data-ds="diaphane"] .dph-button__spinner .dph-progress { --_tint: var(--_fg); }
+
+/* Long-press must not start text selection or the system callout. */
+[data-ds="diaphane"] .dph-button { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }

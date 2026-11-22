@@ -1,0 +1,56 @@
+/* ── Checkbox: the edit-mode selection circle (22pt, 1.5pt tertiary ring,
+      accent fill + bold white check). Keep in sync with .dph-list-item__select in List.css. ── */
+[data-ds="diaphane"] .dph-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dph-space-3);
+  min-height: var(--dph-hit-min);
+  font: var(--dph-font-body);
+  letter-spacing: var(--dph-text-body-tracking);
+  color: var(--dph-label);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-ds="diaphane"] .dph-checkbox[data-label-hidden] { min-height: 22px; }
+[data-ds="diaphane"] .dph-checkbox[data-label-hidden] .dph-checkbox__label {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+/* 44pt hit area around the 22pt circle when the label is hidden. */
+[data-ds="diaphane"] .dph-checkbox[data-label-hidden]::after {
+  content: "";
+  position: absolute;
+  inset-block: calc((22px - var(--dph-hit-min)) / 2);
+  inset-inline: calc((22px - var(--dph-hit-min)) / 2);
+}
+[data-ds="diaphane"] .dph-checkbox__label { min-width: 0; overflow-wrap: anywhere; }
+
+[data-ds="diaphane"] .dph-checkbox__control { position: relative; flex: none; display: inline-grid; width: 22px; height: 22px; }
+[data-ds="diaphane"] .dph-checkbox__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+[data-ds="diaphane"] .dph-checkbox__circle {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--dph-tertiary-label);
+  color: var(--dph-on-accent);
+  font-size: 13px;
+  pointer-events: none;
+  transition: background-color var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-checkbox__circle[data-checked] { background: var(--dph-accent); box-shadow: none; }
+[data-ds="diaphane"] .dph-checkbox__input:focus-visible + .dph-checkbox__circle { box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-checkbox__input:focus-visible + .dph-checkbox__circle:not([data-checked]) { box-shadow: inset 0 0 0 1.5px var(--dph-tertiary-label), var(--dph-focus-ring); }
+
+[data-ds="diaphane"] .dph-checkbox[data-disabled] { cursor: default; }
+[data-ds="diaphane"] .dph-checkbox[data-disabled] .dph-checkbox__label { color: var(--dph-tertiary-label); }
+[data-ds="diaphane"] .dph-checkbox[data-disabled] .dph-checkbox__circle { opacity: 0.4; }

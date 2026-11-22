@@ -1,0 +1,54 @@
+/* ── NavigationStack transitions (see docs/design-specs/motion.md)
+ *   push: incoming page 100% → 0 on --dph-motion-push; covered page 0 → −30% with a 10% black dim fading in
+ *   pop : the reverse on --dph-motion-pop
+ *   incoming page shadow: black 4%, radius 12, offset (0, −3) ── */
+[data-ds="diaphane"] .dph-nav {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+[data-ds="diaphane"] .dph-nav__page {
+  --_dir: 1;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--dph-system-background);
+  /* At rest the page has no transform, so its overlays (sheets, alerts) are positioned and stacked against the whole
+     screen — above an app-level tab bar — like a native modal presented from the window. */
+  translate: none;
+  transition: translate var(--dph-motion-pop);
+}
+[data-ds="diaphane"]:dir(rtl) .dph-nav__page, [data-ds="diaphane"] [dir="rtl"] .dph-nav__page { --_dir: -1; }
+[data-ds="diaphane"] .dph-nav__page[data-role="hidden"] { visibility: hidden; translate: calc(var(--dph-motion-push-parallax) * var(--_dir)) 0; }
+[data-ds="diaphane"] .dph-nav__page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dph-motion-pop);
+}
+
+/* Covered page: shifted 30% and dimmed. */
+[data-ds="diaphane"] .dph-nav__page[data-role="below"] { translate: calc(var(--dph-motion-push-parallax) * var(--_dir)) 0; transition: translate var(--dph-motion-push); }
+[data-ds="diaphane"] .dph-nav__page[data-role="below"]::after { opacity: 1; transition: opacity var(--dph-motion-push); }
+
+/* Incoming page: slides in over the covered one. */
+[data-ds="diaphane"] .dph-nav__page:is([data-state="entering"], [data-state="top"]) { box-shadow: 0 -3px 24px rgb(0 0 0 / 0.04); }
+[data-ds="diaphane"] .dph-nav__page[data-state="entering"] { animation: dph-nav-in var(--dph-motion-push) backwards; }
+@keyframes dph-nav-in { from { translate: calc(100% * var(--_dir)) 0; } }
+
+/* Popping page: slides back out to the trailing edge, above the revealed page. */
+[data-ds="diaphane"] .dph-nav__page[data-role="leaving"] { z-index: 1; translate: calc(100% * var(--_dir)) 0; transition: translate var(--dph-motion-pop); }
+
+/* Interactive swipe-back: both pages follow the finger (progress --_p). */
+[data-ds="diaphane"] .dph-nav[data-dragging] .dph-nav__page { transition: none; }
+[data-ds="diaphane"] .dph-nav[data-dragging] .dph-nav__page[data-role="top"] { translate: calc(var(--_p) * 100% * var(--_dir)) 0; }
+[data-ds="diaphane"] .dph-nav[data-dragging] .dph-nav__page[data-role="below"] { translate: calc((1 - var(--_p)) * var(--dph-motion-push-parallax) * var(--_dir)) 0; }
+[data-ds="diaphane"] .dph-nav[data-dragging] .dph-nav__page[data-role="below"]::after { opacity: calc(1 - var(--_p)); transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ds="diaphane"] .dph-nav__page { animation: none !important; transition: opacity 0.2s linear !important; }
+}

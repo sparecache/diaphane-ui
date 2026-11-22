@@ -1,0 +1,83 @@
+{
+  "name": "diaphane-ui",
+  "version": "0.1.0",
+  "description": "An open-source, iOS-inspired React 19 component library with a translucent glass look, for prototyping mobile web apps. Not affiliated with or endorsed by Apple.",
+  "type": "module",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./frame/phone": "./frame/phone.tsx",
+    "./manifest.json": "./manifest.json",
+    "./catalog.json": "./catalog.json",
+    "./tokens.map.json": "./tokens.map.json",
+    "./intents.json": "./intents.json",
+    "./styles/tokens.css": "./src/styles/tokens.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "frame",
+    "examples",
+    "manifest.json",
+    "tokens.map.json",
+    "catalog.json",
+    "intents.json",
+    "rules.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "dev": "vite --config playground/vite.config.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "validate": "node tools/validate.mjs",
+    "catalog": "node tools/build-catalog.mjs",
+    "audit": "node tools/audit-terms.mjs",
+    "check": "npm run typecheck && npm run validate && npm run audit",
+    "build:playground": "vite build --config playground/vite.config.ts --outDir ../dist-playground --emptyOutDir"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.8",
+    "@fontsource-variable/inter": "^5.3.0"
+  },
+  "dependencies": {
+    "lucide": "^1.77.0"
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "ui",
+    "components",
+    "mobile",
+    "glass",
+    "prototyping",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sparecache/diaphane-ui.git"
+  },
+  "homepage": "https://github.com/sparecache/diaphane-ui#readme",
+  "bugs": {
+    "url": "https://github.com/sparecache/diaphane-ui/issues"
+  },
+  "author": "sparecache",
+  "engines": {
+    "node": ">=20"
+  }
+}

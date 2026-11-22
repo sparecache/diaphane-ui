@@ -1,0 +1,72 @@
+/* ── Stepper (design values)
+ * 94×32 capsule, two 47pt halves filled quaternaryLabel@49% (#3C3C43@0.086 / #EBEBF5@0.078).
+ * Divider 1×24 at x=46.67,y=4, tertiaryLabel, 0.5 radius. Minus 13.33×2, plus 13.33×13.33 (2pt bars), label color;
+ * a half that can't step draws its glyph in tertiaryLabel. In a Form the row stays 52pt (stepper bleeds 5pt). */
+[data-ds="diaphane"] .dph-stepper-wrap { display: flex; align-items: center; gap: 12px; color: var(--dph-label); }
+[data-ds="diaphane"] .dph-stepper-wrap:not([data-label-hidden]) { width: 100%; }
+[data-ds="diaphane"] .dph-stepper-wrap .dph-form-row__label { flex: 1 1 auto; }
+[data-ds="diaphane"] .dph-stepper-row .dph-form-row__control { margin-block: -5px; }
+
+[data-ds="diaphane"] .dph-stepper {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  width: 94px;
+  height: 32px;
+  /* The halves are drawn at x 0.67–47 and 47–93.67 inside the 94pt frame. */
+  padding-inline: 0.667px 0.333px;
+  border-radius: 16px;
+  color: var(--dph-label);
+  outline: none;
+}
+[data-ds="diaphane"] .dph-stepper:focus-visible { box-shadow: var(--dph-focus-ring); }
+[data-ds="diaphane"] .dph-stepper__half {
+  position: relative;
+  flex: 0 0 46.5px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: color-mix(in srgb, var(--dph-quaternary-label) 49%, transparent);
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-ds="diaphane"] .dph-stepper__half[data-op="dec"] { flex-basis: 46.333px; }
+[data-ds="diaphane"] .dph-stepper__half[data-op="inc"] { flex-basis: 46.667px; }
+[data-ds="diaphane"] .dph-stepper__half[data-op="dec"] { border-start-start-radius: 16px; border-end-start-radius: 16px; }
+[data-ds="diaphane"] .dph-stepper__half[data-op="inc"] { border-start-end-radius: 16px; border-end-end-radius: 16px; }
+/* ≥ 44pt touch target */
+[data-ds="diaphane"] .dph-stepper__half::after { content: ""; position: absolute; inset-inline: 0; inset-block: -6px; }
+[data-ds="diaphane"] .dph-stepper__half:not(:disabled):active { background: color-mix(in srgb, var(--dph-quaternary-label) 90%, transparent); }
+[data-ds="diaphane"] .dph-stepper__half:disabled { color: var(--dph-tertiary-label); cursor: default; }
+
+[data-ds="diaphane"] .dph-stepper__glyph { position: relative; width: 13.333px; height: 13.333px; }
+[data-ds="diaphane"] .dph-stepper__glyph::before,
+[data-ds="diaphane"] .dph-stepper__glyph::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc(50% - 1px);
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+[data-ds="diaphane"] .dph-stepper__half[data-op="dec"] .dph-stepper__glyph::after { display: none; }
+[data-ds="diaphane"] .dph-stepper__half[data-op="inc"] .dph-stepper__glyph::after { transform: rotate(90deg); }
+
+[data-ds="diaphane"] .dph-stepper__divider {
+  position: absolute;
+  top: 4px;
+  inset-inline-start: 46.667px; /* covers the seam between the halves */
+  width: 1px;
+  height: 24px;
+  border-radius: 0.5px;
+  background: var(--dph-tertiary-label);
+  pointer-events: none;
+}
+
+/* Long-press must not start text selection or the system callout. */
+[data-ds="diaphane"] .dph-stepper { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }

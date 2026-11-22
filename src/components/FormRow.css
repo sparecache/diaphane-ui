@@ -1,0 +1,26 @@
+/* ── Form row shell shared by the input controls (TextField variant="form", Stepper/Slider/Picker/DatePicker formRow).
+ * Builds on List.css (.dph-list-item / .dph-list-item__body → separators, 20pt row padding, 52pt min height).
+ * Design values: controls get 15pt above and below, e.g.
+ * TextField 22 → 52, Slider 31 → 61, segmented 31 → 61, date pill 34.33 → 64.33, time pill 36 → 66.
+ * Stepper (32) and the menu Picker button (34.33) keep the 52pt row: they bleed into the padding. */
+[data-ds="diaphane"] .dph-form-row > .dph-form-row__body {
+  flex-wrap: wrap;
+  min-height: var(--_row-min, 52px);
+  padding-block: 15px;
+  padding-inline: var(--_row-pad, 20px);
+  column-gap: 12px;
+  row-gap: 4px;
+}
+[data-ds="diaphane"] .dph-form-row__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--dph-label);
+  overflow-wrap: anywhere;
+}
+[data-ds="diaphane"] .dph-form-row__control { flex: 0 1 auto; min-width: 0; display: flex; align-items: center; justify-content: flex-end; }
+[data-ds="diaphane"] .dph-form-row__control[data-fill] { flex: 1 1 0; }
+[data-ds="diaphane"] .dph-form-row__message { flex: 1 0 100%; }
+[data-ds="diaphane"] .dph-visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}

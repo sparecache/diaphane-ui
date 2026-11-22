@@ -1,0 +1,113 @@
+/* ── Slider (design values)
+ * Control 31pt tall. Track 6pt (3pt radius) centred at 15.5pt: label@10% (#000/#FFF @0.1). Fill = accent,
+ * running to the knob centre (to the ends at min/max). Knob 37×24 at y=4, white, capsule,
+ * shadow 0 1 r5 @0.14. Min/max value symbols: 17pt, 8pt from the track. Disabled: whole control at 50%. */
+[data-ds="diaphane"] .dph-slider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  color: var(--dph-label);
+  font-size: 17px;
+}
+[data-ds="diaphane"] .dph-slider[data-disabled] { opacity: 0.5; }
+[data-ds="diaphane"] .dph-slider__icon { flex: none; display: inline-flex; }
+
+[data-ds="diaphane"] .dph-slider__control {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 74px;
+  height: 31px;
+}
+/* ≥ 44pt touch target */
+[data-ds="diaphane"] .dph-slider__control::after { content: ""; position: absolute; inset-inline: 0; inset-block: -6.5px; pointer-events: none; }
+
+[data-ds="diaphane"] .dph-slider__track {
+  position: absolute;
+  inset-inline: 0;
+  top: 12px;
+  height: 5.833px; /* ink: 17.5 device px */
+  border-radius: 3px;
+  transform: translateY(0.583px); /* The track edges land between device pixels (≈ y 12.6pt); a top offset would snap */
+  background: color-mix(in srgb, var(--dph-label) 10%, transparent);
+}
+[data-ds="diaphane"] .dph-slider__fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: var(--_fill);
+  border-radius: 3px;
+  background: var(--dph-accent);
+}
+[data-ds="diaphane"] .dph-slider__ticks { position: absolute; inset-inline: 18.5px; top: 12.5px; height: 6px; pointer-events: none; }
+[data-ds="diaphane"] .dph-slider__tick {
+  position: absolute;
+  top: 1.5px;
+  inset-inline-start: calc(var(--_t) * 100% - 1.5px);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--dph-tertiary-label);
+}
+[data-ds="diaphane"] .dph-slider__knob {
+  position: absolute;
+  top: 4px;
+  inset-inline-start: calc(var(--_p) * (100% - 37px));
+  width: 37px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgb(255 255 255);
+  box-shadow: 0 1px 10px rgb(0 0 0 / 0.14);
+  pointer-events: none;
+  transition: transform var(--dph-duration-fast) var(--dph-ease-standard);
+}
+[data-ds="diaphane"] .dph-slider__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+[data-ds="diaphane"] .dph-slider__input:disabled { cursor: default; }
+/* Pressed / dragging: the thumb becomes the liquid lens (58 × 38.333pt, centred), showing the track magnified ×1.5. */
+[data-ds="diaphane"] .dph-slider__knob {
+  transition: top var(--dph-duration-standard) var(--dph-ease-spring), margin var(--dph-duration-standard) var(--dph-ease-spring),
+    width var(--dph-duration-standard) var(--dph-ease-spring), height var(--dph-duration-standard) var(--dph-ease-spring),
+    border-radius var(--dph-duration-standard) var(--dph-ease-spring), background var(--dph-duration-fast) linear, box-shadow var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-slider__knob::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: calc(50% - 4.375px);
+  height: 8.75px;
+  background: linear-gradient(to right, var(--dph-accent) 50%, color-mix(in srgb, var(--dph-label) 10%, transparent) 50%);
+  opacity: 0;
+  transition: opacity var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"][dir="rtl"] .dph-slider__knob::before, [data-ds="diaphane"] [dir="rtl"] .dph-slider__knob::before {
+  background: linear-gradient(to left, var(--dph-accent) 50%, color-mix(in srgb, var(--dph-label) 10%, transparent) 50%);
+}
+[data-ds="diaphane"] .dph-slider__control:has(.dph-slider__input:not(:disabled):active) .dph-slider__knob {
+  top: -3.667px;
+  margin-inline-start: -10.5px;
+  width: 58px;
+  height: 38.333px;
+  border-radius: 19.167px;
+  background: var(--dph-lens-fill);
+  box-shadow: var(--dph-lens-rim);
+  overflow: hidden; /* the magnified track is clipped to the lens */
+  -webkit-backdrop-filter: var(--dph-lens-filter);
+  backdrop-filter: var(--dph-lens-filter);
+}
+[data-ds="diaphane"] .dph-slider__control:has(.dph-slider__input:not(:disabled):active) .dph-slider__knob::before { opacity: 1; }
+[data-ds="diaphane"] .dph-slider__control:has(.dph-slider__input:focus-visible) .dph-slider__knob { box-shadow: 0 1px 10px rgb(0 0 0 / 0.14), var(--dph-focus-ring); }
+/* RTL: the range input runs right-to-left natively; the visuals use logical insets. */
+
+/* Long-press must not start text selection or the system callout. */
+[data-ds="diaphane"] .dph-slider { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }

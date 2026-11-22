@@ -1,0 +1,602 @@
+{
+  "components": [
+    {
+      "name": "Alert",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onClose": {
+          "type": "callback",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "actions": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "required": true,
+              "i18n": true
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "cancel",
+                "destructive"
+              ],
+              "default": "default"
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "fieldValue": {
+          "type": "string"
+        },
+        "fieldPlaceholder": {
+          "type": "string",
+          "i18n": true
+        },
+        "fieldLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onFieldChange": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Ask for confirmation of a consequential action or collect one short value, with two actions side by side or three or more stacked.",
+      "avoid": "Choices that are not a yes/no decision or more than three actions; use ActionSheet, and use Banner for non-blocking feedback.",
+      "a11y": "role=alertdialog with aria-modal, labelled by the title and described by the message; focus moves into the alert and Escape triggers the cancel action.",
+      "since": "1.0"
+    },
+    {
+      "name": "ActionSheet",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onClose": {
+          "type": "callback",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "actions": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "required": true,
+              "i18n": true
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "cancel",
+                "destructive"
+              ],
+              "default": "default"
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "cancelLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Offer a short list of choices about one item (share, duplicate, delete) after the person taps a control.",
+      "avoid": "Navigation or long option lists; use Menu for persistent commands and Sheet for anything with more content.",
+      "a11y": "role=dialog with aria-modal; the cancel action is not drawn (outside tap dismisses) but stays available as a visually hidden button and on Escape.",
+      "since": "1.0"
+    },
+    {
+      "name": "Sheet",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onClose": {
+          "type": "callback",
+          "required": true,
+          "description": "Called on a scrim tap, Escape, or a drag down past the dismiss threshold."
+        },
+        "detent": {
+          "type": "enum",
+          "values": [
+            "medium",
+            "large"
+          ],
+          "default": "large"
+        },
+        "showGrabber": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "cancelLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onCancel": {
+          "type": "callback"
+        },
+        "confirmLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onConfirm": {
+          "type": "callback"
+        },
+        "confirmDisabled": {
+          "type": "boolean"
+        },
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "testId": {
+          "type": "string"
+        },
+        "detents": {
+          "type": "array",
+          "items": {
+            "type": "enum",
+            "values": [
+              "medium",
+              "large"
+            ]
+          },
+          "description": "Detents the user can drag between (.presentationDetents). Default: only `detent`."
+        },
+        "onDetentChange": {
+          "type": "callback",
+          "description": "Called when a drag settles on another detent."
+        },
+        "dismissDisabled": {
+          "type": "boolean",
+          "default": false,
+          "description": ".interactiveDismissDisabled(): a drag down snaps back (unsaved changes)."
+        },
+        "onDismissAttempt": {
+          "type": "callback",
+          "description": "Called instead of onClose when dismissDisabled blocks a drag, scrim tap or Escape: show the Discard Changes action sheet here."
+        }
+      },
+      "slots": [
+        "List",
+        "ListSection",
+        "ListItem",
+        "Text",
+        "Button",
+        "EmptyState",
+        "ProgressView"
+      ],
+      "use": "Present a focused task or detail (create, edit, inspect) over the current screen, medium for quick input and large for full forms. Put a NavigationStack inside for pickers that push within the sheet (one path, no modal over modal).",
+      "avoid": "Confirmations and one-line messages; use Alert, and push a new screen for primary navigation.",
+      "a11y": "role=dialog with aria-modal, labelled by the title; header buttons take their accessible names from cancel.label and confirm.label; Escape and scrim tap call onClose. Dragging is a pointer gesture only; keep the cancel button or Escape for keyboard and switch users.",
+      "since": "1.0"
+    },
+    {
+      "name": "Menu",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "trigger": {
+          "type": "node",
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "i18n": true
+            },
+            "subtitle": {
+              "type": "string",
+              "i18n": true
+            },
+            "icon": {
+              "type": "icon"
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "destructive"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "checked": {
+              "type": "boolean"
+            },
+            "items": {
+              "type": "array"
+            },
+            "onPress": {
+              "type": "callback"
+            },
+            "divider": {
+              "type": "boolean"
+            },
+            "section": {
+              "type": "string",
+              "i18n": true
+            }
+          }
+        },
+        "layout": {
+          "type": "enum",
+          "values": [
+            "large",
+            "medium",
+            "small"
+          ],
+          "default": "large"
+        },
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onOpenChange": {
+          "type": "callback",
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Button",
+        "IconButton"
+      ],
+      "use": "Group secondary commands (sort, filter, view options, more actions) behind a button: titled sections, checkmarks for toggled state, one level of submenus, and a palette row of 3 (medium) or 4 (small) frequent actions.",
+      "avoid": "Primary actions, long lists or deep hierarchies (submenus are one level, about 5 items); use Button, ActionSheet, Sheet or a List screen instead.",
+      "a11y": "role=menu with menuitem / menuitemcheckbox (aria-checked) buttons; submenu items have aria-haspopup and open with Enter or ArrowRight (ArrowLeft/Escape go back); arrow keys move between items and Escape closes; small palette items are labelled by their label prop; destructive items are tinted red and should say what they delete.",
+      "since": "1.0"
+    },
+    {
+      "name": "ContextMenu",
+      "import": "diaphane-ui",
+      "category": "overlay",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": {
+              "type": "string",
+              "i18n": true
+            },
+            "subtitle": {
+              "type": "string",
+              "i18n": true
+            },
+            "icon": {
+              "type": "icon"
+            },
+            "role": {
+              "type": "enum",
+              "values": [
+                "default",
+                "destructive"
+              ]
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "checked": {
+              "type": "boolean"
+            },
+            "items": {
+              "type": "array"
+            },
+            "onPress": {
+              "type": "callback"
+            },
+            "divider": {
+              "type": "boolean"
+            },
+            "section": {
+              "type": "string",
+              "i18n": true
+            }
+          }
+        },
+        "layout": {
+          "type": "enum",
+          "values": [
+            "large",
+            "medium",
+            "small"
+          ],
+          "default": "large"
+        },
+        "open": {
+          "type": "boolean",
+          "required": true
+        },
+        "onOpenChange": {
+          "type": "callback",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "i18n": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        },
+        "onPress": {
+          "type": "callback",
+          "description": "Tap action on the target (open the photo); a long press still opens the menu. Makes the target a button."
+        }
+      },
+      "slots": [
+        "Card",
+        "Avatar",
+        "ListItem"
+      ],
+      "use": "Touch-and-hold shortcuts for a piece of content (photo, card, row): the content lifts as a preview over a dimmed, blurred background with the menu below; also opens on right click and the context-menu key.",
+      "avoid": "The only way to reach an action (it is hidden); keep each command reachable elsewhere and don't use it for primary actions or on controls that already respond to long press.",
+      "a11y": "The target is focusable with aria-haspopup=menu and opens on the ContextMenu key or Shift+F10; the menu takes focus, Escape closes it and returns focus to the target; same item roles as Menu; give the target a label when its content isn't text.",
+      "since": "1.0"
+    },
+    {
+      "name": "Gauge",
+      "import": "diaphane-ui",
+      "category": "display",
+      "props": {
+        "value": {
+          "type": "number",
+          "required": true
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "capacity",
+            "value"
+          ],
+          "default": "capacity"
+        },
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "currentValueLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "tint": {
+          "type": "enum",
+          "values": [
+            "default",
+            "accent",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "default"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Show a level within a range at a glance, such as battery capacity or a reading on a scale.",
+      "avoid": "Task progress over time; use ProgressView.",
+      "a11y": "role=meter with aria-valuenow 0-100, labelled by label, with currentValueLabel as the value text.",
+      "since": "1.0"
+    },
+    {
+      "name": "EmptyState",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "variant": {
+          "type": "enum",
+          "values": [
+            "default",
+            "search"
+          ],
+          "default": "default"
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "description": {
+          "type": "string",
+          "i18n": true
+        },
+        "query": {
+          "type": "string"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "label": {
+              "type": "string",
+              "required": true,
+              "i18n": true
+            },
+            "variant": {
+              "type": "enum",
+              "values": [
+                "glassProminent",
+                "glass",
+                "borderedProminent",
+                "bordered",
+                "borderless",
+                "plain"
+              ]
+            },
+            "onPress": {
+              "type": "callback"
+            }
+          }
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Fill a screen or list that has no content yet, or no search results, with a short explanation and at most two actions.",
+      "avoid": "Errors and loading; use ErrorState and ProgressView.",
+      "a11y": "Title is a heading; the search variant is a status region so results changes are announced; the icon is decorative.",
+      "since": "1.0"
+    },
+    {
+      "name": "ErrorState",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "description": {
+          "type": "string",
+          "i18n": true
+        },
+        "retryLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onRetry": {
+          "type": "callback"
+        },
+        "retrying": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Replace content that failed to load with what went wrong and a retry button.",
+      "avoid": "Validation messages on form fields or transient failures; use the field footer or a Banner.",
+      "a11y": "Wrapped in role=alert so the failure is announced; the retry button shows a spinner and stays labelled while retrying.",
+      "since": "1.0"
+    },
+    {
+      "name": "Banner",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": true
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "message": {
+          "type": "string",
+          "i18n": true
+        },
+        "icon": {
+          "type": "icon"
+        },
+        "tone": {
+          "type": "enum",
+          "values": [
+            "neutral",
+            "success",
+            "warning",
+            "danger"
+          ],
+          "default": "neutral"
+        },
+        "actionLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onAction": {
+          "type": "callback"
+        },
+        "onDismiss": {
+          "type": "callback"
+        },
+        "dismissLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Confirm a completed action or report a background event without blocking the screen, optionally with one undo-style action.",
+      "avoid": "Decisions the person must make or errors that block the task; use Alert or ErrorState.",
+      "a11y": "role=status (polite) for neutral and success, role=alert (assertive) for warning and danger; the close button needs dismissLabel; Escape dismisses.",
+      "since": "1.0"
+    }
+  ]
+}

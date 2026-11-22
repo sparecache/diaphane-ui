@@ -1,0 +1,148 @@
+/* ── TabBar (glass pill 62pt tall, 21pt from the screen sides and bottom; 4pt inner padding;
+ * selection capsule 54pt (radius 27) = slot width + 13.33; icon centred 20pt below the item top, 10pt label at +35. ── */
+[data-ds="diaphane"] .dph-tabbar {
+  --_sel: var(--dph-system-gray5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px var(--dph-space-3);
+  padding-inline: 21px;
+  /* Screen's bottomBar slot pads by the home-indicator inset (34pt); the pill sits 21pt above the screen edge. */
+  margin-block-end: calc(21px - var(--dph-safe-bottom));
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-tabbar,
+[data-ds="diaphane"] [data-theme="dark"] .dph-tabbar { --_sel: var(--dph-system-background); }
+
+[data-ds="diaphane"] .dph-tabbar__platter,
+[data-ds="diaphane"] .dph-tabbar__search {
+  display: flex;
+  height: 62px;
+  padding: 4px;
+  border-radius: var(--dph-radius-full);
+}
+[data-ds="diaphane"] .dph-tabbar__platter { flex: 1 1 auto; min-width: 0; padding-inline: 10.667px; }
+[data-ds="diaphane"] .dph-tabbar__search { flex: none; width: 62px; }
+[data-ds="diaphane"] .dph-tabbar__search .dph-tabbar__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+[data-ds="diaphane"] .dph-tabbar__search .dph-tabbar__item::before { inset-inline: 0; }
+[data-ds="diaphane"] .dph-tabbar__search .dph-tabbar__icon { margin-block-start: 13px; }
+
+[data-ds="diaphane"] .dph-tabbar__item {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  height: 54px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--dph-label);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* Selection capsule: overhangs the slot by 6.67pt each side, clipped to the platter's 4pt inset. */
+[data-ds="diaphane"] .dph-tabbar__item::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -6.667px;
+  z-index: -1;
+  border-radius: 27px;
+  background: var(--_sel);
+  opacity: 0;
+  transition: opacity var(--dph-duration-fast) linear;
+}
+[data-ds="diaphane"] .dph-tabbar__item[aria-selected="true"] { color: var(--dph-accent); }
+[data-ds="diaphane"] .dph-tabbar__item[aria-selected="true"]::before { opacity: 1; }
+[data-ds="diaphane"] .dph-tabbar__item:focus-visible { outline: none; }
+[data-ds="diaphane"] .dph-tabbar__item:focus-visible::before { opacity: 1; box-shadow: var(--dph-focus-ring); }
+
+[data-ds="diaphane"] .dph-tabbar__icon {
+  display: grid;
+  place-items: center;
+  height: 28px;
+  margin-block-start: 6px;
+  font: var(--dph-font-body);
+  font-size: 22.667px;  /* tab symbols, medium weight: house.fill ink 27.3 × 24pt */
+}
+[data-ds="diaphane"] .dph-tabbar__label {
+  max-width: 100%;
+  margin-block-start: 1px;
+  padding-inline: 2px;
+  overflow: hidden;
+  font: var(--dph-font-caption2);
+  font-size: 10px;      /* tab item title: 10pt, 12pt line */
+  font-weight: var(--dph-weight-medium);
+  line-height: 12px;
+  letter-spacing: var(--dph-text-caption2-tracking);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+[data-ds="diaphane"] .dph-tabbar__item[aria-selected="true"] .dph-tabbar__label { font-weight: var(--dph-weight-semibold); }
+
+/* Badge: 18.33pt red capsule, 12pt medium white digits, at slot centre + 8.67 / item top + 2. */
+[data-ds="diaphane"] .dph-tabbar__badge {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: calc(50% + 8.667px);
+  min-width: 18.333px;
+  height: 18.333px;
+  padding-inline: 4px;
+  border-radius: var(--dph-radius-full);
+  background: var(--dph-system-red);
+  color: var(--dph-on-accent);
+  font: var(--dph-font-caption1);
+  font-weight: var(--dph-weight-medium);
+  line-height: 18.333px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ── Bottom accessory (bottom accessory): 48pt glass capsule, full bar width,
+ * 8pt above the pill; its content is a row with 16pt padding (mini player). ── */
+[data-ds="diaphane"] .dph-tabbar__accessory {
+  display: flex;
+  flex: 1 0 100%;
+  order: -1;
+  align-items: center;
+  gap: var(--dph-space-3);
+  box-sizing: border-box;
+  min-width: 0;
+  height: 48px;
+  padding-inline: var(--dph-margin);
+  border-radius: var(--dph-radius-full);
+  color: var(--dph-label);
+}
+
+/* ── Minimized (on scroll down): the selected tab and search
+ * shrink to 48pt glass circles 28pt from the screen sides and bottom; the accessory sits between them, 14pt apart.
+ * The bar keeps its 62pt slot so the content inset doesn't jump. ── */
+[data-ds="diaphane"] .dph-tabbar[data-minimized] {
+  flex-wrap: nowrap;
+  gap: 14px;
+  box-sizing: border-box;
+  height: 62px;
+  padding-inline: 28px;
+  padding-block-end: 7px;
+}
+[data-ds="diaphane"] .dph-tabbar[data-minimized] .dph-tabbar__accessory { flex: 1 1 auto; order: 0; }
+[data-ds="diaphane"] .dph-tabbar[data-minimized] :is(.dph-tabbar__platter, .dph-tabbar__search) {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+}
+[data-ds="diaphane"] .dph-tabbar[data-minimized] .dph-tabbar__platter { order: -1; }
+[data-ds="diaphane"] .dph-tabbar[data-minimized] .dph-tabbar__search { order: 1; margin-inline-start: auto; }
+[data-ds="diaphane"] .dph-tabbar[data-minimized] .dph-tabbar__item { height: 48px; }
+[data-ds="diaphane"] .dph-tabbar[data-minimized] .dph-tabbar__item::before { inset: 0; }
+[data-ds="diaphane"] .dph-tabbar[data-minimized] .dph-tabbar__item[aria-selected="true"]::before { opacity: 0; }
+[data-ds="diaphane"] .dph-tabbar[data-minimized] .dph-tabbar__icon { margin-block-start: 10px; }
+[data-ds="diaphane"] .dph-tabbar[data-minimized] :is(.dph-tabbar__label, .dph-tabbar__badge) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* Long-press must not start text selection or the system callout. */
+[data-ds="diaphane"] .dph-tabbar { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }

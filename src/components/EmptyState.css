@@ -1,0 +1,52 @@
+/* ── Empty / error state (46pt-wide medium symbol in secondary label,
+ *    23.33pt to a 20pt bold title, 3pt to a 20pt description (25pt line pitch), 29.67pt to small buttons;
+ *    text column 334pt (342pt for search), centered) ── */
+[data-ds="diaphane"] .dph-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 100%;
+  padding-inline: 34px;
+  text-align: center;
+  color: var(--dph-label);
+}
+[data-ds="diaphane"] .dph-empty__icon {
+  display: flex;
+  margin-bottom: 19.333px; /* 23.33pt from the glyph ink; the symbol box adds ~4pt below it */
+  font-size: 39.4px;
+  line-height: 0;
+  color: var(--dph-secondary-label);
+}
+/* ContentUnavailableView.search wraps its description in a wider column. */
+[data-ds="diaphane"] .dph-empty[data-variant="search"] { padding-inline: 30px; }
+[data-ds="diaphane"] .dph-empty__title {
+  margin: 0;
+  max-width: 100%;
+  font: var(--dph-font-title3);
+  font-weight: var(--dph-weight-bold);
+  letter-spacing: var(--dph-text-title3-tracking);
+  overflow-wrap: anywhere;
+}
+/* 24pt first line, 25pt pitch after it. */
+[data-ds="diaphane"] .dph-empty__description {
+  margin: 2.5px 0 -0.5px;
+  max-width: 100%;
+  font: var(--dph-font-title3);
+  line-height: var(--dph-text-title3-leading);
+  letter-spacing: var(--dph-text-title3-tracking);
+  color: var(--dph-secondary-label);
+  overflow-wrap: anywhere;
+}
+[data-ds="diaphane"] .dph-empty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 29.667px;
+}
+
+/* ErrorState wrapper: announces the error without adding a box. */
+[data-ds="diaphane"] .dph-error { display: contents; }

@@ -1,0 +1,411 @@
+{
+  "components": [
+    {
+      "name": "TextField",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "form",
+            "roundedBorder",
+            "plain"
+          ],
+          "default": "form"
+        },
+        "type": {
+          "type": "enum",
+          "values": [
+            "text",
+            "email",
+            "password",
+            "number",
+            "tel",
+            "search"
+          ],
+          "default": "text"
+        },
+        "value": {
+          "type": "string",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "onSubmit": {
+          "type": "callback"
+        },
+        "placeholder": {
+          "type": "string",
+          "i18n": true
+        },
+        "multiline": {
+          "type": "boolean"
+        },
+        "minLines": {
+          "type": "number",
+          "default": 1
+        },
+        "maxLines": {
+          "type": "number"
+        },
+        "invalid": {
+          "type": "boolean"
+        },
+        "errorText": {
+          "type": "string",
+          "i18n": true
+        },
+        "hint": {
+          "type": "string",
+          "i18n": true
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "trailingIcon": {
+          "type": "icon"
+        },
+        "trailingIconLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onTrailingPress": {
+          "type": "callback"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Text entry: variant form as a row inside a Form ListSection (visible label = LabeledContent with the value trailing), roundedBorder or plain on their own, and type search for the glass search capsule.",
+      "avoid": "Choosing from a fixed set of values or picking dates; use Picker or DatePicker.",
+      "a11y": "Native <input>/<textarea>; label is the accessible name (visible or aria-label), aria-invalid/aria-required, hint and error linked with aria-describedby.",
+      "since": "1.0"
+    },
+    {
+      "name": "FieldHint",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "text": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "footer",
+            "inline"
+          ],
+          "default": "footer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Secondary helper text under a Form section (footer) or directly under a standalone field (inline).",
+      "avoid": "Validation errors; use FieldError.",
+      "a11y": "Plain paragraph; pass id and reference it from the field to have it read with the field.",
+      "since": "1.0"
+    },
+    {
+      "name": "FieldError",
+      "import": "diaphane-ui",
+      "category": "feedback",
+      "props": {
+        "text": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "footer",
+            "inline"
+          ],
+          "default": "footer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Red validation message, as the section footer under the invalid Form section or inline under a standalone field.",
+      "avoid": "Page-level failures or neutral guidance; use an Alert or Banner, or FieldHint.",
+      "a11y": "role=alert so it is announced when it appears; also set invalid on the TextField.",
+      "since": "1.0"
+    },
+    {
+      "name": "Slider",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        },
+        "min": {
+          "type": "number",
+          "default": 0
+        },
+        "max": {
+          "type": "number",
+          "default": 1
+        },
+        "step": {
+          "type": "number"
+        },
+        "showTicks": {
+          "type": "boolean"
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "valueText": {
+          "type": "string",
+          "i18n": true
+        },
+        "minIcon": {
+          "type": "icon"
+        },
+        "maxIcon": {
+          "type": "icon"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Choosing a value in a continuous or stepped range such as volume or brightness, optionally with min/max symbols.",
+      "avoid": "Exact numeric entry or a handful of discrete counts; use TextField type number or Stepper.",
+      "a11y": "Native range input (invisible, on top of the visuals); label is the accessible name, valueText the spoken value; arrow keys adjust.",
+      "since": "1.0"
+    },
+    {
+      "name": "Stepper",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number",
+          "default": 1
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "valueText": {
+          "type": "string",
+          "i18n": true
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Small increments of a count, like a quantity row \"Quantity: 3\" with the −/+ control trailing.",
+      "avoid": "Large or continuous ranges; use Slider or a number TextField.",
+      "a11y": "role=spinbutton with aria-valuenow/min/max, labelled by the visible label; arrow, Home and End keys step; the −/+ halves are pointer targets.",
+      "since": "1.0"
+    },
+    {
+      "name": "Picker",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "options": {
+          "type": "array",
+          "required": true,
+          "i18n": true,
+          "description": "{ value: string; label: string; disabled?: boolean }[] — label is visible text"
+        },
+        "value": {
+          "type": "string",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "menu",
+            "inline",
+            "segmented",
+            "wheel",
+            "navigationLink"
+          ],
+          "default": "menu"
+        },
+        "columns": {
+          "type": "array",
+          "i18n": true,
+          "description": "wheel only: { label: string; options: PickerOption[]; value: string }[] — several picker components side by side; replaces options/value"
+        },
+        "onColumnChange": {
+          "type": "callback",
+          "description": "wheel with columns: (column: number, value: string) => void"
+        },
+        "onNavigate": {
+          "type": "callback",
+          "description": "navigationLink: the row was tapped; the app pushes the option list"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Choosing one option: menu as a Form row (label, value, chevron), inline as checkmark rows, segmented for 2–5 view modes, wheel for long ordered lists or several linked columns, navigationLink when the options live on a pushed screen.",
+      "avoid": "Navigating to unrelated screens or triggering actions (use ListItem with a chevron or a Button); wheels for fewer than ~5 options (use menu or segmented).",
+      "a11y": "menu: button with aria-haspopup=menu opening menuitemradio items (Escape closes, arrows move); inline and segmented: radiogroup with radios; wheel: one spinbutton per column (arrows, Page Up/Down, Home/End, drag, scroll, tap a row); navigationLink: button.",
+      "since": "1.0"
+    },
+    {
+      "name": "DatePicker",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "labelHidden": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "string",
+          "required": true,
+          "description": "ISO 8601 date-time (e.g. 2026-11-20T10:00:00Z); for mode=countdown an ISO 8601 duration (e.g. PT1H30M)"
+        },
+        "mode": {
+          "type": "enum",
+          "values": [
+            "date",
+            "time",
+            "dateTime",
+            "countdown"
+          ],
+          "default": "date",
+          "description": "countdown (hours and minutes, max 23 h 59 min) always uses wheels"
+        },
+        "variant": {
+          "type": "enum",
+          "values": [
+            "compact",
+            "graphical",
+            "wheels"
+          ],
+          "default": "compact",
+          "description": "compact pills, inline calendar (graphical; time row for dateTime), or spinning wheels"
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "locale": {
+          "type": "string",
+          "default": "en-US"
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "IANA time zone for graphical and wheels (device zone by default)"
+        },
+        "timeLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "graphical + dateTime: label of the time row, e.g. \"Time\""
+        },
+        "min": {
+          "type": "string"
+        },
+        "max": {
+          "type": "string"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "formRow": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Picking a date and/or time: compact pills in Form rows, graphical when the calendar context matters (booking a day), wheels for precise times or a countdown duration; value is an ISO string.",
+      "avoid": "Free-form or relative dates (\"next week\"); use a Picker or TextField. Avoid graphical in tight layouts (it needs ~330 × 417pt).",
+      "a11y": "compact: an invisible native date/time input on each pill. graphical: grid of day buttons (arrow keys move by day/week and page months, Enter selects, aria-current=date on today), month steppers and a month/year toggle with aria-expanded. wheels: a spinbutton per column (arrows, Page Up/Down, drag, scroll, tap).",
+      "since": "1.0"
+    }
+  ]
+}

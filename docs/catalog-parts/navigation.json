@@ -1,0 +1,360 @@
+{
+  "components": [
+    {
+      "name": "NavigationBar",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "title": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "subtitle": {
+          "type": "string",
+          "i18n": true
+        },
+        "displayMode": {
+          "type": "enum",
+          "values": [
+            "large",
+            "inline"
+          ],
+          "default": "large"
+        },
+        "backLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "onBack": {
+          "type": "callback",
+          "description": "Shows the back button. Inside a NavigationStack, pushed pages get it automatically."
+        },
+        "leading": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "trailing": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "account": {
+          "type": "object",
+          "description": "The signed-in person: an avatar button in a glass circle after the trailing actions.",
+          "shape": {
+            "name": "string (i18n, required) — accessible name",
+            "src": "string — photo URL",
+            "initials": "string — fallback when there is no photo",
+            "onPress": "callback"
+          }
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "The header of every stack page, in Screen's header slot: large title on root pages, inline title plus back button on pushed pages, up to three glass actions per side.",
+      "avoid": "Switching between top-level sections or putting form controls in the bar; use TabBar for sections and SegmentedControl in the content for filters.",
+      "a11y": "Renders a header with an h1 title; the back button is a native button named by backLabel; icon actions use their label as accessible name; adjacent icon actions merge visually but stay separate buttons.",
+      "since": "1.0"
+    },
+    {
+      "name": "TabBar",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "items": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "icon": "icon (use .fill variants)",
+            "label": "string (i18n, required)",
+            "badge": "string | number"
+          }
+        },
+        "selected": {
+          "type": "number",
+          "required": true,
+          "description": "Index of the selected item; the search tab is index items.length."
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "searchLabel": {
+          "type": "string",
+          "i18n": true,
+          "description": "Adds the search tab (Tab role .search)."
+        },
+        "searchIcon": {
+          "type": "icon",
+          "default": "magnifyingglass"
+        },
+        "searchPlacement": {
+          "type": "enum",
+          "values": [
+            "inline",
+            "separate"
+          ],
+          "default": "inline"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "accessory": {
+          "type": "node",
+          "description": "Bottom accessory, e.g. a mini player: 48pt glass capsule above the bar, inline when minimized."
+        },
+        "accessoryLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "minimizeBehavior": {
+          "type": "enum",
+          "values": [
+            "never",
+            "onScrollDown"
+          ],
+          "default": "never",
+          "description": "onScrollDown collapses the bar to the selected tab and search while Screen's content scrolls down."
+        },
+        "minimized": {
+          "type": "boolean",
+          "description": "Forces the minimized (true) or expanded (false) state."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "accessory"
+      ],
+      "use": "Top-level navigation between 2–5 sections of the app, in Screen's bottomBar slot, with an optional search tab, count badges, a persistent accessory such as a mini player, and minimize-on-scroll for long content.",
+      "avoid": "Actions or filters (use Toolbar or SegmentedControl) and more than five sections.",
+      "a11y": "A nav landmark containing a tablist; each tab is a button with role tab and aria-selected; the badge text is part of the tab's name. The accessory is a labelled region; minimized tabs keep their names.",
+      "since": "1.0"
+    },
+    {
+      "name": "Toolbar",
+      "import": "diaphane-ui",
+      "category": "action",
+      "props": {
+        "leading": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "trailing": {
+          "type": "array",
+          "items": {
+            "icon": "icon",
+            "label": "string (i18n, required)",
+            "onPress": "callback",
+            "variant": "enum glass|glassProminent",
+            "disabled": "boolean",
+            "menu": "MenuItem[] — opens a pull-down Menu from the button (Sort, Add…); onPress is ignored"
+          }
+        },
+        "status": {
+          "type": "string",
+          "i18n": true
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Page-level actions at the bottom of a pushed or document page (compose, filter, share) with an optional short status such as an item count, in Screen's bottomBar slot.",
+      "avoid": "Navigating between top-level sections, or pages that already have a TabBar.",
+      "a11y": "role toolbar named by label; icon actions are buttons named by their label; status is a live status region.",
+      "since": "1.0"
+    },
+    {
+      "name": "SearchField",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "value": {
+          "type": "string",
+          "required": true
+        },
+        "placeholder": {
+          "type": "string",
+          "required": true,
+          "i18n": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "onSubmit": {
+          "type": "callback"
+        },
+        "onCancel": {
+          "type": "callback"
+        },
+        "onMic": {
+          "type": "callback"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "clearLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "cancelLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "micLabel": {
+          "type": "string",
+          "i18n": true
+        },
+        "placement": {
+          "type": "enum",
+          "values": [
+            "bottomBar",
+            "inline"
+          ],
+          "default": "bottomBar"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Searching or filtering the current page's content; on phones put it in Screen's bottomBar slot.",
+      "avoid": "General text entry or forms; use TextField.",
+      "a11y": "A search landmark with a native type=search input named by label or placeholder; clear, mic and close are buttons named by clearLabel, micLabel and cancelLabel.",
+      "since": "1.0"
+    },
+    {
+      "name": "SegmentedControl",
+      "import": "diaphane-ui",
+      "category": "input",
+      "props": {
+        "segments": {
+          "type": "array",
+          "required": true,
+          "items": {
+            "label": "string (i18n, required)",
+            "icon": "icon",
+            "disabled": "boolean"
+          }
+        },
+        "selected": {
+          "type": "number",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Switching between 2–5 mutually exclusive views or filters of the same content, such as Day / Week / Month.",
+      "avoid": "Top-level navigation (use TabBar) or more than five options (use a Picker or menu).",
+      "a11y": "role radiogroup of role radio buttons with aria-checked; arrow keys move the selection (mirrored in RTL); icon segments are named by their label.",
+      "since": "1.0"
+    },
+    {
+      "name": "PageControl",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "count": {
+          "type": "number",
+          "required": true
+        },
+        "current": {
+          "type": "number",
+          "required": true
+        },
+        "onChange": {
+          "type": "callback"
+        },
+        "background": {
+          "type": "boolean",
+          "default": false
+        },
+        "label": {
+          "type": "string",
+          "i18n": true
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [],
+      "use": "Showing the position in a horizontally paged carousel or onboarding flow; bare dots over imagery or colour, background=true over plain backgrounds.",
+      "avoid": "More than about ten pages or step-by-step progress (use ProgressView).",
+      "a11y": "A labelled group of dot buttons; the current one has aria-current=page; arrow keys move between pages.",
+      "since": "1.0"
+    },
+    {
+      "name": "NavigationStack",
+      "import": "diaphane-ui",
+      "category": "navigation",
+      "props": {
+        "children": {
+          "type": "node",
+          "required": true,
+          "description": "Root page, usually a Screen with a NavigationBar."
+        },
+        "backLabel": {
+          "type": "string",
+          "i18n": true,
+          "required": true,
+          "description": "Accessible name of the automatic back button on pushed pages."
+        },
+        "testId": {
+          "type": "string"
+        }
+      },
+      "slots": [
+        "Screen"
+      ],
+      "use": "Drill-down navigation: list → detail → sub-detail. Call useNavigation().push(<Screen…/>) from a row or card; pushed pages get a back button and swipe-from-edge back automatically, with a push/pop transition.",
+      "avoid": "Switching top-level sections (use TabBar) or modal tasks such as create/edit forms (use Sheet).",
+      "a11y": "Only the top page is exposed; covered pages are inert and aria-hidden. Back is a labelled button; the swipe is an extra gesture, never the only way back.",
+      "since": "1.1"
+    }
+  ]
+}

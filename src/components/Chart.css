@@ -1,0 +1,134 @@
+/* ── Chart (chart defaults):
+ *   y axis trailing, leading-aligned 11pt labels 5pt after the plot; ~3 "nice" intervals from zero
+ *   gridlines #D3D3D5 / #353537, 0.667pt; category boundaries dashed 2/2 through the label row
+ *   bars 70.7% of their band; x labels 11pt, baseline 14.4pt under the plot (18pt row)
+ *   donut: innerRadius 0.6, angularInset 1.5pt, legend 8pt dots + 11pt labels under the ring ── */
+[data-ds="diaphane"] .dph-chart {
+  --_tint: var(--dph-accent);
+  --_grid: rgb(211 211 213);
+  position: relative;
+  width: 100%;
+  font: 400 11px/13px var(--dph-font-family);
+  color: var(--dph-secondary-label);
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: pan-y;
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-chart, [data-ds="diaphane"] [data-theme="dark"] .dph-chart { --_grid: rgb(53 53 55); }
+[data-ds="diaphane"] .dph-chart__svg { display: block; overflow: visible; }
+[data-ds="diaphane"] .dph-chart__grid { stroke: var(--_grid); stroke-width: 0.667; shape-rendering: crispEdges; }
+[data-ds="diaphane"] .dph-chart__grid[data-dashed] { stroke-dasharray: 2 2; }
+[data-ds="diaphane"] .dph-chart__axis { fill: var(--dph-secondary-label); font: inherit; }
+[data-ds="diaphane"] .dph-chart__bar {
+  fill: var(--_tint);
+  transform-box: view-box;
+  transform-origin: 0 var(--_o);
+  animation: dph-chart-grow 0.6s var(--dph-ease-spring) backwards;
+  transition: opacity var(--dph-duration-fast) linear, y 0.4s var(--dph-ease-standard), height 0.4s var(--dph-ease-standard);
+}
+@keyframes dph-chart-grow { from { transform: scaleY(0); } }
+[data-ds="diaphane"] .dph-chart__line { fill: none; stroke: var(--_tint); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+[data-ds="diaphane"] .dph-chart__area { fill: color-mix(in srgb, var(--_tint) 15%, transparent); }
+/* Gradient area (trend charts): tint fading to clear (set inline on minimal / sparkline charts). */
+[data-ds="diaphane"] .dph-chart__fade-top { stop-color: var(--_tint); stop-opacity: 0.32; }
+[data-ds="diaphane"] .dph-chart__fade-bottom { stop-color: var(--_tint); stop-opacity: 0; }
+[data-ds="diaphane"] .dph-chart__line[data-thick] { stroke-width: 3; }
+[data-ds="diaphane"] .dph-chart__line[data-compare] { stroke: var(--dph-system-gray4, #d1d1d6); stroke-width: 3; }
+/* Summary cards: older bars systemGray5, the latest in the tint. */
+[data-ds="diaphane"] .dph-chart__bar[data-muted] { fill: var(--dph-system-gray5, #e5e5ea); }
+[data-ds="diaphane"] .dph-chart__axis[data-minimal] { font-weight: 600; fill: var(--dph-secondary-label); }
+/* RuleMark (average / goal): thick tinted line across the plot (e.g. "Average Steps"). */
+[data-ds="diaphane"] .dph-chart__rulemark line { stroke: var(--_tint); stroke-width: 4; stroke-linecap: round; }
+[data-ds="diaphane"] .dph-chart__rulemark text { fill: var(--_tint); font: 600 11px var(--dph-font-family); }
+/* Over tinted bars the rule switches to a dashed label-colour line so it stays visible (rule mark with a dashed line style). */
+[data-ds="diaphane"] .dph-chart[data-kind="bar"][data-highlight="none"] .dph-chart__rulemark line { stroke: var(--dph-label); stroke-width: 1.5; stroke-dasharray: 4 3; stroke-linecap: butt; opacity: 0.75; }
+[data-ds="diaphane"] .dph-chart[data-kind="bar"][data-highlight="none"] .dph-chart__rulemark text { fill: var(--dph-secondary-label); }
+
+/* Detail header: TOTAL / value + unit / date; becomes a callout box over the selection. */
+[data-ds="diaphane"] .dph-chart__summary {
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+[data-ds="diaphane"] .dph-chart__summary[data-boxed] { padding: 6px 12px 8px; background: var(--dph-tertiary-system-fill); min-width: 146px; }
+[data-ds="diaphane"] .dph-chart__summary-label { font: 600 13px/16px var(--dph-font-family); letter-spacing: 0.02em; color: var(--dph-secondary-label); text-transform: uppercase; }
+[data-ds="diaphane"] .dph-chart__summary-value { font: 600 34px/38px var(--dph-font-family); letter-spacing: 0.01em; color: var(--dph-label); font-variant-numeric: tabular-nums; }
+[data-ds="diaphane"] .dph-chart__summary-unit { font: 600 17px var(--dph-font-family); color: var(--dph-secondary-label); letter-spacing: 0; }
+[data-ds="diaphane"] .dph-chart__summary-caption { font: 600 15px/18px var(--dph-font-family); color: var(--dph-secondary-label); }
+[data-ds="diaphane"] .dph-chart__summary:not([data-boxed]) { top: 2px; }
+
+/* Comparison bars (highlights): value + unit, then a 24pt labelled bar; first tinted, others systemGray5. */
+[data-ds="diaphane"] .dph-chart__compare { display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; list-style: none; }
+[data-ds="diaphane"] .dph-chart__compare li { display: flex; flex-direction: column; gap: 4px; }
+[data-ds="diaphane"] .dph-chart__compare-value { font: 600 22px/28px var(--dph-font-family); color: var(--dph-label); font-variant-numeric: tabular-nums; }
+[data-ds="diaphane"] .dph-chart__compare-unit { font: 600 15px var(--dph-font-family); color: var(--dph-secondary-label); }
+[data-ds="diaphane"] .dph-chart__compare-bar {
+  box-sizing: border-box;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: var(--dph-system-gray5, #e5e5ea);
+  color: var(--dph-label);
+  font: 600 13px/22px var(--dph-font-family);
+  white-space: nowrap;
+  animation: dph-chart-bar-in 0.6s var(--dph-ease-standard) backwards;
+}
+[data-ds="diaphane"] .dph-chart__compare-bar[data-first] { background: var(--_tint); color: rgb(255 255 255); }
+@keyframes dph-chart-bar-in { from { clip-path: inset(0 100% 0 0 round 4px); } to { clip-path: inset(0 0 0 0 round 4px); } }
+[data-ds="diaphane"] .dph-chart__point { fill: var(--_tint); }
+[data-ds="diaphane"] .dph-chart__point[data-selected] { stroke: var(--dph-system-background); stroke-width: 2; }
+[data-ds="diaphane"] .dph-chart__rule { stroke: var(--dph-tertiary-label); stroke-width: 1; }
+[data-ds="diaphane"] .dph-chart [data-dim] { opacity: 0.35; }
+[data-ds="diaphane"] .dph-chart__sector { fill: var(--_c); transition: opacity var(--dph-duration-fast) linear; }
+
+/* Selection callout (annotation above the plot). */
+[data-ds="diaphane"] .dph-chart__callout {
+  position: absolute;
+  top: -4px;
+  width: 96px;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--dph-secondary-system-background);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  translate: 0 -100%;
+}
+[data-ds="diaphane"] .dph-chart__callout-label { font: var(--dph-font-caption1); color: var(--dph-secondary-label); }
+[data-ds="diaphane"] .dph-chart__callout-value { font: var(--dph-font-headline); color: var(--dph-label); font-variant-numeric: tabular-nums; }
+
+[data-ds="diaphane"] .dph-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 9px;
+  margin: 5px 0 0;
+  padding: 0;
+  list-style: none;
+  font: 400 11px/13.333px var(--dph-font-family);
+}
+[data-ds="diaphane"] .dph-chart__legend li { display: flex; align-items: center; gap: 6px; }
+[data-ds="diaphane"] .dph-chart__legend li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--_c); }
+
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="accent"] { --_tint: var(--dph-accent); --_c: var(--dph-accent); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="blue"] { --_tint: var(--dph-system-blue); --_c: var(--dph-system-blue); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="green"] { --_tint: var(--dph-system-green); --_c: var(--dph-system-green); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="orange"] { --_tint: var(--dph-system-orange); --_c: var(--dph-system-orange); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="purple"] { --_tint: var(--dph-system-purple); --_c: var(--dph-system-purple); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="red"] { --_tint: var(--dph-system-red); --_c: var(--dph-system-red); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="teal"] { --_tint: var(--dph-system-cyan); --_c: var(--dph-system-cyan); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="yellow"] { --_tint: var(--dph-system-yellow); --_c: var(--dph-system-yellow); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="pink"] { --_tint: var(--dph-system-pink); --_c: var(--dph-system-pink); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="gray"] { --_tint: var(--dph-system-gray); --_c: var(--dph-system-gray); }
+[data-ds="diaphane"] :is(.dph-chart, .dph-chart__sector, .dph-chart__legend li)[data-tint="indigo"] { --_tint: var(--dph-system-indigo); --_c: var(--dph-system-indigo); }
+
+/* Data table for assistive tech; visually hidden. */
+[data-ds="diaphane"] .dph-chart__table { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { [data-ds="diaphane"] .dph-chart__bar { animation: none; } }

@@ -1,0 +1,29 @@
+/* Playground-only styles for the lists-more screens (mini player content of the tab bar accessory). */
+.pg-mini__art {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: var(--dph-system-pink);
+  color: rgb(255 255 255);
+  font-size: 15px;
+}
+.pg-mini__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font: var(--dph-font-subheadline);
+  font-weight: var(--dph-weight-medium);
+}
+.pg-mini__btn {
+  flex: none;
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--dph-label);
+  font-size: 17px;
+}
+.pg-mini__anchor { display: none; }

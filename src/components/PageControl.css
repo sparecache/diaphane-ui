@@ -1,0 +1,37 @@
+/* ── PageControl (25.67pt row, 9.67pt dots 8pt apart, 14pt side padding.
+ * Bare: current white, others white 45%. With background: thin-material capsule, current white, others label 25%. ── */
+[data-ds="diaphane"] .dph-page-control {
+  --_on: var(--dph-on-accent);
+  --_off: color-mix(in srgb, var(--dph-on-accent) 45%, transparent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 25.667px;
+  padding-inline: 14px;
+  border-radius: var(--dph-radius-full);
+}
+[data-ds="diaphane"] .dph-page-control[data-background] {
+  --_off: color-mix(in srgb, var(--dph-label) 25%, transparent);
+  background: var(--dph-glass-fill);
+  -webkit-backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+  backdrop-filter: var(--dph-glass-refraction,) var(--dph-glass-backdrop);
+}
+
+[data-ds="diaphane"] .dph-page-control__dot {
+  position: relative;
+  flex: none;
+  width: 9.667px;
+  height: 9.667px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--_off);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--dph-duration-fast) linear;
+}
+/* 44pt-tall hit area per dot (spans the gaps). */
+[data-ds="diaphane"] .dph-page-control__dot::after { content: ""; position: absolute; inset-block: -17px; inset-inline: -4px; }
+[data-ds="diaphane"] .dph-page-control__dot[aria-current="page"] { background: var(--_on); }
+[data-ds="diaphane"] .dph-page-control__dot:focus-visible { outline: none; box-shadow: var(--dph-focus-ring); }

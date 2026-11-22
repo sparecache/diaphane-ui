@@ -1,0 +1,68 @@
+/* ── Context menu: the target lifts ×1.144 (180 → 206pt) around its own
+ *    center, clamped 16pt below the safe area; the background dims with --dph-scrim and blurs; the 250pt menu
+ *    sits 16pt below the preview, centered on it and kept 16pt from the screen edges. Light surface is denser
+ *    than the pull-down's (#EDEDED over the scrim). See docs/design-specs/menus.md. ── */
+[data-ds="diaphane"] .dph-context-menu { display: inline-flex; vertical-align: top; }
+[data-ds="diaphane"] .dph-context-menu__target {
+  display: inline-flex;
+  flex: 1 1 auto;   /* fill the wrapper when a layout stretches it (grids, full-width cards) */
+  min-width: 0;
+  outline: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+[data-ds="diaphane"] .dph-context-menu__target:focus-visible { outline: var(--dph-focus-ring); outline-offset: 2px; }
+[data-ds="diaphane"] .dph-context-menu__target > * { flex: 1 1 auto; min-width: 0; }
+[data-ds="diaphane"] .dph-context-menu[data-open] .dph-context-menu__target { visibility: hidden; }
+
+[data-ds="diaphane"] .dph-context-menu__overlay { display: block; }
+[data-ds="diaphane"] .dph-context-menu__overlay:not([data-placed]) > :not(.dph-context-menu__scrim) { visibility: hidden; }
+[data-ds="diaphane"] .dph-context-menu__scrim {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+[data-ds="diaphane"] .dph-context-menu__preview {
+  position: absolute;
+  top: var(--_py, 0px);
+  inset-inline-start: var(--_px, 0px);
+  width: calc(var(--_pw, 0px) * var(--_ps, 1));
+  height: calc(var(--_ph, 0px) * var(--_ps, 1));
+  filter: drop-shadow(0 0 25px rgb(0 0 0 / 0.29));
+  animation: dph-context-lift var(--dph-duration-standard) var(--dph-ease-spring);
+}
+[data-ds="diaphane"] .dph-context-menu__preview-content {
+  display: flex;
+  width: var(--_pw, 0px);
+  height: var(--_ph, 0px);
+  transform: scale(var(--_ps, 1));
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+[data-ds="diaphane"][dir="rtl"] .dph-context-menu__preview-content,
+[data-ds="diaphane"] [dir="rtl"] .dph-context-menu__preview-content { transform-origin: 100% 0; }
+/* Glass picks up the lifted preview just above the menu: a blurred copy of the preview, seen through the
+ * panel (fitted on context-menu: blur σ 40, 22% light / 85% dark). */
+[data-ds="diaphane"] .dph-context-menu__glow {
+  position: absolute;
+  top: var(--_gy, 0px);
+  inset-inline-start: var(--_gx, 0px);
+  opacity: 0.22;
+  filter: blur(40px);
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-context-menu__glow,
+[data-ds="diaphane"] [data-theme="dark"] .dph-context-menu__glow { opacity: 0.85; }
+@keyframes dph-context-lift { from { transform: scale(0.88); } }
+
+[data-ds="diaphane"] .dph-context-menu__overlay .dph-menu__stack {
+  --_menu-fill-pct: 7%;
+  top: var(--_my, 0px);
+  inset-inline-start: var(--_mx, 0px);
+  transform-origin: 50% 0;
+}
+[data-ds="diaphane"][data-theme="dark"] .dph-context-menu__overlay .dph-menu__stack,
+[data-ds="diaphane"] [data-theme="dark"] .dph-context-menu__overlay .dph-menu__stack {
+  --_menu-fill-pct: 2%;
+}
